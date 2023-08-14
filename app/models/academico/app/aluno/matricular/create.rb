@@ -11,7 +11,7 @@ module Academico
           def call(aluno_dto:)
             # raise StandardError unless aluno_dto.is_a?(::Academico::App::Aluno::Matricular::Dto)
 
-            aluno = ::Academico::Domain::Aluno::Record.new(
+            aluno = ::Academico::Domain::Aluno::Entity.new(
               cpf: aluno_dto.cpf, nome: aluno_dto.nome, email: aluno_dto.email,
             )
 

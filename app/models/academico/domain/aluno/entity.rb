@@ -1,7 +1,7 @@
 module Academico
   module Domain
     module Aluno
-      class Record
+      class Entity
         attr_reader :cpf, :email, :nome, :telefones, :senha
 
         def initialize(cpf:, nome:, email:)
