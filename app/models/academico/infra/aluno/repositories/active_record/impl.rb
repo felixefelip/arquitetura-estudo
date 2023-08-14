@@ -6,10 +6,6 @@ module Academico
           class Impl
             include ::Academico::Domain::Aluno::Repository
 
-            def initialize
-              self.record = Record.new
-            end
-
             def adicionar(aluno)
               Record.create(nome: aluno.nome, email: aluno.email, cpf: aluno.cpf, senha: aluno.senha)
             end
@@ -21,10 +17,6 @@ module Academico
             def buscar_todos
               Record.all
             end
-
-            private
-
-            attr_accessor :record
           end
         end
       end
