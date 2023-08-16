@@ -5,6 +5,7 @@ module Shared
     end
 
     def to_s
+      numero
     end
 
     private

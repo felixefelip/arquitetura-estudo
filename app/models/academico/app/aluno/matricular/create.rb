@@ -16,6 +16,9 @@ module Academico
             )
 
             aluno_repository.adicionar(aluno)
+
+            evento = ::Academico::Domain::Aluno::Matriculado.new(cpf_aluno: aluno.cpf)
+            publicador_de_evento.publicar(evento:)
           end
 
           private
