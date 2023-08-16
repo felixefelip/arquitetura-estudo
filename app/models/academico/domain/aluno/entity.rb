@@ -5,7 +5,7 @@ module Academico
         attr_reader :cpf, :email, :nome, :telefones, :senha
 
         def initialize(cpf:, nome:, email:)
-          self.cpf = cpf
+          self.cpf = Cpf.new(numero: cpf)
           self.nome = nome
           self.email = email
         end
