@@ -2,7 +2,7 @@ module Academico
   module Domain
     module Aluno
       class Matriculado
-        include ::Shared::Evento
+        include ::Shared::Domain::Evento
 
         attr_reader :momento, :cpf_aluno
 

@@ -1,4 +1,4 @@
-module Shared
+module Shared::Domain
   module Evento
     module Ouvinte
       extend ActiveSupport::Concern

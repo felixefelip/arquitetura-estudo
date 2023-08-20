@@ -1,4 +1,4 @@
-module Shared
+module Shared::Domain
   module Evento
     class Publicador
       def adicionar_ouvinte(ouvinte:)

@@ -1,6 +1,8 @@
 module Academico
   module Domain
-    class Email
+    module Indicacao
+			class Entity
+      end
     end
   end
 end

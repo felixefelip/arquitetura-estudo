@@ -1,4 +1,4 @@
-module Shared
+module Shared::Domain
   class Cpf
     def initialize(numero:)
       self.numero = numero
