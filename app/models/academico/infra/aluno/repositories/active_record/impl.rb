@@ -3,10 +3,8 @@ module Academico
     module Aluno
       module Repositories
         module ActiveRecord
-          class Impl
-            include ::Academico::Domain::Aluno::Repository
-
-            def adicionar(aluno)
+          class Impl < ::Academico::Domain::Aluno::Repository
+            def adicionar(aluno:)
               Record.create(nome: aluno.nome, email: aluno.email, cpf: aluno.cpf, senha: aluno.senha)
             end
 

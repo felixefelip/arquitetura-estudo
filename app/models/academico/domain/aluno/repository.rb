@@ -1,21 +1,17 @@
 module Academico
   module Domain
     module Aluno
-      module Repository
-        extend ActiveSupport::Concern
+      class Repository
+        def adicionar(aluno:)
+          raise NotImplementedError
+        end
 
-        included do
-          def adicionar(aluno)
-            raise NotImplementedError
-          end
+        def buscar_por_cpf(cpf)
+          raise NotImplementedError
+        end
 
-          def buscar_por_cpf(cpf)
-            raise NotImplementedError
-          end
-
-          def buscar_todos
-            raise NotImplementedError
-          end
+        def buscar_todos
+          raise NotImplementedError
         end
       end
     end

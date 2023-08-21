@@ -1,0 +1,12 @@
+# TypeProf 0.21.7
+
+# Classes
+module Academico
+  module Domain
+    module Aluno
+      class Repository
+        def adicionar: (aluno: Aluno) -> void
+      end
+    end
+  end
+end
