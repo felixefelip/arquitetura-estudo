@@ -4414,7 +4414,7 @@ module ActiveSupport
     #  1234567.to_s(:human, precision: 1,
     #                   separator: ',',
     #                   significant: false)                   # => "1,2 Million"
-    def to_s: (?untyped? format, ?untyped? options) -> untyped
+    def to_s: (?untyped? format, ?untyped? options) -> String
   end
 end
 

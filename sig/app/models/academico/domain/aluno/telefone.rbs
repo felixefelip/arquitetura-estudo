@@ -1,0 +1,15 @@
+# TypeProf 0.21.7
+
+# Classes
+module Academico
+  module Domain
+    module Aluno
+      class Telefone
+        attr_accessor ddd: String
+        attr_accessor numero: String
+        def initialize: (ddd: String, numero: String) -> void
+        def to_s: -> String
+      end
+    end
+  end
+end

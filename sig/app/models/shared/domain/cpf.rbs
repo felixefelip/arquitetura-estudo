@@ -1,0 +1,9 @@
+module Shared
+  module Domain
+    class Cpf
+      attr_accessor numero: String
+      def initialize: (numero: String) -> void
+      def to_s: -> String
+    end
+  end
+end

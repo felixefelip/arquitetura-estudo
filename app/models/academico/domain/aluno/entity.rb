@@ -4,11 +4,10 @@ module Academico
       class Entity
         attr_reader :cpf, :email, :nome, :telefones, :senha
 
-        def initialize(nome:, email:, cpf: nil)
+        def initialize(nome:, email:, cpf:)
           self.cpf = ::Shared::Domain::Cpf.new(numero: cpf)
           self.nome = nome
           self.email = email
-          # self.nome = nil
         end
 
         def adicionar_telefone(ddd:, numero:)
