@@ -1,0 +1,12 @@
+module Academico::Infra::Aluno::Repositories::ActiveRecord
+end
+class ApplicationRecord < ActiveRecord::Base
+end
+module Academico
+end
+module Academico::Infra
+end
+module Academico::Infra::Aluno
+end
+module Academico::Infra::Aluno::Repositories
+end

@@ -4,16 +4,21 @@ module Academico
       class Entity
         attr_reader :cpf, :email, :nome, :telefones, :senha
 
-        def initialize(cpf:, nome:, email:)
-          self.cpf = Cpf.new(numero: cpf)
+        def initialize(nome:, email:, cpf: nil)
+          self.cpf = ::Shared::Domain::Cpf.new(numero: cpf)
           self.nome = nome
           self.email = email
+          # self.nome = nil
         end
 
         def adicionar_telefone(ddd:, numero:)
           raise StandardError if telefones.count == 2
 
           telefones << Telefone.new(ddd:, numero:)
+        end
+
+        def one
+          1
         end
 
         private

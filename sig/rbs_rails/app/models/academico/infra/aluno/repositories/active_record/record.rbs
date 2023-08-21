@@ -1,0 +1,286 @@
+module Academico
+  module Infra
+    module Aluno
+      module Repositories
+        module ActiveRecord
+          class Record < ::ApplicationRecord
+            extend _ActiveRecord_Relation_ClassMethods[Academico::Infra::Aluno::Repositories::ActiveRecord::Record, ActiveRecord_Relation, Integer]
+
+            module GeneratedAttributeMethods
+              def id: () -> Integer
+
+              def id=: (Integer) -> Integer
+
+              def id?: () -> bool
+
+              def id_changed?: () -> bool
+
+              def id_change: () -> [ Integer?, Integer? ]
+
+              def id_will_change!: () -> void
+
+              def id_was: () -> Integer?
+
+              def id_previously_changed?: () -> bool
+
+              def id_previous_change: () -> Array[Integer?]?
+
+              def id_previously_was: () -> Integer?
+
+              def id_before_last_save: () -> Integer?
+
+              def id_change_to_be_saved: () -> Array[Integer?]?
+
+              def id_in_database: () -> Integer?
+
+              def saved_change_to_id: () -> Array[Integer?]?
+
+              def saved_change_to_id?: () -> bool
+
+              def will_save_change_to_id?: () -> bool
+
+              def restore_id!: () -> void
+
+              def clear_id_change: () -> void
+
+              def cpf: () -> String
+
+              def cpf=: (String) -> String
+
+              def cpf?: () -> bool
+
+              def cpf_changed?: () -> bool
+
+              def cpf_change: () -> [ String?, String? ]
+
+              def cpf_will_change!: () -> void
+
+              def cpf_was: () -> String?
+
+              def cpf_previously_changed?: () -> bool
+
+              def cpf_previous_change: () -> Array[String?]?
+
+              def cpf_previously_was: () -> String?
+
+              def cpf_before_last_save: () -> String?
+
+              def cpf_change_to_be_saved: () -> Array[String?]?
+
+              def cpf_in_database: () -> String?
+
+              def saved_change_to_cpf: () -> Array[String?]?
+
+              def saved_change_to_cpf?: () -> bool
+
+              def will_save_change_to_cpf?: () -> bool
+
+              def restore_cpf!: () -> void
+
+              def clear_cpf_change: () -> void
+
+              def email: () -> String
+
+              def email=: (String) -> String
+
+              def email?: () -> bool
+
+              def email_changed?: () -> bool
+
+              def email_change: () -> [ String?, String? ]
+
+              def email_will_change!: () -> void
+
+              def email_was: () -> String?
+
+              def email_previously_changed?: () -> bool
+
+              def email_previous_change: () -> Array[String?]?
+
+              def email_previously_was: () -> String?
+
+              def email_before_last_save: () -> String?
+
+              def email_change_to_be_saved: () -> Array[String?]?
+
+              def email_in_database: () -> String?
+
+              def saved_change_to_email: () -> Array[String?]?
+
+              def saved_change_to_email?: () -> bool
+
+              def will_save_change_to_email?: () -> bool
+
+              def restore_email!: () -> void
+
+              def clear_email_change: () -> void
+
+              def nome: () -> String
+
+              def nome=: (String) -> String
+
+              def nome?: () -> bool
+
+              def nome_changed?: () -> bool
+
+              def nome_change: () -> [ String?, String? ]
+
+              def nome_will_change!: () -> void
+
+              def nome_was: () -> String?
+
+              def nome_previously_changed?: () -> bool
+
+              def nome_previous_change: () -> Array[String?]?
+
+              def nome_previously_was: () -> String?
+
+              def nome_before_last_save: () -> String?
+
+              def nome_change_to_be_saved: () -> Array[String?]?
+
+              def nome_in_database: () -> String?
+
+              def saved_change_to_nome: () -> Array[String?]?
+
+              def saved_change_to_nome?: () -> bool
+
+              def will_save_change_to_nome?: () -> bool
+
+              def restore_nome!: () -> void
+
+              def clear_nome_change: () -> void
+
+              def senha: () -> String?
+
+              def senha=: (String?) -> String?
+
+              def senha?: () -> bool
+
+              def senha_changed?: () -> bool
+
+              def senha_change: () -> [ String?, String? ]
+
+              def senha_will_change!: () -> void
+
+              def senha_was: () -> String?
+
+              def senha_previously_changed?: () -> bool
+
+              def senha_previous_change: () -> Array[String?]?
+
+              def senha_previously_was: () -> String?
+
+              def senha_before_last_save: () -> String?
+
+              def senha_change_to_be_saved: () -> Array[String?]?
+
+              def senha_in_database: () -> String?
+
+              def saved_change_to_senha: () -> Array[String?]?
+
+              def saved_change_to_senha?: () -> bool
+
+              def will_save_change_to_senha?: () -> bool
+
+              def restore_senha!: () -> void
+
+              def clear_senha_change: () -> void
+
+              def created_at: () -> ActiveSupport::TimeWithZone
+
+              def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+              def created_at?: () -> bool
+
+              def created_at_changed?: () -> bool
+
+              def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+              def created_at_will_change!: () -> void
+
+              def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+              def created_at_previously_changed?: () -> bool
+
+              def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+              def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+              def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+              def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+              def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+              def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+              def saved_change_to_created_at?: () -> bool
+
+              def will_save_change_to_created_at?: () -> bool
+
+              def restore_created_at!: () -> void
+
+              def clear_created_at_change: () -> void
+
+              def updated_at: () -> ActiveSupport::TimeWithZone
+
+              def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+              def updated_at?: () -> bool
+
+              def updated_at_changed?: () -> bool
+
+              def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+              def updated_at_will_change!: () -> void
+
+              def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+              def updated_at_previously_changed?: () -> bool
+
+              def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+              def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+              def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+              def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+              def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+              def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+              def saved_change_to_updated_at?: () -> bool
+
+              def will_save_change_to_updated_at?: () -> bool
+
+              def restore_updated_at!: () -> void
+
+              def clear_updated_at_change: () -> void
+            end
+            include GeneratedAttributeMethods
+
+            module GeneratedAssociationMethods
+            end
+            include GeneratedAssociationMethods
+
+            module GeneratedRelationMethods
+            end
+
+            class ActiveRecord_Relation < ::ActiveRecord::Relation
+              include GeneratedRelationMethods
+              include _ActiveRecord_Relation[Academico::Infra::Aluno::Repositories::ActiveRecord::Record, Integer]
+              include Enumerable[Academico::Infra::Aluno::Repositories::ActiveRecord::Record]
+            end
+
+            class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+              include GeneratedRelationMethods
+              include _ActiveRecord_Relation[Academico::Infra::Aluno::Repositories::ActiveRecord::Record, Integer]
+            end
+          end
+        end
+      end
+    end
+  end
+end
