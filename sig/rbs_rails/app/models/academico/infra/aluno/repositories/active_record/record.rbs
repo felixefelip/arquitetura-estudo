@@ -260,6 +260,10 @@ module Academico
               def clear_updated_at_change: () -> void
             end
             include GeneratedAttributeMethods
+            def telefones: () -> Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy
+            def telefones=: (Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy | Array[Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record]) -> (Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy | Array[Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record])
+            def telefone_ids: () -> Array[Integer]
+            def telefone_ids=: (Array[Integer]) -> Array[Integer]
 
             module GeneratedAssociationMethods
             end
