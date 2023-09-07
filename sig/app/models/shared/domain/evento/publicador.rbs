@@ -1,0 +1,15 @@
+module Shared
+  module Domain
+    module Evento
+      class Publicador
+        def adicionar_ouvinte: (ouvinte: untyped) -> void
+
+        def publicar: (evento: untyped) -> void
+
+        private
+
+        def ouvintes: () -> Array[untyped]
+      end
+    end
+  end
+end

@@ -1,0 +1,7 @@
+module Academico
+  class AlunosController < ApplicationController
+    def index: () -> void
+
+    def create: () -> void
+  end
+end

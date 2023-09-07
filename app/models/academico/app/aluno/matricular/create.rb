@@ -9,13 +9,11 @@ module Academico
           end
 
           def call(aluno_dto:)
-            # raise StandardError unless aluno_dto.is_a?(::Academico::App::Aluno::Matricular::Dto)
-
             aluno = ::Academico::Domain::Aluno::Entity.new(
               cpf: aluno_dto.cpf, nome: aluno_dto.nome, email: aluno_dto.email,
             )
 
-            aluno_repository.adicionar(aluno)
+            aluno_repository.adicionar(aluno:)
 
             evento = ::Academico::Domain::Aluno::Matriculado.new(cpf_aluno: aluno.cpf)
             publicador_de_evento.publicar(evento:)
