@@ -1,0 +1,7 @@
+module Shared
+  module Domain
+    interface _Evento
+      def momento: () -> DateTime
+    end
+  end
+end

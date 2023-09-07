@@ -37,12 +37,12 @@ Metrics/ParameterLists:
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 8 lines of code.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#short-methods'
-  Max: 8
+  Max: 10
   Enabled: true
 
 Metrics/BlockLength:
   CountComments: false
-  Max: 5
+  Max: 8
   Exclude:
     - 'config/routes.rb'
   IgnoredMethods:

@@ -3,7 +3,7 @@ module Academico
     module Aluno
       class CifradorDeSenhaBcrypt < ::Academico::Domain::Aluno::CifradorDeSenha
         def cifrar(senha:)
-          BCrypt::Password.create(senha)
+          BCrypt::Password.create(senha, {})
         end
 
         def verificar(senha_em_texto:, senha_cifrada:)
