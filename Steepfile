@@ -30,7 +30,7 @@
 
 target :app do
   check "app"
-  signature "sig"
+  signature "app"
 
   library "pathname"
 end
