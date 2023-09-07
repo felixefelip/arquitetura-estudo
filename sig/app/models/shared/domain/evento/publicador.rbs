@@ -2,13 +2,13 @@ module Shared
   module Domain
     module Evento
       class Publicador
-        def adicionar_ouvinte: (ouvinte: untyped) -> void
+        def adicionar_ouvinte: (ouvinte: Ouvinte) -> void
 
-        def publicar: (evento: untyped) -> void
+        def publicar: (evento: _Evento) -> void
 
         private
 
-        def ouvintes: () -> Array[untyped]
+        def ouvintes: () -> Array[Ouvinte]
       end
     end
   end
