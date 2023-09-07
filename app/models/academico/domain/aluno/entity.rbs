@@ -8,7 +8,7 @@ module Academico
         attr_accessor cpf: Shared::Domain::Cpf
         attr_accessor email: String
         attr_accessor nome: String
-        attr_accessor telefones: [Telefone]
+        attr_accessor telefones: Array[Telefone]
         attr_accessor senha: String
         def initialize: (cpf: String, nome: String, email: String) -> void
         def adicionar_telefone: (ddd: String, numero: String) -> void

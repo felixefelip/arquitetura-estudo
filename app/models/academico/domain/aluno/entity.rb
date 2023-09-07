@@ -8,8 +8,6 @@ module Academico
           self.cpf = ::Shared::Domain::Cpf.new(numero: cpf)
           self.nome = nome
           self.email = email
-
-          telefones.first.ddd = "1"
         end
 
         def adicionar_telefone(ddd:, numero:)
