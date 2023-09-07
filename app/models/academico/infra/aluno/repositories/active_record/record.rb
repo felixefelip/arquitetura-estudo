@@ -11,7 +11,7 @@ module Academico
                      class_name: "::Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record"
 
             def teste
-              telefones.last!.numero
+              telefones.first!.numero
             end
           end
 

@@ -4,8 +4,10 @@
 module Academico
   module Domain
     module Aluno
-      class Repository
-        def adicionar: (aluno: Aluno) -> void
+      interface _Repository
+        def adicionar: (aluno: Entity) -> void
+        def buscar_por_cpf: (Shared::Domain::Cpf) -> Entity
+        def buscar_todos: -> Array[Entity]
       end
     end
   end

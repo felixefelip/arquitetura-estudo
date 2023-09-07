@@ -3,14 +3,16 @@ module Academico
     module Aluno
       module Repositories
         class Memoria
-          include ::Academico::Domain::Aluno::Repository
-
-          def adicionar(aluno)
+          def adicionar(aluno:)
             alunos << aluno
           end
 
           def buscar_por_cpf(cpf)
-            alunos.detect { |aluno| aluno.cpf == cpf }
+            aluno = alunos.detect { |a| a.cpf == cpf }
+
+            raise StandardError if aluno.nil?
+
+            aluno
           end
 
           def buscar_todos

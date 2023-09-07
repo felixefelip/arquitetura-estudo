@@ -6,8 +6,8 @@ module Academico
     module Aluno
       module Repositories
         module ActiveRecord
-          class Impl < ::Academico::Domain::Aluno::Repository
-            def adicionar: (aluno: Domain::Aluno::Entity) -> void
+          class Impl
+            include Academico::Domain::Aluno::_Repository
           end
         end
       end
