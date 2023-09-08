@@ -2,7 +2,8 @@ module Shared
   module Domain
     interface _Evento
       def momento: () -> DateTime
-      def is_a?: (_Evento) -> bool
+
+      def instance_of?: (Class) -> bool
     end
   end
 end

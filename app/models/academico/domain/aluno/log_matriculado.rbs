@@ -2,7 +2,7 @@ module Academico
   module Domain
     module Aluno
       class LogMatriculado < ::Shared::Domain::Evento::Ouvinte
-        def reage_ao: (evento_aluno_matriculado: Matriculado) -> void
+        def reage_ao: (evento: Matriculado) -> void
       end
     end
   end
