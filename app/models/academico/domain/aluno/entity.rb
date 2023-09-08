@@ -5,9 +5,9 @@ module Academico
         attr_reader :cpf, :email, :nome, :telefones, :senha
 
         def initialize(nome:, email:, cpf:)
-          self.cpf = ::Shared::Domain::Cpf.new(numero: cpf)
           self.nome = nome
-          self.email = email
+          self.email = Email.new(endereco: email)
+          self.cpf = ::Shared::Domain::Cpf.new(numero: cpf)
         end
 
         def adicionar_telefone(ddd:, numero:)

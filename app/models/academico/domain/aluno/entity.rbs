@@ -6,7 +6,7 @@ module Academico
     module Aluno
       class Entity
         attr_accessor cpf: Shared::Domain::Cpf
-        attr_accessor email: String
+        attr_accessor email: Email
         attr_accessor nome: String
         attr_accessor telefones: Array[Telefone]
         attr_accessor senha: String

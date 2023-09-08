@@ -1,0 +1,13 @@
+module Academico
+  module Domain
+    class Email
+      def initialize: (endereco: String) -> void
+
+      private
+
+      attr_accessor endereco: String
+
+      def endereco_valido?: -> bool
+    end
+  end
+end
