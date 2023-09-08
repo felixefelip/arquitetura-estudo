@@ -9,7 +9,7 @@ module Academico
             end
 
             def buscar_por_cpf(cpf)
-              record = Record.find_by(cpf:)
+              record = Record.find_by(cpf: cpf.to_s)
 
               raise StandardError if record.nil?
 

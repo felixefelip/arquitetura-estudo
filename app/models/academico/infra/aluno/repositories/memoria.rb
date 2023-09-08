@@ -8,7 +8,7 @@ module Academico
           end
 
           def buscar_por_cpf(cpf)
-            aluno = alunos.detect { |a| a.cpf == cpf }
+            aluno = alunos.detect { |a| a.cpf.to_s == cpf.to_s }
 
             raise StandardError if aluno.nil?
 
