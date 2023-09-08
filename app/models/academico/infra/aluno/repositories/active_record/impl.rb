@@ -13,7 +13,18 @@ module Academico
 
               raise StandardError if record.nil?
 
-              Academico::Domain::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
+              aluno = Academico::Domain::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
+
+              record.telefones.each do |telefone|
+                ddd = telefone.ddd
+                numero = telefone.numero
+
+                next if ddd.nil? || numero.nil?
+
+                aluno.adicionar_telefone(ddd:, numero:)
+              end
+
+              aluno
             end
 
             def buscar_todos
