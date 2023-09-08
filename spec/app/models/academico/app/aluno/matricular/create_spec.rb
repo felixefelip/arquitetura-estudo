@@ -6,7 +6,8 @@ RSpec.describe Academico::App::Aluno::Matricular::Create do
       repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
       publicador = Shared::Domain::Evento::Publicador.new
 
-      publicador.adicionar_ouvinte(ouvinte: Academico::Domain::Aluno::LogMatriculado.new)
+      ouvinte_log_matriculado = Academico::Domain::Aluno::LogMatriculado.new
+      publicador.adicionar_ouvinte(ouvinte: ouvinte_log_matriculado)
 
       aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
         cpf: "123456",
@@ -14,7 +15,7 @@ RSpec.describe Academico::App::Aluno::Matricular::Create do
         email: "felipe@email.com",
       )
 
-      expect_any_instance_of(Academico::Domain::Aluno::LogMatriculado).to receive(:reage_ao).once# .and_return(false)
+      expect(ouvinte_log_matriculado).to receive(:reage_ao).once
 
       described_class.new(
         aluno_repository: repo,
