@@ -1,9 +1,7 @@
 module Academico
   module Domain
     module Aluno
-      class LogMatriculado
-        include ::Shared::Domain::Evento::Ouvinte
-
+      class LogMatriculado < ::Shared::Domain::Evento::Ouvinte
         def reage_ao(evento_aluno_matriculado:)
           Rails.logger.info "Aluno com CPF #{evento_aluno_matriculado.cpf_aluno}
 					                   foi matriculado na data #{evento_aluno_matriculado.momento}"

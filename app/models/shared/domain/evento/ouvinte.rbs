@@ -3,9 +3,9 @@ module Shared::Domain
     class Ouvinte
       def processa: (evento: _Evento) -> void
 
-      def sabe_processar?: (evento: _Evento) -> bool
+      def sabe_processar?: (evento: Class) -> bool
 
-      def reage_ao?: (evento: _Evento) -> bool
+      def reage_ao: (evento: _Evento) -> void
     end
   end
 end
