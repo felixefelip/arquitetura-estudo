@@ -19,7 +19,6 @@ RSpec.describe Academico::App::Aluno::Matricular::Create do
       aluno_busca = repo.buscar_por_cpf(aluno_dto.cpf)
       expect(aluno_busca).to be_present
       expect(aluno_busca).to be_a(Academico::Domain::Aluno::Entity)
-      binding.pry
     end
   end
 end
