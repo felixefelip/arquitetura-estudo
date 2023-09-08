@@ -8,6 +8,7 @@ module Academico
 
             has_many :telefones,
                      foreign_key: :academico_aluno_id,
+                     inverse_of: :aluno,
                      dependent: :destroy,
                      class_name: "::Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record"
 
