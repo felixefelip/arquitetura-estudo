@@ -7,6 +7,7 @@ module Academico
             self.table_name = "academico_alunos"
 
             has_many :telefones,
+                     foreign_key: :academico_aluno_id,
                      dependent: :destroy,
                      class_name: "::Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record"
 
