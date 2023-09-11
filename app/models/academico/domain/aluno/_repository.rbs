@@ -7,6 +7,7 @@ module Academico
       interface _Repository
         def adicionar: (aluno: Entity) -> void
         def buscar_por_cpf: (Shared::Domain::Cpf) -> Entity
+        def buscar_por_email: (String) -> Entity
         def buscar_todos: -> Array[Entity]
       end
     end
