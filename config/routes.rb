@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   namespace :academico do
     resources :alunos
   end
+
+  post "login" => "academico/login#login"
 end

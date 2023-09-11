@@ -1,0 +1,7 @@
+module Academico
+  class CursosController < ApplicationController
+    def index: () -> void
+
+    def update: () -> void
+  end
+end

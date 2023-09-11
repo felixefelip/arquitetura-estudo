@@ -1,0 +1,2 @@
+module Academico::LoginHelper
+end
