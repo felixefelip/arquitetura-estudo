@@ -3,9 +3,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  post "login" => "academico/login#login"
+  get "cursos" => "academico/cursos#index"
+
   namespace :academico do
     resources :alunos
   end
-
-  post "login" => "academico/login#login"
+  resource :cursos, only: %i[index update], controller: "academico/cursos"
 end

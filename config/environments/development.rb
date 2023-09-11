@@ -70,4 +70,5 @@ Rails.application.configure do
 
   config.hosts << /.*\.ngrok\.io/
   config.hosts << /.*\.ngrok-free\.app/
+  config.web_console.whiny_requests = false
 end

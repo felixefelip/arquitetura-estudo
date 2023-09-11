@@ -2,6 +2,7 @@ class Academico::CursosController < ApplicationController
   def index
     cursos = ::Academico::Domain::Curso::Entity.all
 
+    binding.pry
     render json: cursos
   end
 
