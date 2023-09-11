@@ -1,0 +1,15 @@
+module Academico
+  module Email
+    module Domain
+        class ValueObject
+        def initialize: (endereco: String) -> void
+
+        private
+
+        attr_accessor endereco: String
+
+        def endereco_valido?: -> bool
+      end
+    end
+  end
+end

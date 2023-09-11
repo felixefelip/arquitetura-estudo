@@ -1,0 +1,29 @@
+module Academico
+  module Aluno
+    module App
+      module Matricular
+        class Dto
+          attr_reader cpf: String
+
+          attr_reader email: String
+
+          attr_reader nome: String
+
+          attr_reader senha: String
+
+          def initialize: (cpf: String, nome: String, email: String) -> void
+
+          private
+
+          attr_writer cpf: String
+
+          attr_writer email: String
+
+          attr_writer nome: String
+
+          attr_writer senha: String
+        end
+      end
+    end
+  end
+end

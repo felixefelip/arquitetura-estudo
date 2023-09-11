@@ -1,0 +1,14 @@
+# TypeProf 0.21.7
+
+# Classes
+module Academico
+  module Aluno
+    module Domain
+      interface _Repository
+        def adicionar: (aluno: Entity) -> void
+        def buscar_por_cpf: (Shared::Domain::Cpf) -> Entity
+        def buscar_todos: -> Array[Entity]
+      end
+    end
+  end
+end

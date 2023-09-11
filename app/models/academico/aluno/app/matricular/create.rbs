@@ -1,0 +1,20 @@
+module Academico
+  module Aluno
+    module App
+      module Matricular
+        class Create
+          def initialize: (aluno_repository: Academico::Aluno::Domain::_Repository,
+                           publicador_de_evento: Shared::Domain::Evento::Publicador) -> void
+
+          def call: (aluno_dto: Dto) -> void
+
+          private
+
+          attr_accessor aluno_repository: Academico::Aluno::Domain::_Repository
+
+          attr_accessor publicador_de_evento: Shared::Domain::Evento::Publicador
+        end
+      end
+    end
+  end
+end

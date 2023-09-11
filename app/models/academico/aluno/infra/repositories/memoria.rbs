@@ -1,0 +1,20 @@
+# TypeProf 0.21.7
+
+# Classes
+module Academico
+  module Aluno
+    module Infra
+      module Repositories
+        class Memoria
+          include Academico::Aluno::Domain::_Repository
+
+          @alunos: Array[Academico::Aluno::Domain::Entity]
+
+          private
+
+          def alunos: -> Array[Academico::Aluno::Domain::Entity]
+        end
+      end
+    end
+  end
+end
