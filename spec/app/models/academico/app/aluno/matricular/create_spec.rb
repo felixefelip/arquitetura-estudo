@@ -1,15 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Academico::App::Aluno::Matricular::Create do
+RSpec.describe Academico::Aluno::App::Matricular::Create do
   describe "#call" do
     it "cria um aluno", :aggregate_failures do
-      repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
+      repo = Academico::Aluno::Infra::Repositories::ActiveRecord::Impl.new
       publicador = Shared::Domain::Evento::Publicador.new
 
-      ouvinte_log_matriculado = Academico::Domain::Aluno::LogMatriculado.new
+      ouvinte_log_matriculado = Academico::Aluno::Domain::LogMatriculado.new
       publicador.adicionar_ouvinte(ouvinte: ouvinte_log_matriculado)
 
-      aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
+      aluno_dto = Academico::Aluno::App::Matricular::Dto.new(
         cpf: "123456",
         nome: "Felipe",
         email: "felipe@email.com",
@@ -24,18 +24,18 @@ RSpec.describe Academico::App::Aluno::Matricular::Create do
 
       aluno_busca = repo.buscar_por_cpf(Shared::Domain::Cpf.new(numero: aluno_dto.cpf))
       expect(aluno_busca).to be_present
-      expect(aluno_busca).to be_a(Academico::Domain::Aluno::Entity)
+      expect(aluno_busca).to be_a(Academico::Aluno::Domain::Entity)
     end
 
     context "com repo de memoria" do
       it "cria um aluno", :aggregate_failures do
-        repo = Academico::Infra::Aluno::Repositories::Memoria.new
+        repo = Academico::Aluno::Infra::Repositories::Memoria.new
         publicador = Shared::Domain::Evento::Publicador.new
 
-        ouvinte_log_matriculado = Academico::Domain::Aluno::LogMatriculado.new
+        ouvinte_log_matriculado = Academico::Aluno::Domain::LogMatriculado.new
         publicador.adicionar_ouvinte(ouvinte: ouvinte_log_matriculado)
 
-        aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
+        aluno_dto = Academico::Aluno::App::Matricular::Dto.new(
           cpf: "123456",
           nome: "Felipe",
           email: "felipe@email.com",
@@ -50,7 +50,7 @@ RSpec.describe Academico::App::Aluno::Matricular::Create do
 
         aluno_busca = repo.buscar_por_cpf(Shared::Domain::Cpf.new(numero: aluno_dto.cpf))
         expect(aluno_busca).to be_present
-        expect(aluno_busca).to be_a(Academico::Domain::Aluno::Entity)
+        expect(aluno_busca).to be_a(Academico::Aluno::Domain::Entity)
       end
     end
   end

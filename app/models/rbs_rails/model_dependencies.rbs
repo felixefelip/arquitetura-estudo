@@ -1,20 +1,20 @@
-module Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord
+module Academico::Aluno::Infra::TelefoneRepositories::ActiveRecord
 end
 class ApplicationRecord < ActiveRecord::Base
 end
-module Academico::Infra::Aluno::Repositories::ActiveRecord
+module Academico::Aluno::Infra::Repositories::ActiveRecord
 end
-class Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+class Academico::Aluno::Infra::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 module Academico
 end
 module Academico::Infra
 end
-module Academico::Infra::Aluno
+module Academico::Aluno::Infra
 end
-module Academico::Infra::Aluno::TelefoneRepositories
+module Academico::Aluno::Infra::TelefoneRepositories
 end
-module Academico::Infra::Aluno::Repositories
+module Academico::Aluno::Infra::Repositories
 end
 class ActiveRecord::Associations::CollectionProxy < ActiveRecord::Relation
 end

@@ -1,6 +1,6 @@
 class Academico::LoginController < ApplicationController
   def login
-    repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
+    repo = Academico::Aluno::Infra::Repositories::ActiveRecord::Impl.new
 
     aluno = repo.buscar_por_email(params[:email])
 

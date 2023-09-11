@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-# aluno_repository = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
-# aluno_dto = Academico::App::Aluno::Matricular::Dto.new(cpf: "12345678912", nome: "Felipe", email: "felipe@gmail.com")
+# aluno_repository = Academico::Aluno::Infra::Repositories::ActiveRecord::Impl.new
+# aluno_dto = Academico::Aluno::App::Matricular::Dto.new(cpf: "12345678912", nome: "Felipe", email: "felipe@gmail.com")
 
-# Academico::App::Aluno::Matricular::Create.new(aluno_repository:, publicador_de_evento: nil).call(aluno_dto:)
+# Academico::Aluno::App::Matricular::Create.new(aluno_repository:, publicador_de_evento: nil).call(aluno_dto:)
 
 
 cursos = [

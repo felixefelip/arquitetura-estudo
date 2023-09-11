@@ -1,10 +1,10 @@
 module Academico
-  module Infra
-    module Aluno
+  module Aluno
+    module Infra
       module TelefoneRepositories
         module ActiveRecord
           class Record < ::ApplicationRecord
-            extend _ActiveRecord_Relation_ClassMethods[Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record, ActiveRecord_Relation, Integer]
+            extend _ActiveRecord_Relation_ClassMethods[Academico::Aluno::Infra::TelefoneRepositories::ActiveRecord::Record, ActiveRecord_Relation, Integer]
 
             module GeneratedAttributeMethods
               def id: () -> Integer
@@ -225,12 +225,12 @@ module Academico
             end
             include GeneratedAttributeMethods
 
-            def aluno: () -> Academico::Infra::Aluno::Repositories::ActiveRecord::Record
-            def aluno=: (Academico::Infra::Aluno::Repositories::ActiveRecord::Record?) -> Academico::Infra::Aluno::Repositories::ActiveRecord::Record?
-            def reload_aluno: () -> Academico::Infra::Aluno::Repositories::ActiveRecord::Record?
-            def build_aluno: (untyped) -> Academico::Infra::Aluno::Repositories::ActiveRecord::Record
-            def create_aluno: (untyped) -> Academico::Infra::Aluno::Repositories::ActiveRecord::Record
-            def create_aluno!: (untyped) -> Academico::Infra::Aluno::Repositories::ActiveRecord::Record
+            def aluno: () -> Academico::Aluno::Infra::Repositories::ActiveRecord::Record
+            def aluno=: (Academico::Aluno::Infra::Repositories::ActiveRecord::Record?) -> Academico::Aluno::Infra::Repositories::ActiveRecord::Record?
+            def reload_aluno: () -> Academico::Aluno::Infra::Repositories::ActiveRecord::Record?
+            def build_aluno: (untyped) -> Academico::Aluno::Infra::Repositories::ActiveRecord::Record
+            def create_aluno: (untyped) -> Academico::Aluno::Infra::Repositories::ActiveRecord::Record
+            def create_aluno!: (untyped) -> Academico::Aluno::Infra::Repositories::ActiveRecord::Record
             module GeneratedAssociationMethods
             end
             include GeneratedAssociationMethods
@@ -240,13 +240,13 @@ module Academico
 
             class ActiveRecord_Relation < ::ActiveRecord::Relation
               include GeneratedRelationMethods
-              include _ActiveRecord_Relation[Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record, Integer]
-              include Enumerable[Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record]
+              include _ActiveRecord_Relation[Academico::Aluno::Infra::TelefoneRepositories::ActiveRecord::Record, Integer]
+              include Enumerable[Academico::Aluno::Infra::TelefoneRepositories::ActiveRecord::Record]
             end
 
             class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
               include GeneratedRelationMethods
-              include _ActiveRecord_Relation[Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record, Integer]
+              include _ActiveRecord_Relation[Academico::Aluno::Infra::TelefoneRepositories::ActiveRecord::Record, Integer]
             end
           end
         end
