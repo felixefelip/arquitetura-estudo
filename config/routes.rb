@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "cursos" => "academico/cursos#index"
 
   post "/leads" => "marketing/leads#create"
+  post "/clients" => "finance/clients#create"
 
   namespace :academico do
     resources :alunos
