@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post "login" => "academico/login#login"
   get "cursos" => "academico/cursos#index"
 
+  post "/leads" => "marketing/leads#create"
+
   namespace :academico do
     resources :alunos
   end
