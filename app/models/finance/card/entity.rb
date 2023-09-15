@@ -5,6 +5,7 @@ module Finance
 
       belongs_to :client,
                  inverse_of: :cards,
+                 foreign_key: :finance_client_id,
                  class_name: "Finance::Client::Entity"
 
       validates :number, presence: true
