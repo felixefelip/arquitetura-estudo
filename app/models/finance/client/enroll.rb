@@ -18,6 +18,10 @@ module Finance
       end
 
       def call
+        puts "Processando pagamento de #{owner_full_name}"
+
+        sleep 3
+
         client = Entity.create!(full_name:, email:, document:)
         client.cards.create!(number:, owner_full_name:,
                              month_expiration:, year_expiration:, security_code:)
