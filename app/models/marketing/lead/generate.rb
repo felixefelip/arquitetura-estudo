@@ -11,7 +11,7 @@ module Marketing
       end
 
       def call
-        Entity.create!(full_name:, email:)
+        Entity.create!(full_name:, email:, status: :interested)
       end
 
       private

@@ -7,6 +7,10 @@ module Academico
         self.endereco = endereco
       end
 
+      def to_s
+        endereco
+      end
+
       private
 
       attr_accessor :endereco
