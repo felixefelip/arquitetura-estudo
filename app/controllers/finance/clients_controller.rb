@@ -1,5 +1,8 @@
 class Finance::ClientsController < ApplicationController
   def create
+    $publicador ||= Shared::Domain::Evento::Publicador.new
+    $publicador.adicionar_ouvinte(ouvinte: ::Academico::App::Aluno::MatriculadoOuvinte.new)
+
     ::Finance::Client::Enroll.call(
       full_name: params[:cardOwnerFullName],
       email: params[:email],
@@ -9,6 +12,7 @@ class Finance::ClientsController < ApplicationController
       month_expiration: params[:cardExpirationMonth],
       year_expiration: params[:cardExpirationYear],
       security_code: params[:cardSecurityCode],
+      publicador_de_evento: $publicador,
     )
 
     render json: {}, status: :created
