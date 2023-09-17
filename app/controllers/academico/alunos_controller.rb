@@ -10,7 +10,7 @@ module Academico
 
     def create
       repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
-      $publicador = Shared::Domain::Evento::Publicador.new
+
       aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
         cpf: "123456",
         nome: "Felipe",

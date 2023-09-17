@@ -1,8 +1,5 @@
 class Finance::ClientsController < ApplicationController
   def create
-    $publicador ||= Shared::Domain::Evento::Publicador.new
-    $publicador.adicionar_ouvinte(ouvinte: ::Academico::App::Aluno::MatriculadoOuvinte.new)
-
     ::Finance::Client::Enroll.call(
       full_name: params[:cardOwnerFullName],
       email: params[:email],

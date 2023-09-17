@@ -1,18 +1,20 @@
-module Shared::Domain
-  module Evento
-    class Publicador
-      def adicionar_ouvinte(ouvinte:)
-        ouvintes << ouvinte
-      end
+module Shared
+  module Domain
+    module Evento
+      class Publicador
+        def adicionar_ouvinte(ouvinte:)
+          ouvintes << ouvinte
+        end
 
-      def publicar(evento:)
-        ouvintes.each { |ouvinte| ouvinte.processa(evento:) }
-      end
+        def publicar(evento:)
+          ouvintes.each { |ouvinte| ouvinte.processa(evento:) }
+        end
 
-      private
+        private
 
-      def ouvintes
-        @ouvintes ||= []
+        def ouvintes
+          @ouvintes ||= []
+        end
       end
     end
   end
