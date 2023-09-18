@@ -10,13 +10,15 @@ module Academico
 
           def call(aluno_dto:)
             aluno = ::Academico::Domain::Aluno::Entity.new(
-              cpf: aluno_dto.cpf, nome: aluno_dto.nome, email: aluno_dto.email,
+              cpf: aluno_dto.cpf, nome: aluno_dto.nome, email: aluno_dto.email, senha: "123456",
             )
 
             aluno_repository.adicionar(aluno:)
 
             evento = ::Academico::Domain::Aluno::Matriculado.new(cpf_aluno: aluno.cpf)
             publicador_de_evento.publicar(evento:)
+
+            puts "Enviar email"
           end
 
           private

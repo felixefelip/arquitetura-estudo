@@ -4,7 +4,7 @@ class CreateAcademicoCursos < ActiveRecord::Migration[7.0]
       t.string :titulo
       t.string :url
       t.string :icone
-      t.boolean :assitido
+      t.boolean :assistido
 
       t.timestamps
     end

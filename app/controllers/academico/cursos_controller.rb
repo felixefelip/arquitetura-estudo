@@ -1,15 +1,17 @@
-class Academico::CursosController < ApplicationController
-  def index
-    cursos = ::Academico::Domain::Curso::Entity.all
+module Academico
+  class CursosController < ApplicationController
+    def index
+      cursos = ::Academico::Domain::Curso::Entity.all
 
-    render json: cursos
-  end
+      render json: cursos
+    end
 
-  def update
-    curso = ::Academico::Domain::Curso::Entity.find(params[:id])
+    def update
+      curso = ::Academico::Domain::Curso::Entity.find(params[:id])
 
-    curso.update!(assitido: true)
+      curso.update!(assistido: true)
 
-    render :json, :no_content
+      render json: {}, status: :no_content
+    end
   end
 end
