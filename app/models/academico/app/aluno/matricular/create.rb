@@ -18,7 +18,7 @@ module Academico
             evento = ::Academico::Domain::Aluno::Matriculado.new(cpf_aluno: aluno.cpf)
             publicador_de_evento.publicar(evento:)
 
-            puts "Enviar email"
+            SuccessMailer.send_mail(aluno).deliver
           end
 
           private
