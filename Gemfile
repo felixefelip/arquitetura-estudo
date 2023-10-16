@@ -65,6 +65,8 @@ group :development, :test do
   gem "pry-byebug"
   gem "pry-rails"
   gem "rspec-rails", "~> 6.0.0"
+
+  gem "packwerk"
 end
 
 group :development do

@@ -27,7 +27,7 @@ RSpec.describe Academico::App::Aluno::Matricular::Create do
       expect(aluno_busca).to be_a(Academico::Domain::Aluno::Entity)
     end
 
-    context "com repo de memoria" do
+    context "quando com repo de memoria" do
       it "cria um aluno", :aggregate_failures do
         repo = Academico::Infra::Aluno::Repositories::Memoria.new
         publicador = Shared::Domain::Evento::Publicador.new
