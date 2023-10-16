@@ -3,7 +3,6 @@
 # test case (for non-Rails projects). You can then use `packwerk check` to check your code.
 
 # Turn on dependency checks for this package
-enforce_privacy: true
 enforce_dependencies: true
 
 # A list of this package's dependencies
