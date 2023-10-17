@@ -1,0 +1,11 @@
+module Academico
+  module App
+    module Aluno
+      class MatriculadoOuvinte < ::Shared::Domain::Evento::Ouvinte
+        attr_accessor evento: ::Academico::Domain::Aluno::Matriculado
+
+        def reage_ao: (evento: Domain::Aluno::Matriculado) -> void
+      end
+    end
+  end
+end
