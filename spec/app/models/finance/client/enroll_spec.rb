@@ -25,6 +25,7 @@ RSpec.describe Finance::Client::Enroll do
 
       expect(Finance::Client::Entity.all.count).to eq 1
       expect(Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new.buscar_todos.count).to eq 1
+      expect(Marketing::Lead::Entity.find_by(email: client_finance.email)).to be_customer
     end
   end
 end
