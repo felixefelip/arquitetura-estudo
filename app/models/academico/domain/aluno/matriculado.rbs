@@ -5,6 +5,7 @@ module Academico
         include Shared::Domain::_Evento
 
         @momento: DateTime
+        @name: String
 
         attr_reader cpf_aluno: Shared::Domain::Cpf
 

@@ -14,7 +14,7 @@ module Academico
         end
 
         def sabe_processar?(evento:)
-          evento.instance_of?(::Finance::Client::Enrolled)
+          evento.name == "finance_client_enrolled"
         end
 
         private

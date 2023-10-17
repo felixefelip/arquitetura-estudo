@@ -11,7 +11,7 @@ module Academico
         end
 
         def sabe_processar?(evento:)
-          evento.instance_of?(Matriculado)
+          evento.name == "aluno_matriculado"
         end
       end
     end
