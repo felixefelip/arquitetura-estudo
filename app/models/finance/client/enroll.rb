@@ -21,7 +21,7 @@ module Finance
       def call
         puts "Processando pagamento de #{owner_full_name}"
 
-        sleep 3
+        sleep 3 if ENV["RAILS_ENV"] != "test"
 
         client = Entity.create!(full_name:, email:, document:)
         client.cards.create!(number:, owner_full_name:,
