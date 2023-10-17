@@ -1,0 +1,1061 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/shared/domain/evento/publicador.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          4,
+          null,
+          null,
+          1,
+          4,
+          null,
+          null,
+          1,
+          null,
+          1,
+          6,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/shared/domain/evento/ouvinte.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/app/aluno/matriculado_ouvinte.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/marketing/lead/client_enrolled_listener.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/app/aluno/matricular/create.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null,
+          2,
+          null,
+          2,
+          2,
+          null,
+          2,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/infra/aluno/repositories/active_record/impl.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/aluno/log_matriculado.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/app/aluno/matricular/dto.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          2,
+          2,
+          2,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/aluno/entity.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          3,
+          3,
+          3,
+          3,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/aluno/email.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          3,
+          null,
+          3,
+          null,
+          null,
+          1,
+          5,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          1,
+          3,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/shared/domain/cpf.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          5,
+          null,
+          null,
+          1,
+          4,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/infra/aluno/repositories/active_record/record.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/aluno/matriculado.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          2,
+          2,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/app/aluno/matricular/success_mailer.rb": {
+        "lines": [
+          1,
+          1,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          2,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/mailers/application_mailer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/infra/aluno/telefone_repositories/active_record/record.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/infra/aluno/repositories/memoria.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/controllers/academico/alunos_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/controllers/academico/cursos_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/controllers/academico/login_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/controllers/application_controller.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/controllers/finance/clients_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/controllers/marketing/leads_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/app/indicacao/enviar_email_indicacao.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/aluno/cifrador_de_senha.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/aluno/telefone.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/curso/entity.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/forum/entity.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/forum/topico/entity.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/domain/indicacao/entity.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/infra/aluno/cifrador_de_senha_bcrypt.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/infra/aluno/telefone_repositories/active_record/impl.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/academico/infra/aluno/telefone_repositories/memoria.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/card/entity.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/card/expiration.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/card/full_name.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/card/number.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/client/enroll.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/client/enrolled.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/client/entity.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/finance/payment/process.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/gamificacao/app/selo/buscar_de_usuario/create.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/gamificacao/app/selo/buscar_de_usuario/dto.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/gamificacao/app/selo/gerar_selo_de_novato.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/gamificacao/domain/selo/entity.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/gamificacao/domain/selo/repository.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/gamificacao/infra/selo/repositories/active_record.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/marketing/lead/convert.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/marketing/lead/entity.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/marketing/lead/generate.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/marketing/lead/retrieve.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/marketing/lead/retrieve_by_email.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      },
+      "/home/felipe/workspaces/ruby-workspace/arquitetura-estudo/app/models/marketing/lead/status.rb": {
+        "lines": [
+
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1697507492
+  }
+}
