@@ -5,7 +5,9 @@ module Academico
         def reage_ao(evento:)
           self.evento = evento
 
-          messagem = "Aluno com CPF #{evento.client_payload['document']}
+          evento.client_payload.deep_symbolize_keys!
+
+          messagem = "Aluno com CPF #{evento.client_payload[:document]}
 					                   foi matriculado na data #{evento.momento}"
 
           Rails.logger.info messagem
@@ -25,9 +27,9 @@ module Academico
           repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
 
           aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
-            cpf: evento.client_payload["document"],
-            nome: evento.client_payload["full_name"],
-            email: evento.client_payload["email"],
+            cpf: evento.client_payload[:document],
+            nome: evento.client_payload[:full_name],
+            email: evento.client_payload[:email],
           )
 
           Academico::App::Aluno::Matricular::Create.new(

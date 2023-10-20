@@ -1,9 +1,9 @@
 module Marketing
   module Lead
     class ClientEnrolledListener < ::Shared::Domain::Evento::Ouvinte
-      def reage_ao: (evento: Shared::Domain::Evento) -> void
+      def reage_ao: (evento: Finance::Client::Enrolled) -> void
 
-      def sabe_processar?: (evento: Shared::Domain::Evento) -> bool
+      def sabe_processar?: (evento: Finance::Client::Enrolled) -> bool
     end
   end
 end

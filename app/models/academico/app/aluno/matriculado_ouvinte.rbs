@@ -2,9 +2,11 @@ module Academico
   module App
     module Aluno
       class MatriculadoOuvinte < ::Shared::Domain::Evento::Ouvinte
-        attr_accessor evento: ::Academico::Domain::Aluno::Matriculado
+        attr_accessor evento: Finance::Client::Enrolled
 
-        def reage_ao: (evento: Domain::Aluno::Matriculado) -> void
+        def reage_ao: (evento: Finance::Client::Enrolled) -> void
+
+        def matricular_aluno: () -> void
       end
     end
   end
