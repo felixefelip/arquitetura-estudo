@@ -14,8 +14,12 @@ module Finance
         self.publicador_de_evento = publicador_de_evento
       end
 
-      def self.call(**args)
-        new(**args).call
+      def self.call(full_name:, email:, document:, number:,
+                    owner_full_name:, month_expiration:, year_expiration:,
+                    security_code:, publicador_de_evento:)
+        new(full_name:, email:, document:, number:,
+            owner_full_name:, month_expiration:, year_expiration:,
+            security_code:, publicador_de_evento:).call
       end
 
       def call

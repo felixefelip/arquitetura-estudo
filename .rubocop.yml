@@ -149,6 +149,9 @@ Style/TrailingCommaInHashLiteral:
     - no_comma
   Enabled: true
 
+Style/TrivialAccessors:
+  Enabled: false
+
 # Layout Cops
 Layout/ArgumentAlignment:
   Exclude:

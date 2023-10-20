@@ -1,0 +1,14 @@
+module Finance
+  module Client
+    class Enrolled
+      include Shared::Domain::_Evento
+
+      @momento: DateTime
+      @name: String
+
+      attr_reader client_payload: Hash[Symbol, untyped]
+
+      def initialize: (client_payload: Hash[Symbol, untyped]) -> void
+    end
+  end
+end

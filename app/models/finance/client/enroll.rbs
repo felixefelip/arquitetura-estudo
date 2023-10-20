@@ -1,0 +1,37 @@
+module Finance
+  module Client
+    class Enroll
+      def initialize: (full_name: String, email: String, document: String,
+                       number: String, owner_full_name: String, month_expiration: Integer,
+                       year_expiration: Integer, security_code: Integer,
+                       publicador_de_evento: Shared::Domain::Evento::Publicador) -> void
+
+      def self.call: (full_name: String, email: String, document: String,
+      number: String, owner_full_name: String, month_expiration: Integer,
+      year_expiration: Integer, security_code: Integer,
+      publicador_de_evento: Shared::Domain::Evento::Publicador) -> void
+
+      def call: () -> void
+
+      private
+
+      attr_accessor full_name: String
+
+      attr_accessor email: String
+
+      attr_accessor document: String
+
+      attr_accessor number: String
+
+      attr_accessor owner_full_name: String
+
+      attr_accessor month_expiration: Integer
+
+      attr_accessor year_expiration: Integer
+
+      attr_accessor security_code: Integer
+
+      attr_accessor publicador_de_evento: Shared::Domain::Evento::Publicador
+    end
+  end
+end

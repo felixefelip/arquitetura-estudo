@@ -1,0 +1,9 @@
+module Marketing
+  module Lead
+    class ClientEnrolledListener < ::Shared::Domain::Evento::Ouvinte
+      def reage_ao: (evento: Shared::Domain::Evento) -> void
+
+      def sabe_processar?: (evento: Shared::Domain::Evento) -> bool
+    end
+  end
+end
