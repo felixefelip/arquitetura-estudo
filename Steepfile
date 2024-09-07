@@ -34,4 +34,8 @@ target :app do
   signature "sig"
 
   library "pathname"
+
+  configure_code_diagnostics do |hash|
+    hash[Steep::Diagnostic::Ruby::UnknownConstant] = :error
+  end
 end

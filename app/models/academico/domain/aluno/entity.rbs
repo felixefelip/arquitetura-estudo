@@ -10,7 +10,7 @@ module Academico
         attr_accessor nome: String
         attr_accessor telefones: Array[Telefone]
         attr_accessor senha: String
-        def initialize: (cpf: String, nome: String, email: String, senha: String) -> void
+        def initialize: (cpf: String, nome: String, email: String, ?senha: String) -> void
         def adicionar_telefone: (ddd: String, numero: String) -> void
         def one: -> Integer
       end

@@ -1,7 +1,7 @@
 module Academico
   module App
     module Aluno
-      module Matricular
+      class Matricular
         class Dto
           attr_reader :cpf, :email, :nome, :senha
 

@@ -32,7 +32,7 @@ module Academico
             email: evento.client_payload[:email],
           )
 
-          Academico::App::Aluno::Matricular::Create.new(
+          Academico::App::Aluno::Matricular.new(
             aluno_repository: repo,
             publicador_de_evento: $publicador,
           ).call(aluno_dto:)
