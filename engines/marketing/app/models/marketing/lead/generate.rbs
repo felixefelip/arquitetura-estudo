@@ -1,0 +1,16 @@
+module Marketing
+  module Lead
+    class Generate
+      def initialize: (full_name: String, email: String) -> void
+
+      def self.call: (full_name: String, email: String) -> void
+
+      def call: () -> void
+
+      private
+
+      attr_accessor full_name: String
+      attr_accessor email: String
+    end
+  end
+end
