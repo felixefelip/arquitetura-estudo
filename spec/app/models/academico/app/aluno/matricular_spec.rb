@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Academico::App::Aluno::Matricular do
+RSpec.describe Academico::Application::Aluno::Matricular do
   describe "#call" do
     it "cria um aluno", :aggregate_failures do
       repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new

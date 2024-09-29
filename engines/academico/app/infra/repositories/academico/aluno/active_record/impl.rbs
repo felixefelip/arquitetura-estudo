@@ -1,0 +1,12 @@
+# TypeProf 0.21.7
+
+# Classes
+module Academico
+  module Aluno
+    module ActiveRecord
+      class Impl
+        include Academico::Domain::Aluno::_Repository
+      end
+    end
+  end
+end

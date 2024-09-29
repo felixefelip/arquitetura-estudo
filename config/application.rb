@@ -11,6 +11,9 @@ module ArquiteturaEstudo
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # config.autoload_paths += Dir[Rails.root.join("app", "infra", "http", "controllers", "**/")]
+    config.autoload_paths += %W["#{config.root}/app/infra/http/controllers"]
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
