@@ -22,7 +22,7 @@ RSpec.describe Academico::Aluno::Matricular do
         publicador_de_evento: publicador,
       ).call(aluno_dto:)
 
-      aluno_busca = repo.buscar_por_cpf(Shared::Cpf.new(numero: aluno_dto.cpf))
+      aluno_busca = repo.buscar_por_cpf(Shared::Domain::Cpf.new(numero: aluno_dto.cpf))
       expect(aluno_busca).to be_present
       expect(aluno_busca).to be_a(Academico::Aluno::Entity)
     end

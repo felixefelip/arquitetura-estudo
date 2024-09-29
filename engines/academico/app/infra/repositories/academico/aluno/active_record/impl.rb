@@ -11,7 +11,7 @@ module Academico
 
           raise StandardError if record.nil?
 
-          aluno = Academico::Domain::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
+          aluno = Academico::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
 
           record.telefones.each do |telefone|
             ddd = telefone.ddd
@@ -30,7 +30,7 @@ module Academico
 
           raise StandardError if record.nil?
 
-          aluno = Academico::Domain::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
+          aluno = Academico::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
 
           record.telefones.each do |telefone|
             ddd = telefone.ddd

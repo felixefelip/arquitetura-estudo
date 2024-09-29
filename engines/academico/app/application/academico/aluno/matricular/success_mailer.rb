@@ -8,6 +8,7 @@ class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
     Senha: #{aluno.senha}
     Bons estudos!
     "
+    append_view_path "app/infra/http/views"
 
     mail to: aluno.email.to_s, subject: "Matrícula confirmada"
   end

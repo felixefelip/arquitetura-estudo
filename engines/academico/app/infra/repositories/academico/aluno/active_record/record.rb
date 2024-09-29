@@ -5,10 +5,10 @@ module Academico
         self.table_name = "academico_alunos"
 
         has_many :telefones,
-                  foreign_key: :academico_aluno_id,
-                  inverse_of: :aluno,
-                  dependent: :destroy,
-                  class_name: "::Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record"
+                 foreign_key: :academico_aluno_id,
+                 inverse_of: :aluno,
+                 dependent: :destroy,
+                 class_name: "::Academico::Aluno::TelefoneRepositories::ActiveRecord::Record"
 
         def teste
           telefones.first!.numero
