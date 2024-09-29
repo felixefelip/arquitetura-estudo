@@ -1,0 +1,9 @@
+module Academico
+  module Aluno
+    class CifradorDeSenha
+      def cifrar: (senha: untyped) -> nil
+
+      def verificar: (senha_em_texto: untyped, senha_cifrada: untyped) -> nil
+    end
+  end
+end

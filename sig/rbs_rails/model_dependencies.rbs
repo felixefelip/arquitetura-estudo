@@ -1,22 +1,26 @@
-module Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord
+module Academico::Curso
 end
-class ApplicationRecord < ActiveRecord::Base
+class Academico::ApplicationRecord < ActiveRecord::Base
 end
-module Academico::Infra::Aluno::Repositories::ActiveRecord
+module Finance::Client
 end
-class Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+class Finance::ApplicationRecord < ActiveRecord::Base
+end
+class Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
+module Finance::Card
+end
+module Marketing::Lead
+end
+class Marketing::ApplicationRecord < ActiveRecord::Base
 end
 module Academico
 end
-module Academico::Infra
-end
-module Academico::Infra::Aluno
-end
-module Academico::Infra::Aluno::TelefoneRepositories
-end
-module Academico::Infra::Aluno::Repositories
+module Finance
 end
 class ActiveRecord::Associations::CollectionProxy < ActiveRecord::Relation
+end
+module Marketing
 end
 class ActiveRecord::Relation < Object
 end

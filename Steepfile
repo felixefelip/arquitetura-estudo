@@ -29,8 +29,8 @@
 # end
 
 target :app do
-  check "app"
-  signature "app"
+  check "./"
+  signature "./"
   signature "sig"
 
   library "pathname"

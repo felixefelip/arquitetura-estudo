@@ -1,0 +1,2 @@
+class Academico::ApplicationMailer < ActionMailer::Base
+end

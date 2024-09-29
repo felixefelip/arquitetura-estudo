@@ -1,3 +1,9 @@
-class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
-  def self.send_mail: (Academico::Domain::Aluno::Entity aluno) -> untyped
+module Academico
+  module Aluno
+    class Matricular
+      class SuccessMailer < Academico::ApplicationMailer
+        def self.send_mail: (Academico::Aluno::Entity aluno) -> void
+      end
+    end
+  end
 end

@@ -11,9 +11,9 @@ PATH
       rails (>= 7.0.6)
 
 PATH
-  remote: engines/gameficacao
+  remote: engines/gamificacao
   specs:
-    gameficacao (0.1.0)
+    gamificacao (0.1.0)
       rails (>= 7.0.6)
 
 PATH
@@ -410,7 +410,7 @@ DEPENDENCIES
   capybara
   debug
   finance!
-  gameficacao!
+  gamificacao!
   importmap-rails
   jbuilder
   letter_opener_web (~> 2.0)

@@ -1,13 +1,13 @@
 module Academico
   class CursosController < ApplicationController
     def index
-      cursos = ::Academico::Domain::Curso::Entity.all
+      cursos = ::Academico::Curso::Entity.all
 
       render json: cursos
     end
 
     def update
-      curso = ::Academico::Domain::Curso::Entity.find(params[:id])
+      curso = ::Academico::Curso::Entity.find(params[:id])
 
       curso.update!(assistido: true)
 

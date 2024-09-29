@@ -5,7 +5,7 @@ module Academico
   module Aluno
     module ActiveRecord
       class Impl
-        include Academico::Domain::Aluno::_Repository
+        include Academico::Aluno::_Repository
       end
     end
   end

@@ -99,4 +99,4 @@ end
 gem 'academico', path: 'engines/academico'
 gem 'finance', path: 'engines/finance'
 gem 'marketing', path: 'engines/marketing'
-gem 'gameficacao', path: 'engines/gameficacao'
+gem 'gamificacao', path: 'engines/gamificacao'

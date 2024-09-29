@@ -4,7 +4,7 @@
 module Academico
   module Aluno
     class Memoria
-      include Academico::Domain::Aluno::_Repository
+      include Academico::Aluno::_Repository
 
       @alunos: Array[Academico::Domain::Aluno::Entity]
 
