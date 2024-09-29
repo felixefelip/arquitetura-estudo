@@ -1,18 +1,16 @@
 module Academico
-  module Application
-    module Aluno
-      class Matricular
-        def initialize: (aluno_repository: Academico::Domain::Aluno::_Repository,
-                          publicador_de_evento: Shared::Domain::Evento::Publicador) -> void
+  module Aluno
+    class Matricular
+      def initialize: (aluno_repository: Academico::Aluno::_Repository,
+                        publicador_de_evento: Shared::Evento::Publicador) -> void
 
-        def call: (aluno_dto: Dto) -> void
+      def call: (aluno_dto: Dto) -> void
 
-        private
+      private
 
-        attr_accessor aluno_repository: Academico::Domain::Aluno::_Repository
+      attr_accessor aluno_repository: Academico::Aluno::_Repository
 
-        attr_accessor publicador_de_evento: Shared::Domain::Evento::Publicador
-      end
+      attr_accessor publicador_de_evento: Shared::Evento::Publicador
     end
   end
 end

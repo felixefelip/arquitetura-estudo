@@ -1,8 +1,6 @@
 module Academico
-  module Domain
-    module Indicacao
-			class Entity
-      end
+  module Indicacao
+    class Entity
     end
   end
 end

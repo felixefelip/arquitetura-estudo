@@ -1,30 +1,26 @@
 module Academico
-  module Infra
-    module Aluno
-      module Repositories
-        class Memoria
-          def adicionar(aluno:)
-            alunos << aluno
-          end
+  module Aluno
+    class Memoria
+      def adicionar(aluno:)
+        alunos << aluno
+      end
 
-          def buscar_por_cpf(cpf)
-            aluno = alunos.detect { |a| a.cpf.to_s == cpf.to_s }
+      def buscar_por_cpf(cpf)
+        aluno = alunos.detect { |a| a.cpf.to_s == cpf.to_s }
 
-            raise StandardError if aluno.nil?
+        raise StandardError if aluno.nil?
 
-            aluno
-          end
+        aluno
+      end
 
-          def buscar_todos
-            alunos
-          end
+      def buscar_todos
+        alunos
+      end
 
-          private
+      private
 
-          def alunos
-            @alunos ||= []
-          end
-        end
+      def alunos
+        @alunos ||= []
       end
     end
   end

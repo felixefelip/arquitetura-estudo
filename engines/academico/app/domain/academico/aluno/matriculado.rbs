@@ -1,16 +1,14 @@
 module Academico
-  module Domain
-    module Aluno
-      class Matriculado
-        include Shared::Domain::_Evento
+  module Aluno
+    class Matriculado
+      include Shared::Domain::_Evento
 
-        @momento: DateTime
-        @name: String
+      @momento: DateTime
+      @name: String
 
-        attr_reader cpf_aluno: Shared::Domain::Cpf
+      attr_reader cpf_aluno: Shared::Domain::Cpf
 
-        def initialize: (cpf_aluno: Shared::Domain::Cpf) -> void
-      end
+      def initialize: (cpf_aluno: Shared::Domain::Cpf) -> void
     end
   end
 end

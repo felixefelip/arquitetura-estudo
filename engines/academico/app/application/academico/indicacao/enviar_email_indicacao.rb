@@ -1,2 +1,2 @@
-class Academico::Application::Indicacao::EnviarEmailIndicacao
+class Academico::Indicacao::EnviarEmailIndicacao
 end

@@ -1,5 +1,5 @@
 module Academico
-  module Domain::Aluno
+  module Aluno
     class Email
       def initialize(endereco:)
         raise ArgumentError unless endereco_valido?

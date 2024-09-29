@@ -1,4 +1,4 @@
-class Academico::Application::Aluno::Matricular::SuccessMailer < ApplicationMailer
+class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
   def send_mail(aluno)
     @mensagem = "
     Olá, #{aluno.nome}! Seu pagamento foi confirmado e sua matrícula foi criada com sucesso.
