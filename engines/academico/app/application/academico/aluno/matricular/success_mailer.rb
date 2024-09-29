@@ -1,4 +1,4 @@
-class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
+class Academico::Aluno::Matricular::SuccessMailer < Academico::ApplicationMailer
   def send_mail(aluno)
     @mensagem = "
     Olá, #{aluno.nome}! Seu pagamento foi confirmado e sua matrícula foi criada com sucesso.
@@ -8,7 +8,6 @@ class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
     Senha: #{aluno.senha}
     Bons estudos!
     "
-    append_view_path "app/infra/http/views"
 
     mail to: aluno.email.to_s, subject: "Matrícula confirmada"
   end
