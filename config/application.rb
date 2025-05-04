@@ -18,5 +18,16 @@ module ArquiteturaEstudo
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    #
+    ## Custom directories with classes and modules you want to be autoloadable.
+
+    Dir["./engines/*"].each do |path|
+      next unless File.directory?(path)
+
+      component = path.split("/").last
+
+      config.autoload_paths += Dir[Rails.root.join("engines", component, "app", "**")]
+      config.autoload_paths += Dir[Rails.root.join("engines", component, "lib")]
+    end
   end
 end

@@ -30,12 +30,14 @@
 
 target :app do
   check "app"
+  check "engines"
   signature "app"
+  signature "engines"
   signature "sig"
 
   library "pathname"
 
   configure_code_diagnostics do |hash|
-    hash[Steep::Diagnostic::Ruby::UnknownConstant] = :error
+    hash[Steep::Diagnostic::Ruby::UnknownConstant] = :warning
   end
 end

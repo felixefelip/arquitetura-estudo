@@ -95,8 +95,3 @@ group :test do
   gem "simplecov", require: false
   gem "webdrivers"
 end
-
-gem 'academico', path: 'engines/academico'
-gem 'finance', path: 'engines/finance'
-gem 'marketing', path: 'engines/marketing'
-gem 'gameficacao', path: 'engines/gameficacao'
