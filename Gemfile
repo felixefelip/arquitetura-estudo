@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.1.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.6"
+gem "rails", "~> 7.2.2.1"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -13,7 +13,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -45,7 +45,7 @@ gem "bootsnap", require: false
 # gem "rbs", require: false
 gem "rbs_rails", require: false
 
-gem "steep", "~> 1.5.3"
+gem "steep", "~> 1.10.0"
 # gem "typeprof", require: false
 
 # Use Sass to process CSS
@@ -64,7 +64,7 @@ group :development, :test do
 
   gem "pry-byebug"
   gem "pry-rails"
-  gem "rspec-rails", "~> 6.0.0"
+  gem "rspec-rails"
 
   gem "packwerk"
 end

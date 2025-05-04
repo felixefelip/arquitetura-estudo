@@ -1,2 +1,2 @@
-class Gamificacao::Domain::Selo::Repository
+class Gameficacao::Domain::Selo::Repository
 end

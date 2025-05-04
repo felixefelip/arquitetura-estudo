@@ -3,7 +3,7 @@ module Academico
     module Aluno
       module TelefoneRepositories
         module ActiveRecord
-          class Record < ::ApplicationRecord
+          class Record < ::Academico::ApplicationRecord
             extend _ActiveRecord_Relation_ClassMethods[Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record, ActiveRecord_Relation, Integer]
 
             module GeneratedAttributeMethods

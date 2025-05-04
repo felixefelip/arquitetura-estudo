@@ -28,6 +28,8 @@ module ArquiteturaEstudo
 
       config.autoload_paths += Dir[Rails.root.join("engines", component, "app", "**")]
       config.autoload_paths += Dir[Rails.root.join("engines", component, "lib")]
+
+      config.eager_load_paths += Dir[Rails.root.join("engines", component, "app", "**")]
     end
   end
 end

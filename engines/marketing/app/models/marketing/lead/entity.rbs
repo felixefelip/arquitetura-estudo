@@ -1,7 +1,0 @@
-module Marketing
-  module Lead
-    class Entity < ApplicationRecord
-      # def do_something_dangerous: () -> untyped
-    end
-  end
-end

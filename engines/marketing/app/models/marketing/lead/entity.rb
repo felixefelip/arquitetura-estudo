@@ -7,9 +7,8 @@ module Marketing
 
       validates :status, presence: true
 
-      # def do_something_dangerous
-      #   ::Academico::Infra::Aluno::Repositories::ActiveRecord::Record.destroy_all
-      # end
+      def do_something_dangerous
+      end
     end
   end
 end

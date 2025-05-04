@@ -1,2 +1,2 @@
-class Gamificacao::Infra::Selo::Repositories::ActiveRecord
+class Gameficacao::Infra::Selo::Repositories::ActiveRecord
 end

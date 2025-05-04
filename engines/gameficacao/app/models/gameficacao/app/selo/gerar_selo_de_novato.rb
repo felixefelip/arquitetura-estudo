@@ -1,2 +1,2 @@
-class Gamificacao::App::GerarSeloDeNovato
+class Gameficacao::App::Selo::GerarSeloDeNovato
 end

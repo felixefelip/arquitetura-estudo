@@ -3,6 +3,10 @@ interface _RbsRailsPathHelpers
   def rails_info_properties_path: (*untyped) -> String
   def rails_info_routes_path: (*untyped) -> String
   def rails_info_path: (*untyped) -> String
+  def login_path: (*untyped) -> String
+  def cursos_path: (*untyped) -> String
+  def leads_path: (*untyped) -> String
+  def clients_path: (*untyped) -> String
   def academico_alunos_path: (*untyped) -> String
   def new_academico_aluno_path: (*untyped) -> String
   def edit_academico_aluno_path: (*untyped) -> String
@@ -39,6 +43,10 @@ interface _RbsRailsPathHelpers
   def rails_info_properties_url: (*untyped) -> String
   def rails_info_routes_url: (*untyped) -> String
   def rails_info_url: (*untyped) -> String
+  def login_url: (*untyped) -> String
+  def cursos_url: (*untyped) -> String
+  def leads_url: (*untyped) -> String
+  def clients_url: (*untyped) -> String
   def academico_alunos_url: (*untyped) -> String
   def new_academico_aluno_url: (*untyped) -> String
   def edit_academico_aluno_url: (*untyped) -> String
