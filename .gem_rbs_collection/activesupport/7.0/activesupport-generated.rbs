@@ -221,7 +221,7 @@ module ActiveSupport
       def initialize: (untyped cache_path, ?untyped? options) -> untyped
 
       # Advertise cache versioning support.
-      def self.supports_cache_versioning?: () -> ::TrueClass
+      def self.supports_cache_versioning?: () -> true
 
       # Deletes all items from the cache. In this case it deletes all the entries in the specified
       # file store directory except for .keep or .gitkeep. Be careful which directory is specified in your
@@ -245,7 +245,7 @@ module ActiveSupport
 
       def read_entry: (untyped key, **untyped options) -> untyped
 
-      def write_entry: (untyped key, untyped entry, **untyped options) -> (::FalseClass | ::TrueClass)
+      def write_entry: (untyped key, untyped entry, **untyped options) -> bool
 
       def delete_entry: (untyped key, **untyped options) -> untyped
 
@@ -295,7 +295,7 @@ module ActiveSupport
       end
 
       # Advertise cache versioning support.
-      def self.supports_cache_versioning?: () -> ::TrueClass
+      def self.supports_cache_versioning?: () -> true
 
       ESCAPE_KEY_CHARS: untyped
 
@@ -375,7 +375,7 @@ module ActiveSupport
       def initialize: (?untyped? options) -> untyped
 
       # Advertise cache versioning support.
-      def self.supports_cache_versioning?: () -> ::TrueClass
+      def self.supports_cache_versioning?: () -> true
 
       # Delete all data stored in a given cache store.
       def clear: (?untyped? options) -> untyped
@@ -411,7 +411,7 @@ module ActiveSupport
 
       def read_entry: (untyped key, **untyped options) -> untyped
 
-      def write_entry: (untyped key, untyped entry, **untyped options) -> (::FalseClass | untyped)
+      def write_entry: (untyped key, untyped entry, **untyped options) -> (false | untyped)
 
       def delete_entry: (untyped key, **untyped options) -> untyped
 
@@ -431,7 +431,7 @@ module ActiveSupport
     # ActiveSupport::Cache::Strategy::LocalCache for more details.
     class NullStore < Store
       # Advertise cache versioning support.
-      def self.supports_cache_versioning?: () -> ::TrueClass
+      def self.supports_cache_versioning?: () -> true
 
       def clear: (?untyped? options) -> nil
 
@@ -447,9 +447,9 @@ module ActiveSupport
 
       def read_entry: (untyped key, **untyped options) -> nil
 
-      def write_entry: (untyped key, untyped entry, **untyped options) -> ::TrueClass
+      def write_entry: (untyped key, untyped entry, **untyped options) -> true
 
-      def delete_entry: (untyped key, **untyped options) -> ::FalseClass
+      def delete_entry: (untyped key, **untyped options) -> false
     end
   end
 end
@@ -488,7 +488,7 @@ module ActiveSupport
       SCAN_BATCH_SIZE: ::Integer
 
       # Advertise cache versioning support.
-      def self.supports_cache_versioning?: () -> ::TrueClass
+      def self.supports_cache_versioning?: () -> true
 
       module LocalCacheWithRaw
         private
@@ -667,7 +667,7 @@ module ActiveSupport
 
           def read_multi_entries: (untyped keys, **untyped options) -> untyped
 
-          def write_entry: (untyped key, untyped value, **untyped options) -> ::TrueClass
+          def write_entry: (untyped key, untyped value, **untyped options) -> true
 
           def delete_entry: (untyped key, **untyped options) -> untyped
 
@@ -792,15 +792,11 @@ module ActiveSupport
     # The +key+ argument can also respond to +cache_key+ or +to_param+.
     def self.expand_cache_key: (untyped key, ?untyped? namespace) -> untyped
 
-    private
-
     def self.retrieve_cache_key: (untyped key) -> untyped
 
     # Obtains the specified cache store class, given the name of the +store+.
     # Raises an error when the store class cannot be found.
     def self.retrieve_store_class: (untyped store) -> untyped
-
-    public
 
     # An abstract cache store class. There are multiple cache store
     # implementations, each having its own additional features. See the classes
@@ -1846,48 +1842,6 @@ module ActiveSupport
   end
 end
 
-module ActiveSupport
-  # Configurable provides a <tt>config</tt> method to store and retrieve
-  # configuration options as an <tt>OrderedHash</tt>.
-  module Configurable
-    extend ActiveSupport::Concern
-
-    class Configuration[T, U] < ActiveSupport::InheritableOptions[T, U]
-      def compile_methods!: () -> untyped
-
-      # Compiles reader methods so we don't have to go through method_missing.
-      def self.compile_methods!: (untyped keys) -> untyped
-    end
-
-    module ClassMethods
-      def config: () -> untyped
-
-      def configure: () { (untyped) -> untyped } -> untyped
-
-      private
-
-      def config_accessor: (*untyped names, ?instance_accessor: bool instance_accessor, ?instance_writer: bool instance_writer, ?instance_reader: bool instance_reader) { () -> untyped } -> untyped
-    end
-
-    # Reads and writes attributes from a configuration <tt>OrderedHash</tt>.
-    #
-    #   require 'active_support/configurable'
-    #
-    #   class User
-    #     include ActiveSupport::Configurable
-    #   end
-    #
-    #   user = User.new
-    #
-    #   user.config.allowed_access = true
-    #   user.config.level = 1
-    #
-    #   user.config.allowed_access # => true
-    #   user.config.level          # => 1
-    def config: () -> untyped
-  end
-end
-
 class Array[unchecked out Elem]
   # Returns the tail of the array from +position+.
   #
@@ -2026,83 +1980,6 @@ class Array[unchecked out Elem]
   def to_formatted_s: (?::Symbol format) -> untyped
 
   alias to_default_s to_s
-
-  # Returns a string that represents the array in XML by invoking +to_xml+
-  # on each element. Active Record collections delegate their representation
-  # in XML to this method.
-  #
-  # All elements are expected to respond to +to_xml+, if any of them does
-  # not then an exception is raised.
-  #
-  # The root node reflects the class name of the first element in plural
-  # if all elements belong to the same type and that's not Hash:
-  #
-  #   customer.projects.to_xml
-  #
-  #   <?xml version="1.0" encoding="UTF-8"?>
-  #   <projects type="array">
-  #     <project>
-  #       <amount type="decimal">20000.0</amount>
-  #       <customer-id type="integer">1567</customer-id>
-  #       <deal-date type="date">2008-04-09</deal-date>
-  #       ...
-  #     </project>
-  #     <project>
-  #       <amount type="decimal">57230.0</amount>
-  #       <customer-id type="integer">1567</customer-id>
-  #       <deal-date type="date">2008-04-15</deal-date>
-  #       ...
-  #     </project>
-  #   </projects>
-  #
-  # Otherwise the root element is "objects":
-  #
-  #   [{ foo: 1, bar: 2}, { baz: 3}].to_xml
-  #
-  #   <?xml version="1.0" encoding="UTF-8"?>
-  #   <objects type="array">
-  #     <object>
-  #       <bar type="integer">2</bar>
-  #       <foo type="integer">1</foo>
-  #     </object>
-  #     <object>
-  #       <baz type="integer">3</baz>
-  #     </object>
-  #   </objects>
-  #
-  # If the collection is empty the root element is "nil-classes" by default:
-  #
-  #   [].to_xml
-  #
-  #   <?xml version="1.0" encoding="UTF-8"?>
-  #   <nil-classes type="array"/>
-  #
-  # To ensure a meaningful root element use the <tt>:root</tt> option:
-  #
-  #   customer_with_no_projects.projects.to_xml(root: 'projects')
-  #
-  #   <?xml version="1.0" encoding="UTF-8"?>
-  #   <projects type="array"/>
-  #
-  # By default name of the node for the children of root is <tt>root.singularize</tt>.
-  # You can change it with the <tt>:children</tt> option.
-  #
-  # The +options+ hash is passed downwards:
-  #
-  #   Message.all.to_xml(skip_types: true)
-  #
-  #   <?xml version="1.0" encoding="UTF-8"?>
-  #   <messages>
-  #     <message>
-  #       <created-at>2008-03-07T09:58:18+01:00</created-at>
-  #       <id>1</id>
-  #       <name>1</name>
-  #       <updated-at>2008-03-07T09:58:18+01:00</updated-at>
-  #       <user-id>1</user-id>
-  #     </message>
-  #   </messages>
-  #
-  def to_xml: (?::Hash[untyped, untyped] options) { (untyped) -> untyped } -> untyped
 end
 
 class Array[unchecked out Elem]
@@ -2178,52 +2055,6 @@ class Array[unchecked out Elem]
   #   pets.any?(:cat, :ferret)  # => true
   #   pets.any?(:ferret, :alligator)  # => false
   def inquiry: () -> ActiveSupport::ArrayInquirer[Elem]
-end
-
-class Array[unchecked out Elem]
-  # Wraps its argument in an array unless it is already an array (or array-like).
-  #
-  # Specifically:
-  #
-  # * If the argument is +nil+ an empty array is returned.
-  # * Otherwise, if the argument responds to +to_ary+ it is invoked, and its result returned.
-  # * Otherwise, returns an array with the argument as its single element.
-  #
-  #     Array.wrap(nil)       # => []
-  #     Array.wrap([1, 2, 3]) # => [1, 2, 3]
-  #     Array.wrap(0)         # => [0]
-  #
-  # This method is similar in purpose to <tt>Kernel#Array</tt>, but there are some differences:
-  #
-  # * If the argument responds to +to_ary+ the method is invoked. <tt>Kernel#Array</tt>
-  #   moves on to try +to_a+ if the returned value is +nil+, but <tt>Array.wrap</tt> returns
-  #   an array with the argument as its single element right away.
-  # * If the returned value from +to_ary+ is neither +nil+ nor an +Array+ object, <tt>Kernel#Array</tt>
-  #   raises an exception, while <tt>Array.wrap</tt> does not, it just returns the value.
-  # * It does not call +to_a+ on the argument, if the argument does not respond to +to_ary+
-  #   it returns an array with the argument as its single element.
-  #
-  # The last point is easily explained with some enumerables:
-  #
-  #   Array(foo: :bar)      # => [[:foo, :bar]]
-  #   Array.wrap(foo: :bar) # => [{:foo=>:bar}]
-  #
-  # There's also a related idiom that uses the splat operator:
-  #
-  #   [*object]
-  #
-  # which returns <tt>[]</tt> for +nil+, but calls to <tt>Array(object)</tt> otherwise.
-  #
-  # The differences with <tt>Kernel#Array</tt> explained above
-  # apply to the rest of <tt>object</tt>s.
-  def self.wrap: (untyped object) -> untyped
-end
-
-module ActiveSupport
-  module BigDecimalWithDefaultFormat
-    # nodoc:
-    def to_s: (?::String format) -> untyped
-  end
 end
 
 class Class
@@ -2328,7 +2159,7 @@ end
 
 class Date
   # Duck-types as a Date-like class. See Object#acts_like?.
-  def acts_like_date?: () -> ::TrueClass
+  def acts_like_date?: () -> true
 end
 
 class Date
@@ -2338,7 +2169,7 @@ class Date
   #   Date.today.blank? # => false
   #
   # @return [false]
-  def blank?: () -> ::FalseClass
+  def blank?: () -> false
 end
 
 class Date
@@ -2749,10 +2580,10 @@ end
 
 class DateTime
   # Duck-types as a Date-like class. See Object#acts_like?.
-  def acts_like_date?: () -> ::TrueClass
+  def acts_like_date?: () -> true
 
   # Duck-types as a Time-like class. See Object#acts_like?.
-  def acts_like_time?: () -> ::TrueClass
+  def acts_like_time?: () -> true
 end
 
 class DateTime
@@ -2762,7 +2593,7 @@ class DateTime
   #   DateTime.now.blank? # => false
   #
   # @return [false]
-  def blank?: () -> ::FalseClass
+  def blank?: () -> false
 end
 
 class DateTime
@@ -3097,70 +2928,6 @@ class File
 end
 
 class Hash[unchecked out K, unchecked out V]
-  # Returns a string containing an XML representation of its receiver:
-  #
-  #   { foo: 1, bar: 2 }.to_xml
-  #   # =>
-  #   # <?xml version="1.0" encoding="UTF-8"?>
-  #   # <hash>
-  #   #   <foo type="integer">1</foo>
-  #   #   <bar type="integer">2</bar>
-  #   # </hash>
-  #
-  # To do so, the method loops over the pairs and builds nodes that depend on
-  # the _values_. Given a pair +key+, +value+:
-  #
-  # * If +value+ is a hash there's a recursive call with +key+ as <tt>:root</tt>.
-  #
-  # * If +value+ is an array there's a recursive call with +key+ as <tt>:root</tt>,
-  #   and +key+ singularized as <tt>:children</tt>.
-  #
-  # * If +value+ is a callable object it must expect one or two arguments. Depending
-  #   on the arity, the callable is invoked with the +options+ hash as first argument
-  #   with +key+ as <tt>:root</tt>, and +key+ singularized as second argument. The
-  #   callable can add nodes by using <tt>options[:builder]</tt>.
-  #
-  #     {foo: lambda { |options, key| options[:builder].b(key) }}.to_xml
-  #     # => "<b>foo</b>"
-  #
-  # * If +value+ responds to +to_xml+ the method is invoked with +key+ as <tt>:root</tt>.
-  #
-  #     class Foo
-  #       def to_xml(options)
-  #         options[:builder].bar 'fooing!'
-  #       end
-  #     end
-  #
-  #     { foo: Foo.new }.to_xml(skip_instruct: true)
-  #     # =>
-  #     # <hash>
-  #     #   <bar>fooing!</bar>
-  #     # </hash>
-  #
-  # * Otherwise, a node with +key+ as tag is created with a string representation of
-  #   +value+ as text node. If +value+ is +nil+ an attribute "nil" set to "true" is added.
-  #   Unless the option <tt>:skip_types</tt> exists and is true, an attribute "type" is
-  #   added as well according to the following mapping:
-  #
-  #     XML_TYPE_NAMES = {
-  #       "Symbol"     => "symbol",
-  #       "Integer"    => "integer",
-  #       "BigDecimal" => "decimal",
-  #       "Float"      => "float",
-  #       "TrueClass"  => "boolean",
-  #       "FalseClass" => "boolean",
-  #       "Date"       => "date",
-  #       "DateTime"   => "dateTime",
-  #       "Time"       => "dateTime"
-  #     }
-  #
-  # By default the root node is "hash", but that's configurable via the <tt>:root</tt> option.
-  #
-  # The default XML builder is a fresh instance of <tt>Builder::XmlMarkup</tt>. You can
-  # configure your own builder with the <tt>:builder</tt> option. The method also accepts
-  # options like <tt>:dasherize</tt> and friends, they are forwarded to the builder.
-  def to_xml: (?::Hash[untyped, untyped] options) { (untyped) -> untyped } -> untyped
-
   # Returns a Hash containing a collection of pairs when the key is the node name and the value is
   # its content
   #
@@ -3550,28 +3317,6 @@ class Module
   #   m.name         # => "M"
   #   m.anonymous?   # => false
   def anonymous?: () -> untyped
-end
-
-class Module
-  # Declares an attribute reader backed by an internally-named instance variable.
-  def attr_internal_reader: (*untyped attrs) -> untyped
-
-  # Declares an attribute writer backed by an internally-named instance variable.
-  def attr_internal_writer: (*untyped attrs) -> untyped
-
-  # Declares an attribute reader and writer backed by an internally-named instance
-  # variable.
-  def attr_internal_accessor: (*untyped attrs) -> untyped
-
-  alias attr_internal attr_internal_accessor
-
-  attr_accessor self.attr_internal_naming_format: untyped
-
-  private
-
-  def attr_internal_ivar_name: (untyped attr) -> untyped
-
-  def attr_internal_define: (untyped attr_name, untyped `type`) -> untyped
 end
 
 # Extends the module object with class/module and instance accessors for
@@ -4316,108 +4061,6 @@ class Numeric
   alias exabyte exabytes
 end
 
-module ActiveSupport
-  module NumericWithFormat
-    # Provides options for converting numbers into formatted strings.
-    # Options are provided for phone numbers, currency, percentage,
-    # precision, positional notation, file size and pretty printing.
-    #
-    # ==== Options
-    #
-    # For details on which formats use which options, see ActiveSupport::NumberHelper
-    #
-    # ==== Examples
-    #
-    #  Phone Numbers:
-    #  5551234.to_s(:phone)                                     # => "555-1234"
-    #  1235551234.to_s(:phone)                                  # => "123-555-1234"
-    #  1235551234.to_s(:phone, area_code: true)                 # => "(123) 555-1234"
-    #  1235551234.to_s(:phone, delimiter: ' ')                  # => "123 555 1234"
-    #  1235551234.to_s(:phone, area_code: true, extension: 555) # => "(123) 555-1234 x 555"
-    #  1235551234.to_s(:phone, country_code: 1)                 # => "+1-123-555-1234"
-    #  1235551234.to_s(:phone, country_code: 1, extension: 1343, delimiter: '.')
-    #  # => "+1.123.555.1234 x 1343"
-    #
-    #  Currency:
-    #  1234567890.50.to_s(:currency)                 # => "$1,234,567,890.50"
-    #  1234567890.506.to_s(:currency)                # => "$1,234,567,890.51"
-    #  1234567890.506.to_s(:currency, precision: 3)  # => "$1,234,567,890.506"
-    #  1234567890.506.to_s(:currency, locale: :fr)   # => "1 234 567 890,51 (trim non-ascii characters)"
-    #  -1234567890.50.to_s(:currency, negative_format: '(%u%n)')
-    #  # => "($1,234,567,890.50)"
-    #  1234567890.50.to_s(:currency, unit: '&pound;', separator: ',', delimiter: '')
-    #  # => "&pound;1234567890,50"
-    #  1234567890.50.to_s(:currency, unit: '&pound;', separator: ',', delimiter: '', format: '%n %u')
-    #  # => "1234567890,50 &pound;"
-    #
-    #  Percentage:
-    #  100.to_s(:percentage)                                  # => "100.000%"
-    #  100.to_s(:percentage, precision: 0)                    # => "100%"
-    #  1000.to_s(:percentage, delimiter: '.', separator: ',') # => "1.000,000%"
-    #  302.24398923423.to_s(:percentage, precision: 5)        # => "302.24399%"
-    #  1000.to_s(:percentage, locale: :fr)                    # => "1 000,000%"
-    #  100.to_s(:percentage, format: '%n  %')                 # => "100.000  %"
-    #
-    #  Delimited:
-    #  12345678.to_s(:delimited)                     # => "12,345,678"
-    #  12345678.05.to_s(:delimited)                  # => "12,345,678.05"
-    #  12345678.to_s(:delimited, delimiter: '.')     # => "12.345.678"
-    #  12345678.to_s(:delimited, delimiter: ',')     # => "12,345,678"
-    #  12345678.05.to_s(:delimited, separator: ' ')  # => "12,345,678 05"
-    #  12345678.05.to_s(:delimited, locale: :fr)     # => "12 345 678,05"
-    #  98765432.98.to_s(:delimited, delimiter: ' ', separator: ',')
-    #  # => "98 765 432,98"
-    #
-    #  Rounded:
-    #  111.2345.to_s(:rounded)                                      # => "111.235"
-    #  111.2345.to_s(:rounded, precision: 2)                        # => "111.23"
-    #  13.to_s(:rounded, precision: 5)                              # => "13.00000"
-    #  389.32314.to_s(:rounded, precision: 0)                       # => "389"
-    #  111.2345.to_s(:rounded, significant: true)                   # => "111"
-    #  111.2345.to_s(:rounded, precision: 1, significant: true)     # => "100"
-    #  13.to_s(:rounded, precision: 5, significant: true)           # => "13.000"
-    #  111.234.to_s(:rounded, locale: :fr)                          # => "111,234"
-    #  13.to_s(:rounded, precision: 5, significant: true, strip_insignificant_zeros: true)
-    #  # => "13"
-    #  389.32314.to_s(:rounded, precision: 4, significant: true)    # => "389.3"
-    #  1111.2345.to_s(:rounded, precision: 2, separator: ',', delimiter: '.')
-    #  # => "1.111,23"
-    #
-    #  Human-friendly size in Bytes:
-    #  123.to_s(:human_size)                                   # => "123 Bytes"
-    #  1234.to_s(:human_size)                                  # => "1.21 KB"
-    #  12345.to_s(:human_size)                                 # => "12.1 KB"
-    #  1234567.to_s(:human_size)                               # => "1.18 MB"
-    #  1234567890.to_s(:human_size)                            # => "1.15 GB"
-    #  1234567890123.to_s(:human_size)                         # => "1.12 TB"
-    #  1234567890123456.to_s(:human_size)                      # => "1.1 PB"
-    #  1234567890123456789.to_s(:human_size)                   # => "1.07 EB"
-    #  1234567.to_s(:human_size, precision: 2)                 # => "1.2 MB"
-    #  483989.to_s(:human_size, precision: 2)                  # => "470 KB"
-    #  1234567.to_s(:human_size, precision: 2, separator: ',') # => "1,2 MB"
-    #  1234567890123.to_s(:human_size, precision: 5)           # => "1.1228 TB"
-    #  524288000.to_s(:human_size, precision: 5)               # => "500 MB"
-    #
-    #  Human-friendly format:
-    #  123.to_s(:human)                                       # => "123"
-    #  1234.to_s(:human)                                      # => "1.23 Thousand"
-    #  12345.to_s(:human)                                     # => "12.3 Thousand"
-    #  1234567.to_s(:human)                                   # => "1.23 Million"
-    #  1234567890.to_s(:human)                                # => "1.23 Billion"
-    #  1234567890123.to_s(:human)                             # => "1.23 Trillion"
-    #  1234567890123456.to_s(:human)                          # => "1.23 Quadrillion"
-    #  1234567890123456789.to_s(:human)                       # => "1230 Quadrillion"
-    #  489939.to_s(:human, precision: 2)                      # => "490 Thousand"
-    #  489939.to_s(:human, precision: 4)                      # => "489.9 Thousand"
-    #  1234567.to_s(:human, precision: 4,
-    #                   significant: false)                   # => "1.2346 Million"
-    #  1234567.to_s(:human, precision: 1,
-    #                   separator: ',',
-    #                   significant: false)                   # => "1,2 Million"
-    def to_s: (?untyped? format, ?untyped? options) -> String
-  end
-end
-
 class Numeric
   # Returns a Duration instance matching the number of seconds provided.
   #
@@ -4476,133 +4119,6 @@ class Object
   # <tt>x.acts_like?(:date)</tt> to do duck-type-safe comparisons, since classes that
   # we want to act like Time simply need to define an <tt>acts_like_time?</tt> method.
   def acts_like?: (untyped duck) -> untyped
-end
-
-class Object
-  # An object is blank if it's false, empty, or a whitespace string.
-  # For example, +nil+, '', '   ', [], {}, and +false+ are all blank.
-  #
-  # This simplifies
-  #
-  #   !address || address.empty?
-  #
-  # to
-  #
-  #   address.blank?
-  #
-  # @return [true, false]
-  def blank?: () -> untyped
-
-  # An object is present if it's not blank.
-  #
-  # @return [true, false]
-  def present?: () -> untyped
-
-  # Returns the receiver if it's present otherwise returns +nil+.
-  # <tt>object.presence</tt> is equivalent to
-  #
-  #    object.present? ? object : nil
-  #
-  # For example, something like
-  #
-  #   state   = params[:state]   if params[:state].present?
-  #   country = params[:country] if params[:country].present?
-  #   region  = state || country || 'US'
-  #
-  # becomes
-  #
-  #   region = params[:state].presence || params[:country].presence || 'US'
-  #
-  # @return [Object]
-  def presence: () -> untyped
-end
-
-class NilClass
-  # +nil+ is blank:
-  #
-  #   nil.blank? # => true
-  #
-  # @return [true]
-  def blank?: () -> ::TrueClass
-end
-
-class FalseClass
-  # +false+ is blank:
-  #
-  #   false.blank? # => true
-  #
-  # @return [true]
-  def blank?: () -> ::TrueClass
-end
-
-class TrueClass
-  # +true+ is not blank:
-  #
-  #   true.blank? # => false
-  #
-  # @return [false]
-  def blank?: () -> ::FalseClass
-end
-
-class Array[unchecked out Elem]
-  # An array is blank if it's empty:
-  #
-  #   [].blank?      # => true
-  #   [1,2,3].blank? # => false
-  #
-  # @return [true, false]
-  alias blank? empty?
-end
-
-class Hash[unchecked out K, unchecked out V]
-  # A hash is blank if it's empty:
-  #
-  #   {}.blank?                # => true
-  #   { key: 'value' }.blank?  # => false
-  #
-  # @return [true, false]
-  alias blank? empty?
-end
-
-class String
-  BLANK_RE: untyped
-
-  ENCODED_BLANKS: untyped
-
-  # A string is blank if it's empty or contains whitespaces only:
-  #
-  #   ''.blank?       # => true
-  #   '   '.blank?    # => true
-  #   "\t\n\r".blank? # => true
-  #   ' blah '.blank? # => false
-  #
-  # Unicode whitespace is supported:
-  #
-  #   "\u00a0".blank? # => true
-  #
-  # @return [true, false]
-  def blank?: () -> untyped
-end
-
-class Numeric
-  # nodoc:
-  # No number is blank:
-  #
-  #   1.blank? # => false
-  #   0.blank? # => false
-  #
-  # @return [false]
-  def blank?: () -> ::FalseClass
-end
-
-class Time
-  # nodoc:
-  # No Time is blank:
-  #
-  #   Time.now.blank? # => false
-  #
-  # @return [false]
-  def blank?: () -> ::FalseClass
 end
 
 class Object
@@ -4665,7 +4181,7 @@ class Object
   #
   # False for method objects;
   # true otherwise.
-  def duplicable?: () -> ::TrueClass
+  def duplicable?: () -> true
 end
 
 class Method
@@ -4673,7 +4189,7 @@ class Method
   #
   #  method(:puts).duplicable? # => false
   #  method(:puts).dup         # => TypeError: allocator undefined for Method
-  def duplicable?: () -> ::FalseClass
+  def duplicable?: () -> false
 end
 
 class UnboundMethod
@@ -4681,29 +4197,7 @@ class UnboundMethod
   #
   #  method(:puts).unbind.duplicable? # => false
   #  method(:puts).unbind.dup         # => TypeError: allocator undefined for UnboundMethod
-  def duplicable?: () -> ::FalseClass
-end
-
-class Object
-  # Returns true if this object is included in the argument. Argument must be
-  # any object which responds to +#include?+. Usage:
-  #
-  #   characters = ["Konata", "Kagami", "Tsukasa"]
-  #   "Konata".in?(characters) # => true
-  #
-  # This will throw an +ArgumentError+ if the argument doesn't respond
-  # to +#include?+.
-  def in?: (untyped another_object) -> untyped
-
-  # Returns the receiver if it's included in the argument otherwise returns +nil+.
-  # Argument must be any object which responds to +#include?+. Usage:
-  #
-  #   params[:bucket_type].presence_in %w( project calendar )
-  #
-  # This will throw an +ArgumentError+ if the argument doesn't respond to +#include?+.
-  #
-  # @return [Object]
-  def presence_in: (untyped another_object) -> untyped
+  def duplicable?: () -> false
 end
 
 class Object
@@ -4984,25 +4478,6 @@ end
 module ActiveSupport
   module RangeWithFormat
     RANGE_FORMATS: ::Hash[untyped, untyped]
-
-    # Convert range to a formatted string. See RANGE_FORMATS for predefined formats.
-    #
-    #   range = (1..100)           # => 1..100
-    #
-    #   range.to_s                 # => "1..100"
-    #   range.to_s(:db)            # => "BETWEEN '1' AND '100'"
-    #
-    # == Adding your own range formats to to_s
-    # You can add your own formats to the Range::RANGE_FORMATS hash.
-    # Use the format name as the hash key and a Proc instance.
-    #
-    #   # config/initializers/range_formats.rb
-    #   Range::RANGE_FORMATS[:short] = ->(start, stop) { "Between #{start.to_s(:db)} and #{stop.to_s(:db)}" }
-    def to_s: (?::Symbol format) -> untyped
-
-    alias to_default_s to_s
-
-    alias to_formatted_s to_s
   end
 end
 
@@ -5158,7 +4633,7 @@ end
 
 class String
   # Enables more predictable duck-typing on String-like classes. See <tt>Object#acts_like?</tt>.
-  def acts_like_string?: () -> ::TrueClass
+  def acts_like_string?: () -> true
 end
 
 class String
@@ -5327,219 +4802,6 @@ class String
   def indent: (untyped amount, ?untyped? indent_string, ?bool indent_empty_lines) -> untyped
 end
 
-# String inflections define new methods on the String class to transform names for different purposes.
-# For instance, you can figure out the name of a table from the name of a class.
-#
-#   'ScaleScore'.tableize # => "scale_scores"
-#
-class String
-  # Returns the plural form of the word in the string.
-  #
-  # If the optional parameter +count+ is specified,
-  # the singular form will be returned if <tt>count == 1</tt>.
-  # For any other value of +count+ the plural will be returned.
-  #
-  # If the optional parameter +locale+ is specified,
-  # the word will be pluralized as a word of that language.
-  # By default, this parameter is set to <tt>:en</tt>.
-  # You must define your own inflection rules for languages other than English.
-  #
-  #   'post'.pluralize             # => "posts"
-  #   'octopus'.pluralize          # => "octopi"
-  #   'sheep'.pluralize            # => "sheep"
-  #   'words'.pluralize            # => "words"
-  #   'the blue mailman'.pluralize # => "the blue mailmen"
-  #   'CamelOctopus'.pluralize     # => "CamelOctopi"
-  #   'apple'.pluralize(1)         # => "apple"
-  #   'apple'.pluralize(2)         # => "apples"
-  #   'ley'.pluralize(:es)         # => "leyes"
-  #   'ley'.pluralize(1, :es)      # => "ley"
-  def pluralize: (?untyped? count, ?::Symbol locale) -> untyped
-
-  # The reverse of +pluralize+, returns the singular form of a word in a string.
-  #
-  # If the optional parameter +locale+ is specified,
-  # the word will be singularized as a word of that language.
-  # By default, this parameter is set to <tt>:en</tt>.
-  # You must define your own inflection rules for languages other than English.
-  #
-  #   'posts'.singularize            # => "post"
-  #   'octopi'.singularize           # => "octopus"
-  #   'sheep'.singularize            # => "sheep"
-  #   'word'.singularize             # => "word"
-  #   'the blue mailmen'.singularize # => "the blue mailman"
-  #   'CamelOctopi'.singularize      # => "CamelOctopus"
-  #   'leyes'.singularize(:es)       # => "ley"
-  def singularize: (?::Symbol locale) -> untyped
-
-  # +constantize+ tries to find a declared constant with the name specified
-  # in the string. It raises a NameError when the name is not in CamelCase
-  # or is not initialized.  See ActiveSupport::Inflector.constantize
-  #
-  #   'Module'.constantize  # => Module
-  #   'Class'.constantize   # => Class
-  #   'blargle'.constantize # => NameError: wrong constant name blargle
-  def constantize: () -> untyped
-
-  # +safe_constantize+ tries to find a declared constant with the name specified
-  # in the string. It returns +nil+ when the name is not in CamelCase
-  # or is not initialized.  See ActiveSupport::Inflector.safe_constantize
-  #
-  #   'Module'.safe_constantize  # => Module
-  #   'Class'.safe_constantize   # => Class
-  #   'blargle'.safe_constantize # => nil
-  def safe_constantize: () -> untyped
-
-  # By default, +camelize+ converts strings to UpperCamelCase. If the argument to camelize
-  # is set to <tt>:lower</tt> then camelize produces lowerCamelCase.
-  #
-  # +camelize+ will also convert '/' to '::' which is useful for converting paths to namespaces.
-  #
-  #   'active_record'.camelize                # => "ActiveRecord"
-  #   'active_record'.camelize(:lower)        # => "activeRecord"
-  #   'active_record/errors'.camelize         # => "ActiveRecord::Errors"
-  #   'active_record/errors'.camelize(:lower) # => "activeRecord::Errors"
-  def camelize: (?::Symbol first_letter) -> untyped
-
-  alias camelcase camelize
-
-  # Capitalizes all the words and replaces some characters in the string to create
-  # a nicer looking title. +titleize+ is meant for creating pretty output. It is not
-  # used in the Rails internals.
-  #
-  # The trailing '_id','Id'.. can be kept and capitalized by setting the
-  # optional parameter +keep_id_suffix+ to true.
-  # By default, this parameter is false.
-  #
-  # +titleize+ is also aliased as +titlecase+.
-  #
-  #   'man from the boondocks'.titleize                       # => "Man From The Boondocks"
-  #   'x-men: the last stand'.titleize                        # => "X Men: The Last Stand"
-  #   'string_ending_with_id'.titleize(keep_id_suffix: true)  # => "String Ending With Id"
-  def titleize: (?keep_id_suffix: bool keep_id_suffix) -> untyped
-
-  alias titlecase titleize
-
-  # The reverse of +camelize+. Makes an underscored, lowercase form from the expression in the string.
-  #
-  # +underscore+ will also change '::' to '/' to convert namespaces to paths.
-  #
-  #   'ActiveModel'.underscore         # => "active_model"
-  #   'ActiveModel::Errors'.underscore # => "active_model/errors"
-  def underscore: () -> untyped
-
-  # Replaces underscores with dashes in the string.
-  #
-  #   'puni_puni'.dasherize # => "puni-puni"
-  def dasherize: () -> untyped
-
-  # Removes the module part from the constant expression in the string.
-  #
-  #   'ActiveSupport::Inflector::Inflections'.demodulize # => "Inflections"
-  #   'Inflections'.demodulize                           # => "Inflections"
-  #   '::Inflections'.demodulize                         # => "Inflections"
-  #   ''.demodulize                                      # => ''
-  #
-  # See also +deconstantize+.
-  def demodulize: () -> untyped
-
-  # Removes the rightmost segment from the constant expression in the string.
-  #
-  #   'Net::HTTP'.deconstantize   # => "Net"
-  #   '::Net::HTTP'.deconstantize # => "::Net"
-  #   'String'.deconstantize      # => ""
-  #   '::String'.deconstantize    # => ""
-  #   ''.deconstantize            # => ""
-  #
-  # See also +demodulize+.
-  def deconstantize: () -> untyped
-
-  # Replaces special characters in a string so that it may be used as part of a 'pretty' URL.
-  #
-  # If the optional parameter +locale+ is specified,
-  # the word will be parameterized as a word of that language.
-  # By default, this parameter is set to <tt>nil</tt> and it will use
-  # the configured <tt>I18n.locale</tt>.
-  #
-  #   class Person
-  #     def to_param
-  #       "#{id}-#{name.parameterize}"
-  #     end
-  #   end
-  #
-  #   @person = Person.find(1)
-  #   # => #<Person id: 1, name: "Donald E. Knuth">
-  #
-  #   <%= link_to(@person.name, person_path) %>
-  #   # => <a href="/person/1-donald-e-knuth">Donald E. Knuth</a>
-  #
-  # To preserve the case of the characters in a string, use the +preserve_case+ argument.
-  #
-  #   class Person
-  #     def to_param
-  #       "#{id}-#{name.parameterize(preserve_case: true)}"
-  #     end
-  #   end
-  #
-  #   @person = Person.find(1)
-  #   # => #<Person id: 1, name: "Donald E. Knuth">
-  #
-  #   <%= link_to(@person.name, person_path) %>
-  #   # => <a href="/person/1-Donald-E-Knuth">Donald E. Knuth</a>
-  def parameterize: (?locale: untyped? locale, ?preserve_case: bool preserve_case, ?separator: ::String separator) -> untyped
-
-  # Creates the name of a table like Rails does for models to table names. This method
-  # uses the +pluralize+ method on the last word in the string.
-  #
-  #   'RawScaledScorer'.tableize # => "raw_scaled_scorers"
-  #   'ham_and_egg'.tableize     # => "ham_and_eggs"
-  #   'fancyCategory'.tableize   # => "fancy_categories"
-  def tableize: () -> untyped
-
-  # Creates a class name from a plural table name like Rails does for table names to models.
-  # Note that this returns a string and not a class. (To convert to an actual class
-  # follow +classify+ with +constantize+.)
-  #
-  #   'ham_and_eggs'.classify # => "HamAndEgg"
-  #   'posts'.classify        # => "Post"
-  def classify: () -> untyped
-
-  # Capitalizes the first word, turns underscores into spaces, and (by default)strips a
-  # trailing '_id' if present.
-  # Like +titleize+, this is meant for creating pretty output.
-  #
-  # The capitalization of the first word can be turned off by setting the
-  # optional parameter +capitalize+ to false.
-  # By default, this parameter is true.
-  #
-  # The trailing '_id' can be kept and capitalized by setting the
-  # optional parameter +keep_id_suffix+ to true.
-  # By default, this parameter is false.
-  #
-  #   'employee_salary'.humanize                    # => "Employee salary"
-  #   'author_id'.humanize                          # => "Author"
-  #   'author_id'.humanize(capitalize: false)       # => "author"
-  #   '_id'.humanize                                # => "Id"
-  #   'author_id'.humanize(keep_id_suffix: true)    # => "Author Id"
-  def humanize: (?keep_id_suffix: bool keep_id_suffix, ?capitalize: bool capitalize) -> untyped
-
-  # Converts just the first character to uppercase.
-  #
-  #   'what a Lovely Day'.upcase_first # => "What a Lovely Day"
-  #   'w'.upcase_first                 # => "W"
-  #   ''.upcase_first                  # => ""
-  def upcase_first: () -> untyped
-
-  # Creates a foreign key name from a class name.
-  # +separate_class_name_and_id_with_underscore+ sets whether
-  # the method should put '_' between the name and 'id'.
-  #
-  #   'Message'.foreign_key        # => "message_id"
-  #   'Message'.foreign_key(false) # => "messageid"
-  #   'Admin::Post'.foreign_key    # => "post_id"
-  def foreign_key: (?bool separate_class_name_and_id_with_underscore) -> untyped
-end
-
 class String
   # Wraps the current string in the <tt>ActiveSupport::StringInquirer</tt> class,
   # which gives you a prettier way to test for equality.
@@ -5609,9 +4871,9 @@ class ERB
     #
     #   puts html_escape('is a > 0 & a < 10?')
     #   # => is a &gt; 0 &amp; a &lt; 10?
-    def self?.html_escape: (untyped s) -> untyped
+    def self?.html_escape: ...
 
-    alias h html_escape
+    def self?.h: ...
 
     def self?.unwrapped_html_escape: (untyped s) -> untyped
 
@@ -5684,11 +4946,11 @@ class ERB
 end
 
 class Object
-  def html_safe?: () -> ::FalseClass
+  def html_safe?: () -> false
 end
 
 class Numeric
-  def html_safe?: () -> ::TrueClass
+  def html_safe?: () -> true
 end
 
 module ActiveSupport
@@ -5795,7 +5057,7 @@ end
 
 class Time
   # Duck-types as a Time-like class. See Object#acts_like?.
-  def acts_like_time?: () -> ::TrueClass
+  def acts_like_time?: () -> true
 end
 
 class Time
@@ -6084,26 +5346,6 @@ class Time
   # attributes that have been read before the block will remain in
   # the application's default timezone.
   def self.use_zone: (untyped time_zone) { () -> untyped } -> untyped
-
-  # Returns a TimeZone instance matching the time zone provided.
-  # Accepts the time zone in any format supported by <tt>Time.zone=</tt>.
-  # Raises an +ArgumentError+ for invalid time zones.
-  #
-  #   Time.find_zone! "America/New_York" # => #<ActiveSupport::TimeZone @name="America/New_York" ...>
-  #   Time.find_zone! "EST"              # => #<ActiveSupport::TimeZone @name="EST" ...>
-  #   Time.find_zone! -5.hours           # => #<ActiveSupport::TimeZone @name="Bogota" ...>
-  #   Time.find_zone! nil                # => nil
-  #   Time.find_zone! false              # => false
-  #   Time.find_zone! "NOT-A-TIMEZONE"   # => ArgumentError: Invalid Timezone: NOT-A-TIMEZONE
-  def self.find_zone!: (untyped time_zone) -> untyped
-
-  # Returns a TimeZone instance matching the time zone provided.
-  # Accepts the time zone in any format supported by <tt>Time.zone=</tt>.
-  # Returns +nil+ for invalid time zones.
-  #
-  #   Time.find_zone "America/New_York" # => #<ActiveSupport::TimeZone @name="America/New_York" ...>
-  #   Time.find_zone "NOT-A-TIMEZONE"   # => nil
-  def self.find_zone: (untyped time_zone) -> untyped
 end
 
 module URI
@@ -6349,8 +5591,6 @@ module ActiveSupport
 
       def self.take_over: (enable_reloading: untyped enable_reloading) -> untyped
 
-      private
-
       def self.setup_autoloaders: (untyped enable_reloading) -> untyped
 
       def self.autoload_once?: (untyped autoload_path) -> untyped
@@ -6593,7 +5833,7 @@ module ActiveSupport
     def safe_constantize: (untyped name) -> untyped
 
     # Determine if the given constant has been automatically loaded.
-    def autoloaded?: (untyped desc) -> (::FalseClass | untyped)
+    def autoloaded?: (untyped desc) -> (false | untyped)
 
     # Will the provided constant descriptor be unloaded?
     def will_unload?: (untyped const_desc) -> untyped
@@ -7111,7 +6351,7 @@ module ActiveSupport
       def raise_parsing_error: (?untyped? reason) -> untyped
 
       # Checks for various semantic errors as stated in ISO 8601 standard.
-      def validate!: () -> ::TrueClass
+      def validate!: () -> true
     end
   end
 end
@@ -7354,7 +6594,7 @@ module ActiveSupport
 
     private
 
-    def options: () -> untyped
+    def options: () -> InheritableOptions
 
     def deserialize: (untyped config) -> untyped
   end
@@ -7722,7 +6962,7 @@ module ActiveSupport
   class HashWithIndifferentAccess[T, U] < Hash[T, U]
     # Returns +true+ so that <tt>Array#extract_options!</tt> finds members of
     # this class.
-    def extractable_options?: () -> ::TrueClass
+    def extractable_options?: () -> true
 
     def with_indifferent_access: () -> untyped
 
@@ -7953,10 +7193,7 @@ module ActiveSupport
   end
 end
 
-# NOTE: HashWithIndifferentAccess and ActiveSupport::HashWithIndifferentAccess are the same object
-#       but RBS doesn't have class alias syntax
-class HashWithIndifferentAccess[T, U] < ActiveSupport::HashWithIndifferentAccess[T, U]
-end
+class HashWithIndifferentAccess = ActiveSupport::HashWithIndifferentAccess
 
 module I18n
   class Railtie < Rails::Railtie
@@ -8537,8 +7774,6 @@ module ActiveSupport
     #   end
     def self.parse_error: () -> untyped
 
-    private
-
     def self.convert_dates_from: (untyped data) -> untyped
   end
 end
@@ -8899,17 +8134,17 @@ module ActiveSupport
     # :nodoc:
     extend ActiveSupport::Concern
 
-    def after_initialize: () -> untyped
+    def after_initialize: () -> void
 
     def local_log_id: () -> untyped
 
-    def local_level: () -> untyped
+    def local_level: () -> Integer
 
-    def local_level=: (untyped level) -> untyped
+    def local_level=: (Integer level) -> void
 
-    def level: () -> untyped
+    def level: () -> Integer
 
-    def add: (untyped severity, ?untyped? message, ?untyped? progname) { () -> untyped } -> (::TrueClass | untyped)
+    def add: (Integer severity, ?String? message, ?String? progname) ?{ () -> String } -> true
   end
 end
 
@@ -9629,9 +8864,9 @@ module ActiveSupport
 
           def publish: (untyped name, *untyped args) -> untyped
 
-          def subscribed_to?: (untyped name) -> ::TrueClass
+          def subscribed_to?: (untyped name) -> true
 
-          def unsubscribe!: () -> ::FalseClass
+          def unsubscribe!: () -> false
 
           alias matches? ===
         end
@@ -10539,60 +9774,7 @@ module ActiveSupport
     def nested_under_indifferent_access: () -> untyped
 
     # Returns true to make sure that this hash is extractable via <tt>Array#extract_options!</tt>
-    def extractable_options?: () -> ::TrueClass
-  end
-end
-
-module ActiveSupport
-  # Usually key value pairs are handled something like this:
-  #
-  #   h = {}
-  #   h[:boy] = 'John'
-  #   h[:girl] = 'Mary'
-  #   h[:boy]  # => 'John'
-  #   h[:girl] # => 'Mary'
-  #   h[:dog]  # => nil
-  #
-  # Using +OrderedOptions+, the above code could be reduced to:
-  #
-  #   h = ActiveSupport::OrderedOptions.new
-  #   h.boy = 'John'
-  #   h.girl = 'Mary'
-  #   h.boy  # => 'John'
-  #   h.girl # => 'Mary'
-  #   h.dog  # => nil
-  #
-  # To raise an exception when the value is blank, append a
-  # bang to the key name, like:
-  #
-  #   h.dog! # => raises KeyError: :dog is blank
-  #
-  class OrderedOptions[T, U] < Hash[T, U]
-    alias _get []
-
-    def []=: (untyped key, untyped value) -> untyped
-
-    def []: (untyped key) -> untyped
-
-    def method_missing: (untyped name, *untyped args) -> untyped
-
-    def respond_to_missing?: (untyped name, untyped include_private) -> ::TrueClass
-
-    def extractable_options?: () -> ::TrueClass
-  end
-
-  # +InheritableOptions+ provides a constructor to build an +OrderedOptions+
-  # hash inherited from another hash.
-  #
-  # Use this if you already have some hash and you want to create a new one based on it.
-  #
-  #   h = ActiveSupport::InheritableOptions.new({ girl: 'Mary', boy: 'John' })
-  #   h.girl # => 'Mary'
-  #   h.boy  # => 'John'
-  class InheritableOptions[T, U] < OrderedOptions[T, U]
-    def initialize: (?untyped? parent) -> untyped
-
-    def inheritable_copy: () -> untyped
+    def extractable_options?: () -> true
   end
 end
 
@@ -10779,97 +9961,6 @@ module ActiveSupport
     def class_unload!: () { () -> untyped } -> untyped
 
     def complete!: () -> untyped
-  end
-end
-
-module ActiveSupport
-  # Rescuable module adds support for easier exception handling.
-  module Rescuable
-    extend Concern
-
-    module ClassMethods
-      # Rescue exceptions raised in controller actions.
-      #
-      # <tt>rescue_from</tt> receives a series of exception classes or class
-      # names, and a trailing <tt>:with</tt> option with the name of a method
-      # or a Proc object to be called to handle them. Alternatively a block can
-      # be given.
-      #
-      # Handlers that take one argument will be called with the exception, so
-      # that the exception can be inspected when dealing with it.
-      #
-      # Handlers are inherited. They are searched from right to left, from
-      # bottom to top, and up the hierarchy. The handler of the first class for
-      # which <tt>exception.is_a?(klass)</tt> holds true is the one invoked, if
-      # any.
-      #
-      #   class ApplicationController < ActionController::Base
-      #     rescue_from User::NotAuthorized, with: :deny_access # self defined exception
-      #     rescue_from ActiveRecord::RecordInvalid, with: :show_errors
-      #
-      #     rescue_from 'MyAppError::Base' do |exception|
-      #       render xml: exception, status: 500
-      #     end
-      #
-      #     private
-      #       def deny_access
-      #         ...
-      #       end
-      #
-      #       def show_errors(exception)
-      #         exception.record.new_record? ? ...
-      #       end
-      #   end
-      #
-      # Exceptions raised inside exception handlers are not propagated up.
-      def rescue_from: (*untyped klasses, ?with: untyped? with) { () -> untyped } -> untyped
-
-      # Matches an exception to a handler based on the exception class.
-      #
-      # If no handler matches the exception, check for a handler matching the
-      # (optional) exception.cause. If no handler matches the exception or its
-      # cause, this returns +nil+, so you can deal with unhandled exceptions.
-      # Be sure to re-raise unhandled exceptions if this is what you expect.
-      #
-      #     begin
-      #       (trim non-ascii characters)
-      #     rescue => exception
-      #       rescue_with_handler(exception) || raise
-      #     end
-      #
-      # Returns the exception if it was handled and +nil+ if it was not.
-      def rescue_with_handler: (untyped exception, ?visited_exceptions: untyped visited_exceptions, ?object: untyped object) -> untyped
-
-      def handler_for_rescue: (untyped exception, ?object: untyped object) -> untyped
-
-      private
-
-      def find_rescue_handler: (untyped exception) -> untyped
-
-      def constantize_rescue_handler_class: (untyped class_or_name) -> untyped
-    end
-
-    # Delegates to the class method, but uses the instance as the subject for
-    # rescue_from handlers (method calls, instance_exec blocks).
-    def rescue_with_handler: (untyped exception) -> untyped
-
-    def handler_for_rescue: (untyped exception) -> untyped
-  end
-end
-
-module ActiveSupport
-  module SecurityUtils
-    # Constant time string comparison, for fixed length strings.
-    #
-    # The values compared should be of fixed length, such as strings
-    # that have already been processed by HMAC. Raises in case of length mismatch.
-    def self?.fixed_length_secure_compare: (untyped a, untyped b) -> untyped
-
-    # Constant time string comparison, for variable length strings.
-    #
-    # The values are first processed by SHA256, so that we don't leak length info
-    # via timing attacks.
-    def self?.secure_compare: (untyped a, untyped b) -> untyped
   end
 end
 
@@ -11709,12 +10800,6 @@ module ActiveSupport
 
     def initialize: (untyped utc_time, untyped time_zone, ?untyped? local_time, ?untyped? period) -> untyped
 
-    # Returns a <tt>Time</tt> instance that represents the time in +time_zone+.
-    def time: () -> untyped
-
-    # Returns a <tt>Time</tt> instance of the simultaneous time in the UTC timezone.
-    def utc: () -> untyped
-
     alias comparable_time utc
 
     alias getgm utc
@@ -11730,33 +10815,11 @@ module ActiveSupport
     def in_time_zone: (?(ActiveSupport::TimeZone | String) new_zone) -> ::ActiveSupport::TimeWithZone
                     | (false? zone) -> ::Time
 
-    # Returns a <tt>Time</tt> instance of the simultaneous time in the system timezone.
-    def localtime: (?untyped? utc_offset) -> untyped
-
     alias getlocal localtime
-
-    # Returns true if the current time is within Daylight Savings Time for the
-    # specified time zone.
-    #
-    #   Time.zone = 'Eastern Time (US & Canada)'    # => 'Eastern Time (US & Canada)'
-    #   Time.zone.parse("2012-5-30").dst?           # => true
-    #   Time.zone.parse("2012-11-30").dst?          # => false
-    def dst?: () -> untyped
 
     alias isdst dst?
 
-    # Returns true if the current time zone is set to UTC.
-    #
-    #   Time.zone = 'UTC'                           # => 'UTC'
-    #   Time.zone.now.utc?                          # => true
-    #   Time.zone = 'Eastern Time (US & Canada)'    # => 'Eastern Time (US & Canada)'
-    #   Time.zone.now.utc?                          # => false
-    def utc?: () -> untyped
-
     alias gmt? utc?
-
-    # Returns the offset from current time to UTC time in seconds.
-    def utc_offset: () -> untyped
 
     alias gmt_offset utc_offset
 
@@ -11771,12 +10834,6 @@ module ActiveSupport
     #   Time.zone = 'UTC'                          # => "UTC"
     #   Time.zone.now.formatted_offset(true, "0")  # => "0"
     def formatted_offset: (?bool colon, ?untyped? alternate_utc_string) -> untyped
-
-    # Returns the time zone abbreviation.
-    #
-    #   Time.zone = 'Eastern Time (US & Canada)'   # => "Eastern Time (US & Canada)"
-    #   Time.zone.now.zone # => "EST"
-    def zone: () -> untyped
 
     # Returns a string of the object's date, time, zone, and offset from UTC.
     #
@@ -11811,18 +10868,6 @@ module ActiveSupport
 
     def encode_with: (untyped coder) -> untyped
 
-    # Returns a string of the object's date and time in the format used by
-    # HTTP requests.
-    #
-    #   Time.zone.now.httpdate  # => "Tue, 01 Jan 2013 04:39:43 GMT"
-    def httpdate: () -> untyped
-
-    # Returns a string of the object's date and time in the RFC 2822 standard
-    # format.
-    #
-    #   Time.zone.now.rfc2822  # => "Tue, 01 Jan 2013 04:51:39 +0000"
-    def rfc2822: () -> untyped
-
     alias rfc822 rfc2822
 
     # Returns a string of the object's date and time.
@@ -11833,10 +10878,6 @@ module ActiveSupport
     def to_s: (?::Symbol format) -> untyped
 
     alias to_formatted_s to_s
-
-    # Replaces <tt>%Z</tt> directive with +zone before passing to Time#strftime,
-    # so that zone information is correct.
-    def strftime: (untyped format) -> untyped
 
     # Use the time in UTC for comparisons.
     def <=>: (untyped other) -> untyped
@@ -11974,46 +11015,10 @@ module ActiveSupport
     #   now.advance(years: 1)   # => Mon, 02 Nov 2015 01:26:28 EST -05:00
     def advance: (untyped options) -> TimeWithZone
 
-    # Returns Array of parts of Time in sequence of
-    # [seconds, minutes, hours, day, month, year, weekday, yearday, dst?, zone].
-    #
-    #   now = Time.zone.now     # => Tue, 18 Aug 2015 02:29:27 UTC +00:00
-    #   now.to_a                # => [27, 29, 2, 18, 8, 2015, 2, 230, false, "UTC"]
-    def to_a: () -> ::Array[untyped]
-
-    # Returns the object's date and time as a floating point number of seconds
-    # since the Epoch (January 1, 1970 00:00 UTC).
-    #
-    #   Time.zone.now.to_f # => 1417709320.285418
-    def to_f: () -> untyped
-
-    # Returns the object's date and time as an integer number of seconds
-    # since the Epoch (January 1, 1970 00:00 UTC).
-    #
-    #   Time.zone.now.to_i # => 1417709320
-    def to_i: () -> untyped
-
     alias tv_sec to_i
 
-    # Returns the object's date and time as a rational number of seconds
-    # since the Epoch (January 1, 1970 00:00 UTC).
-    #
-    #   Time.zone.now.to_r # => (708854548642709/500000)
-    def to_r: () -> untyped
-
-    # Returns an instance of DateTime with the timezone's UTC offset
-    #
-    #   Time.zone.now.to_datetime                         # => Tue, 18 Aug 2015 02:32:20 +0000
-    #   Time.current.in_time_zone('Hawaii').to_datetime   # => Mon, 17 Aug 2015 16:32:20 -1000
-    def to_datetime: () -> untyped
-
-    # Returns an instance of +Time+, either with the same UTC offset
-    # as +self+ or in the local system timezone depending on the setting
-    # of +ActiveSupport.to_time_preserves_timezone+.
-    def to_time: () -> untyped
-
     # So that +self+ <tt>acts_like?(:time)</tt>.
-    def acts_like_time?: () -> ::TrueClass
+    def acts_like_time?: () -> true
 
     # Say we're a Time to thwart type checking.
     def is_a?: (untyped klass) -> untyped
@@ -12021,7 +11026,7 @@ module ActiveSupport
     alias kind_of? is_a?
 
     # An instance of ActiveSupport::TimeWithZone is never blank
-    def blank?: () -> ::FalseClass
+    def blank?: () -> false
 
     def freeze: () -> untyped
 
@@ -12031,11 +11036,11 @@ module ActiveSupport
 
     # respond_to_missing? is not called in some cases, such as when type conversion is
     # performed with Kernel#String
-    def respond_to?: (untyped sym, ?bool include_priv) -> (::FalseClass | untyped)
+    def respond_to?: (untyped sym, ?bool include_priv) -> (false | untyped)
 
     # Ensure proxy class responds to all methods that underlying time instance
     # responds to.
-    def respond_to_missing?: (untyped sym, untyped include_priv) -> (::FalseClass | untyped)
+    def respond_to_missing?: (untyped sym, untyped include_priv) -> (false | untyped)
 
     # Send the missing method to +time+ instance, and wrap result in a new
     # TimeWithZone with the existing +time_zone+.
@@ -12103,13 +11108,6 @@ module ActiveSupport
     # TimeZone objects per time zone, in many cases, to make it easier
     # for users to find their own time zone.
     def self.all: () -> untyped
-
-    # Locate a specific time zone object. If the argument is a string, it
-    # is interpreted to mean the name of the timezone to locate. If it is a
-    # numeric value it is either the hour offset, or the second offset, of the
-    # timezone to find. (The first one with that offset will be returned.)
-    # Returns +nil+ if no such time zone is known to the system.
-    def self.[]: (untyped arg) -> untyped
 
     # A convenience method for returning a collection of TimeZone objects
     # for time zones in the USA.
@@ -12668,8 +11666,6 @@ class Object
   #   Benchmark.ms { User.all }
   #   # => 0.074
   def self.ms: () { () -> untyped } -> untyped
-
-  public
 
   def unescape: (untyped str, ?untyped escaped) -> untyped
 end

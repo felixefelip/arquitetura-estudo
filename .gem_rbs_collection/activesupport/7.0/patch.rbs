@@ -1,9 +1,3 @@
-class Object
-  # Object#sum is actually not defined, but rbs prototype rb generates it mistakenly due to `class << Benchmark`.
-  # So we need to define it to suppress the alias error.
-  def sum: () -> untyped
-end
-
 module ActiveSupport
   class TestCase < ::Minitest::Test
     # It is necessary to satisfy alias target.
@@ -23,13 +17,6 @@ module ActiveSupport
     def refute_predicate: (*untyped) -> untyped
     def refute_respond_to: (*untyped) -> untyped
     def refute_same: (*untyped) -> untyped
-  end
-end
-
-# Remove the fake type of Minitest
-# if the real types are available.
-module Minitest
-  class Test
   end
 end
 
@@ -55,31 +42,10 @@ module Nokogiri
   end
 end
 
-# Remove the fake type of TZInfo
-# if the real types are available.
-module TZInfo
-  class Timezone
-  end
-end
-
 # Remove the fake type of DRb
 # if the real types are available.
 module DRb
   module DRbUndumped
-  end
-end
-
-# Remove the fake types for Gem::Version
-# if the real types are available.
-module Gem
-  class Version
-  end
-end
-
-# Remove the fake types for OpenSSL::Cipher
-# if the real types are available.
-module OpenSSL
-  class Cipher
   end
 end
 

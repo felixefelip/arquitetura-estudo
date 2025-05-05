@@ -68,12 +68,25 @@ class Redis
   # @return [String, Boolean] `"OK"` or true, false if `:nx => true` or `:xx => true`
   def set: ((String | Symbol) key, top value, ?ex: Integer?, ?px: Integer?, ?nx: boolish, ?xx: boolish, ?keepttl: boolish) -> (String | bool)
 
+  # Set the time to live in seconds of a key.
+  #
+  # @param [String] key
+  # @param [Integer] ttl
+  # @param [String] value
+  # @return [String] `"OK"`
+  def setex: (String key, Integer ttl, String value) -> String
+
   # Get the value of a key.
   #
   # @param [String] key
   # @return [String]
   def get: ((String | Symbol) key) -> String?
 
+  # Delete one or more keys.
+  #
+  # @param [String, Array<String>] keys
+  # @return [Integer] number of keys that were deleted
+  def del: (*(String | Array[String]) keys) -> Integer
 
   # Set one or more values.
   #
@@ -99,7 +112,6 @@ class Redis
   # @see #mapped_mget
   def mget: (*String keys) -> Array[String?]
           | [T] (*String keys) { (Array[String?]) -> T } -> T
-
 
   # Decrement the integer value of a key by one.
   #
@@ -201,8 +213,8 @@ class Redis
   def zcard: (_ToS key) -> Integer
   def zadd: (_ToS key, *untyped args, ?nx: bool, ?ch: bool, ?incr: bool) -> (bool | Integer | Float)
           | (_ToS key, *untyped args, ?xx: bool, ?ch: bool, ?incr: bool) -> (bool | Integer | Float)
-  def zincrby: (_ToS key, Integer|Float|"-inf"|"+inf" increment, String member) -> Float
-  def zrem: (_ToS key, String|Array[String] member) -> (bool | Integer)
+  def zincrby: (_ToS key, Integer | Float | "-inf" | "+inf" increment, String member) -> Float
+  def zrem: (_ToS key, String | Array[String] member) -> (bool | Integer)
 
   # Disconnect the client as quickly and silently as possible.
   def close: () -> void

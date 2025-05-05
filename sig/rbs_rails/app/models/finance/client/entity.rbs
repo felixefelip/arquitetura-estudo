@@ -1,36 +1,36 @@
 module Finance
   module Client
     class Entity < ::Finance::ApplicationRecord
-      extend _ActiveRecord_Relation_ClassMethods[Finance::Client::Entity, ActiveRecord_Relation, Integer]
+      extend ::_ActiveRecord_Relation_ClassMethods[::Finance::Client::Entity, ::Finance::Client::Entity::ActiveRecord_Relation, ::Integer]
 
       module GeneratedAttributeMethods
-        def id: () -> Integer
+        def id: () -> ::Integer
 
-        def id=: (Integer) -> Integer
+        def id=: (::Integer) -> ::Integer
 
         def id?: () -> bool
 
         def id_changed?: () -> bool
 
-        def id_change: () -> [ Integer?, Integer? ]
+        def id_change: () -> [ ::Integer?, ::Integer? ]
 
         def id_will_change!: () -> void
 
-        def id_was: () -> Integer?
+        def id_was: () -> ::Integer?
 
         def id_previously_changed?: () -> bool
 
-        def id_previous_change: () -> Array[Integer?]?
+        def id_previous_change: () -> ::Array[::Integer?]?
 
-        def id_previously_was: () -> Integer?
+        def id_previously_was: () -> ::Integer?
 
-        def id_before_last_save: () -> Integer?
+        def id_before_last_save: () -> ::Integer?
 
-        def id_change_to_be_saved: () -> Array[Integer?]?
+        def id_change_to_be_saved: () -> ::Array[::Integer?]?
 
-        def id_in_database: () -> Integer?
+        def id_in_database: () -> ::Integer?
 
-        def saved_change_to_id: () -> Array[Integer?]?
+        def saved_change_to_id: () -> ::Array[::Integer?]?
 
         def saved_change_to_id?: () -> bool
 
@@ -40,33 +40,33 @@ module Finance
 
         def clear_id_change: () -> void
 
-        def full_name: () -> String?
+        def full_name: () -> ::String?
 
-        def full_name=: (String?) -> String?
+        def full_name=: (::String?) -> ::String?
 
         def full_name?: () -> bool
 
         def full_name_changed?: () -> bool
 
-        def full_name_change: () -> [ String?, String? ]
+        def full_name_change: () -> [ ::String?, ::String? ]
 
         def full_name_will_change!: () -> void
 
-        def full_name_was: () -> String?
+        def full_name_was: () -> ::String?
 
         def full_name_previously_changed?: () -> bool
 
-        def full_name_previous_change: () -> Array[String?]?
+        def full_name_previous_change: () -> ::Array[::String?]?
 
-        def full_name_previously_was: () -> String?
+        def full_name_previously_was: () -> ::String?
 
-        def full_name_before_last_save: () -> String?
+        def full_name_before_last_save: () -> ::String?
 
-        def full_name_change_to_be_saved: () -> Array[String?]?
+        def full_name_change_to_be_saved: () -> ::Array[::String?]?
 
-        def full_name_in_database: () -> String?
+        def full_name_in_database: () -> ::String?
 
-        def saved_change_to_full_name: () -> Array[String?]?
+        def saved_change_to_full_name: () -> ::Array[::String?]?
 
         def saved_change_to_full_name?: () -> bool
 
@@ -76,33 +76,33 @@ module Finance
 
         def clear_full_name_change: () -> void
 
-        def email: () -> String?
+        def email: () -> ::String?
 
-        def email=: (String?) -> String?
+        def email=: (::String?) -> ::String?
 
         def email?: () -> bool
 
         def email_changed?: () -> bool
 
-        def email_change: () -> [ String?, String? ]
+        def email_change: () -> [ ::String?, ::String? ]
 
         def email_will_change!: () -> void
 
-        def email_was: () -> String?
+        def email_was: () -> ::String?
 
         def email_previously_changed?: () -> bool
 
-        def email_previous_change: () -> Array[String?]?
+        def email_previous_change: () -> ::Array[::String?]?
 
-        def email_previously_was: () -> String?
+        def email_previously_was: () -> ::String?
 
-        def email_before_last_save: () -> String?
+        def email_before_last_save: () -> ::String?
 
-        def email_change_to_be_saved: () -> Array[String?]?
+        def email_change_to_be_saved: () -> ::Array[::String?]?
 
-        def email_in_database: () -> String?
+        def email_in_database: () -> ::String?
 
-        def saved_change_to_email: () -> Array[String?]?
+        def saved_change_to_email: () -> ::Array[::String?]?
 
         def saved_change_to_email?: () -> bool
 
@@ -112,33 +112,33 @@ module Finance
 
         def clear_email_change: () -> void
 
-        def document: () -> String?
+        def document: () -> ::String?
 
-        def document=: (String?) -> String?
+        def document=: (::String?) -> ::String?
 
         def document?: () -> bool
 
         def document_changed?: () -> bool
 
-        def document_change: () -> [ String?, String? ]
+        def document_change: () -> [ ::String?, ::String? ]
 
         def document_will_change!: () -> void
 
-        def document_was: () -> String?
+        def document_was: () -> ::String?
 
         def document_previously_changed?: () -> bool
 
-        def document_previous_change: () -> Array[String?]?
+        def document_previous_change: () -> ::Array[::String?]?
 
-        def document_previously_was: () -> String?
+        def document_previously_was: () -> ::String?
 
-        def document_before_last_save: () -> String?
+        def document_before_last_save: () -> ::String?
 
-        def document_change_to_be_saved: () -> Array[String?]?
+        def document_change_to_be_saved: () -> ::Array[::String?]?
 
-        def document_in_database: () -> String?
+        def document_in_database: () -> ::String?
 
-        def saved_change_to_document: () -> Array[String?]?
+        def saved_change_to_document: () -> ::Array[::String?]?
 
         def saved_change_to_document?: () -> bool
 
@@ -148,33 +148,33 @@ module Finance
 
         def clear_document_change: () -> void
 
-        def created_at: () -> ActiveSupport::TimeWithZone
+        def created_at: () -> ::ActiveSupport::TimeWithZone
 
-        def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+        def created_at=: (::ActiveSupport::TimeWithZone) -> ::ActiveSupport::TimeWithZone
 
         def created_at?: () -> bool
 
         def created_at_changed?: () -> bool
 
-        def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+        def created_at_change: () -> [ ::ActiveSupport::TimeWithZone?, ::ActiveSupport::TimeWithZone? ]
 
         def created_at_will_change!: () -> void
 
-        def created_at_was: () -> ActiveSupport::TimeWithZone?
+        def created_at_was: () -> ::ActiveSupport::TimeWithZone?
 
         def created_at_previously_changed?: () -> bool
 
-        def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+        def created_at_previous_change: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-        def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+        def created_at_previously_was: () -> ::ActiveSupport::TimeWithZone?
 
-        def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+        def created_at_before_last_save: () -> ::ActiveSupport::TimeWithZone?
 
-        def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+        def created_at_change_to_be_saved: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-        def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+        def created_at_in_database: () -> ::ActiveSupport::TimeWithZone?
 
-        def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+        def saved_change_to_created_at: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
         def saved_change_to_created_at?: () -> bool
 
@@ -184,33 +184,33 @@ module Finance
 
         def clear_created_at_change: () -> void
 
-        def updated_at: () -> ActiveSupport::TimeWithZone
+        def updated_at: () -> ::ActiveSupport::TimeWithZone
 
-        def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+        def updated_at=: (::ActiveSupport::TimeWithZone) -> ::ActiveSupport::TimeWithZone
 
         def updated_at?: () -> bool
 
         def updated_at_changed?: () -> bool
 
-        def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+        def updated_at_change: () -> [ ::ActiveSupport::TimeWithZone?, ::ActiveSupport::TimeWithZone? ]
 
         def updated_at_will_change!: () -> void
 
-        def updated_at_was: () -> ActiveSupport::TimeWithZone?
+        def updated_at_was: () -> ::ActiveSupport::TimeWithZone?
 
         def updated_at_previously_changed?: () -> bool
 
-        def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+        def updated_at_previous_change: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-        def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+        def updated_at_previously_was: () -> ::ActiveSupport::TimeWithZone?
 
-        def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+        def updated_at_before_last_save: () -> ::ActiveSupport::TimeWithZone?
 
-        def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+        def updated_at_change_to_be_saved: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-        def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+        def updated_at_in_database: () -> ::ActiveSupport::TimeWithZone?
 
-        def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+        def saved_change_to_updated_at: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
         def saved_change_to_updated_at?: () -> bool
 
@@ -221,10 +221,10 @@ module Finance
         def clear_updated_at_change: () -> void
       end
       include GeneratedAttributeMethods
-      def cards: () -> Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy
-      def cards=: (Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy | Array[Finance::Card::Entity]) -> (Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy | Array[Finance::Card::Entity])
-      def card_ids: () -> Array[Integer]
-      def card_ids=: (Array[Integer]) -> Array[Integer]
+      def cards: () -> ::Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy
+      def cards=: (::Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy | ::Array[::Finance::Card::Entity]) -> (::Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy | ::Array[::Finance::Card::Entity])
+      def card_ids: () -> ::Array[::Integer]
+      def card_ids=: (::Array[::Integer]) -> ::Array[::Integer]
 
       module GeneratedAssociationMethods
       end
@@ -234,14 +234,14 @@ module Finance
       end
 
       class ActiveRecord_Relation < ::ActiveRecord::Relation
-        include GeneratedRelationMethods
-        include _ActiveRecord_Relation[Finance::Client::Entity, Integer]
-        include Enumerable[Finance::Client::Entity]
+        include ::Finance::Client::Entity::GeneratedRelationMethods
+        include ::_ActiveRecord_Relation[::Finance::Client::Entity, ::Integer]
+        include ::Enumerable[::Finance::Client::Entity]
       end
 
       class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
-        include GeneratedRelationMethods
-        include _ActiveRecord_Relation[Finance::Client::Entity, Integer]
+        include ::Finance::Client::Entity::GeneratedRelationMethods
+        include ::_ActiveRecord_Relation[::Finance::Client::Entity, ::Integer]
       end
     end
   end

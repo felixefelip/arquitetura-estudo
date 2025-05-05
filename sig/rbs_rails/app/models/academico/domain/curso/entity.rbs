@@ -2,36 +2,36 @@ module Academico
   module Domain
     module Curso
       class Entity < ::Academico::ApplicationRecord
-        extend _ActiveRecord_Relation_ClassMethods[Academico::Domain::Curso::Entity, ActiveRecord_Relation, Integer]
+        extend ::_ActiveRecord_Relation_ClassMethods[::Academico::Domain::Curso::Entity, ::Academico::Domain::Curso::Entity::ActiveRecord_Relation, ::Integer]
 
         module GeneratedAttributeMethods
-          def id: () -> Integer
+          def id: () -> ::Integer
 
-          def id=: (Integer) -> Integer
+          def id=: (::Integer) -> ::Integer
 
           def id?: () -> bool
 
           def id_changed?: () -> bool
 
-          def id_change: () -> [ Integer?, Integer? ]
+          def id_change: () -> [ ::Integer?, ::Integer? ]
 
           def id_will_change!: () -> void
 
-          def id_was: () -> Integer?
+          def id_was: () -> ::Integer?
 
           def id_previously_changed?: () -> bool
 
-          def id_previous_change: () -> Array[Integer?]?
+          def id_previous_change: () -> ::Array[::Integer?]?
 
-          def id_previously_was: () -> Integer?
+          def id_previously_was: () -> ::Integer?
 
-          def id_before_last_save: () -> Integer?
+          def id_before_last_save: () -> ::Integer?
 
-          def id_change_to_be_saved: () -> Array[Integer?]?
+          def id_change_to_be_saved: () -> ::Array[::Integer?]?
 
-          def id_in_database: () -> Integer?
+          def id_in_database: () -> ::Integer?
 
-          def saved_change_to_id: () -> Array[Integer?]?
+          def saved_change_to_id: () -> ::Array[::Integer?]?
 
           def saved_change_to_id?: () -> bool
 
@@ -41,33 +41,33 @@ module Academico
 
           def clear_id_change: () -> void
 
-          def titulo: () -> String?
+          def titulo: () -> ::String?
 
-          def titulo=: (String?) -> String?
+          def titulo=: (::String?) -> ::String?
 
           def titulo?: () -> bool
 
           def titulo_changed?: () -> bool
 
-          def titulo_change: () -> [ String?, String? ]
+          def titulo_change: () -> [ ::String?, ::String? ]
 
           def titulo_will_change!: () -> void
 
-          def titulo_was: () -> String?
+          def titulo_was: () -> ::String?
 
           def titulo_previously_changed?: () -> bool
 
-          def titulo_previous_change: () -> Array[String?]?
+          def titulo_previous_change: () -> ::Array[::String?]?
 
-          def titulo_previously_was: () -> String?
+          def titulo_previously_was: () -> ::String?
 
-          def titulo_before_last_save: () -> String?
+          def titulo_before_last_save: () -> ::String?
 
-          def titulo_change_to_be_saved: () -> Array[String?]?
+          def titulo_change_to_be_saved: () -> ::Array[::String?]?
 
-          def titulo_in_database: () -> String?
+          def titulo_in_database: () -> ::String?
 
-          def saved_change_to_titulo: () -> Array[String?]?
+          def saved_change_to_titulo: () -> ::Array[::String?]?
 
           def saved_change_to_titulo?: () -> bool
 
@@ -77,33 +77,33 @@ module Academico
 
           def clear_titulo_change: () -> void
 
-          def url: () -> String?
+          def url: () -> ::String?
 
-          def url=: (String?) -> String?
+          def url=: (::String?) -> ::String?
 
           def url?: () -> bool
 
           def url_changed?: () -> bool
 
-          def url_change: () -> [ String?, String? ]
+          def url_change: () -> [ ::String?, ::String? ]
 
           def url_will_change!: () -> void
 
-          def url_was: () -> String?
+          def url_was: () -> ::String?
 
           def url_previously_changed?: () -> bool
 
-          def url_previous_change: () -> Array[String?]?
+          def url_previous_change: () -> ::Array[::String?]?
 
-          def url_previously_was: () -> String?
+          def url_previously_was: () -> ::String?
 
-          def url_before_last_save: () -> String?
+          def url_before_last_save: () -> ::String?
 
-          def url_change_to_be_saved: () -> Array[String?]?
+          def url_change_to_be_saved: () -> ::Array[::String?]?
 
-          def url_in_database: () -> String?
+          def url_in_database: () -> ::String?
 
-          def saved_change_to_url: () -> Array[String?]?
+          def saved_change_to_url: () -> ::Array[::String?]?
 
           def saved_change_to_url?: () -> bool
 
@@ -113,33 +113,33 @@ module Academico
 
           def clear_url_change: () -> void
 
-          def icone: () -> String?
+          def icone: () -> ::String?
 
-          def icone=: (String?) -> String?
+          def icone=: (::String?) -> ::String?
 
           def icone?: () -> bool
 
           def icone_changed?: () -> bool
 
-          def icone_change: () -> [ String?, String? ]
+          def icone_change: () -> [ ::String?, ::String? ]
 
           def icone_will_change!: () -> void
 
-          def icone_was: () -> String?
+          def icone_was: () -> ::String?
 
           def icone_previously_changed?: () -> bool
 
-          def icone_previous_change: () -> Array[String?]?
+          def icone_previous_change: () -> ::Array[::String?]?
 
-          def icone_previously_was: () -> String?
+          def icone_previously_was: () -> ::String?
 
-          def icone_before_last_save: () -> String?
+          def icone_before_last_save: () -> ::String?
 
-          def icone_change_to_be_saved: () -> Array[String?]?
+          def icone_change_to_be_saved: () -> ::Array[::String?]?
 
-          def icone_in_database: () -> String?
+          def icone_in_database: () -> ::String?
 
-          def saved_change_to_icone: () -> Array[String?]?
+          def saved_change_to_icone: () -> ::Array[::String?]?
 
           def saved_change_to_icone?: () -> bool
 
@@ -165,17 +165,17 @@ module Academico
 
           def assistido_previously_changed?: () -> bool
 
-          def assistido_previous_change: () -> Array[bool?]?
+          def assistido_previous_change: () -> ::Array[bool?]?
 
           def assistido_previously_was: () -> bool?
 
           def assistido_before_last_save: () -> bool?
 
-          def assistido_change_to_be_saved: () -> Array[bool?]?
+          def assistido_change_to_be_saved: () -> ::Array[bool?]?
 
           def assistido_in_database: () -> bool?
 
-          def saved_change_to_assistido: () -> Array[bool?]?
+          def saved_change_to_assistido: () -> ::Array[bool?]?
 
           def saved_change_to_assistido?: () -> bool
 
@@ -185,33 +185,33 @@ module Academico
 
           def clear_assistido_change: () -> void
 
-          def created_at: () -> ActiveSupport::TimeWithZone
+          def created_at: () -> ::ActiveSupport::TimeWithZone
 
-          def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+          def created_at=: (::ActiveSupport::TimeWithZone) -> ::ActiveSupport::TimeWithZone
 
           def created_at?: () -> bool
 
           def created_at_changed?: () -> bool
 
-          def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+          def created_at_change: () -> [ ::ActiveSupport::TimeWithZone?, ::ActiveSupport::TimeWithZone? ]
 
           def created_at_will_change!: () -> void
 
-          def created_at_was: () -> ActiveSupport::TimeWithZone?
+          def created_at_was: () -> ::ActiveSupport::TimeWithZone?
 
           def created_at_previously_changed?: () -> bool
 
-          def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+          def created_at_previous_change: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-          def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+          def created_at_previously_was: () -> ::ActiveSupport::TimeWithZone?
 
-          def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+          def created_at_before_last_save: () -> ::ActiveSupport::TimeWithZone?
 
-          def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+          def created_at_change_to_be_saved: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-          def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+          def created_at_in_database: () -> ::ActiveSupport::TimeWithZone?
 
-          def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+          def saved_change_to_created_at: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
           def saved_change_to_created_at?: () -> bool
 
@@ -221,33 +221,33 @@ module Academico
 
           def clear_created_at_change: () -> void
 
-          def updated_at: () -> ActiveSupport::TimeWithZone
+          def updated_at: () -> ::ActiveSupport::TimeWithZone
 
-          def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+          def updated_at=: (::ActiveSupport::TimeWithZone) -> ::ActiveSupport::TimeWithZone
 
           def updated_at?: () -> bool
 
           def updated_at_changed?: () -> bool
 
-          def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+          def updated_at_change: () -> [ ::ActiveSupport::TimeWithZone?, ::ActiveSupport::TimeWithZone? ]
 
           def updated_at_will_change!: () -> void
 
-          def updated_at_was: () -> ActiveSupport::TimeWithZone?
+          def updated_at_was: () -> ::ActiveSupport::TimeWithZone?
 
           def updated_at_previously_changed?: () -> bool
 
-          def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+          def updated_at_previous_change: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-          def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+          def updated_at_previously_was: () -> ::ActiveSupport::TimeWithZone?
 
-          def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+          def updated_at_before_last_save: () -> ::ActiveSupport::TimeWithZone?
 
-          def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+          def updated_at_change_to_be_saved: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
-          def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+          def updated_at_in_database: () -> ::ActiveSupport::TimeWithZone?
 
-          def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+          def saved_change_to_updated_at: () -> ::Array[::ActiveSupport::TimeWithZone?]?
 
           def saved_change_to_updated_at?: () -> bool
 
@@ -267,14 +267,14 @@ module Academico
         end
 
         class ActiveRecord_Relation < ::ActiveRecord::Relation
-          include GeneratedRelationMethods
-          include _ActiveRecord_Relation[Academico::Domain::Curso::Entity, Integer]
-          include Enumerable[Academico::Domain::Curso::Entity]
+          include ::Academico::Domain::Curso::Entity::GeneratedRelationMethods
+          include ::_ActiveRecord_Relation[::Academico::Domain::Curso::Entity, ::Integer]
+          include ::Enumerable[::Academico::Domain::Curso::Entity]
         end
 
         class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
-          include GeneratedRelationMethods
-          include _ActiveRecord_Relation[Academico::Domain::Curso::Entity, Integer]
+          include ::Academico::Domain::Curso::Entity::GeneratedRelationMethods
+          include ::_ActiveRecord_Relation[::Academico::Domain::Curso::Entity, ::Integer]
         end
       end
     end

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby "3.4.3"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2.1"
@@ -44,8 +44,7 @@ gem "bootsnap", require: false
 
 # gem "rbs", require: false
 gem "rbs_rails", require: false
-
-gem "steep", "~> 1.10.0"
+gem "steep"
 # gem "typeprof", require: false
 
 # Use Sass to process CSS

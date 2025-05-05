@@ -22,7 +22,6 @@ interface _RbsRailsPathHelpers
   def rails_mailgun_inbound_emails_path: (*untyped) -> String
   def rails_conductor_inbound_emails_path: (*untyped) -> String
   def new_rails_conductor_inbound_email_path: (*untyped) -> String
-  def edit_rails_conductor_inbound_email_path: (*untyped) -> String
   def rails_conductor_inbound_email_path: (*untyped) -> String
   def new_rails_conductor_inbound_email_source_path: (*untyped) -> String
   def rails_conductor_inbound_email_sources_path: (*untyped) -> String
@@ -62,7 +61,6 @@ interface _RbsRailsPathHelpers
   def rails_mailgun_inbound_emails_url: (*untyped) -> String
   def rails_conductor_inbound_emails_url: (*untyped) -> String
   def new_rails_conductor_inbound_email_url: (*untyped) -> String
-  def edit_rails_conductor_inbound_email_url: (*untyped) -> String
   def rails_conductor_inbound_email_url: (*untyped) -> String
   def new_rails_conductor_inbound_email_source_url: (*untyped) -> String
   def rails_conductor_inbound_email_sources_url: (*untyped) -> String
