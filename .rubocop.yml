@@ -184,6 +184,9 @@ Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented
 
+Layout/LeadingCommentSpace:
+  Enabled: false
+
 # Rails Cops
 Rails/Delegate:
   Description: 'Prefer delegate method for delegations.'

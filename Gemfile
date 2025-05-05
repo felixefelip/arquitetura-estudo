@@ -44,6 +44,7 @@ gem "bootsnap", require: false
 
 # gem "rbs", require: false
 gem "rbs_rails", require: false
+gem 'rbs-inline', require: false
 gem "steep"
 # gem "typeprof", require: false
 

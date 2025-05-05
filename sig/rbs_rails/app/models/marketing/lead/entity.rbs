@@ -3,6 +3,10 @@ module Marketing
     class Entity < ::Marketing::ApplicationRecord
       extend ::_ActiveRecord_Relation_ClassMethods[::Marketing::Lead::Entity, ::Marketing::Lead::Entity::ActiveRecord_Relation, ::Integer]
 
+      def do_something_dangerous: () -> ::Marketing::Lead::Entity::ActiveRecord_Relation
+
+      def teste: () -> Integer
+
       module GeneratedAttributeMethods
         def id: () -> ::Integer
 

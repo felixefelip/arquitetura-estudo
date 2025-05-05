@@ -1,6 +1,9 @@
+# rbs_inline: enabled
+
 module Marketing
   module Lead
     class Convert
+      # @rbs (email: String) -> void
       def initialize(email:)
         self.email = email
       end

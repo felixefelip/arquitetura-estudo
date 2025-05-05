@@ -1,43 +1,39 @@
-module Academico
-  module App
-    module Aluno
-      class MatriculadoOuvinte < ::Shared::Domain::Evento::Ouvinte
-        def reage_ao(evento:)
-          self.evento = evento
+module Academico::App::Aluno
+  class MatriculadoOuvinte < ::Shared::Domain::Evento::Ouvinte
+    def reage_ao(evento:)
+      self.evento = evento
 
-          evento.client_payload.deep_symbolize_keys!
+      evento.client_payload.deep_symbolize_keys!
 
-          messagem = "Aluno com CPF #{evento.client_payload[:document]}
-					                   foi matriculado na data #{evento.momento}"
+      messagem = "Aluno com CPF #{evento.client_payload[:document]}
+                          foi matriculado na data #{evento.momento}"
 
-          Rails.logger.info messagem
+      Rails.logger.info messagem
 
-          matricular_aluno
-        end
+      matricular_aluno
+    end
 
-        def sabe_processar?(evento:)
-          evento.name == "finance_client_enrolled"
-        end
+    def sabe_processar?(evento:)
+      evento.name == "finance_client_enrolled"
+    end
 
-        private
+    private
 
-        attr_accessor :evento
+    attr_accessor :evento
 
-        def matricular_aluno
-          repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
+    def matricular_aluno
+      repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
 
-          aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
-            cpf: evento.client_payload[:document],
-            nome: evento.client_payload[:full_name],
-            email: evento.client_payload[:email],
-          )
+      aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
+        cpf: evento.client_payload[:document],
+        nome: evento.client_payload[:full_name],
+        email: evento.client_payload[:email],
+      )
 
-          Academico::App::Aluno::Matricular.new(
-            aluno_repository: repo,
-            publicador_de_evento: $publicador,
-          ).call(aluno_dto:)
-        end
-      end
+      Academico::App::Aluno::Matricular.new(
+        aluno_repository: repo,
+        publicador_de_evento: $publicador,
+      ).call(aluno_dto:)
     end
   end
 end
