@@ -1,22 +1,19 @@
 # rbs_inline: enabled
 
-module Marketing
-  module Lead
-    class Entity < ApplicationRecord
-      self.table_name = "marketing_leads"
+module Marketing::Lead
+  class Entity < ApplicationRecord
+    self.table_name = "marketing_leads"
 
-      enum :status, { interested: 0, customer: 1, canceled: 2 }
+    enum :status, { interested: 0, customer: 1, canceled: 2 }
 
-      validates :status, presence: true
+    validates :status, presence: true
 
-      # @rbs () -> ::Marketing::Lead::Entity::ActiveRecord_Relation
-      def do_something_dangerous
-        ::Marketing::Lead::Entity.all
-      end
+    class << self
+      # @rbs (email: String) -> void
+      def convert(email:)
+        lead = find_by!(email:)
 
-      # @rbs () -> Integer
-      def teste
-        do_something_dangerous.where(status: 0).order(:id).count
+        lead.update!(status: :customer)
       end
     end
   end

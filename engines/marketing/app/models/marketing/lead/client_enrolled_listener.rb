@@ -10,7 +10,7 @@ module Marketing
 
         Rails.logger.info messagem
 
-        Convert.call(email: evento.client_payload[:email])
+        Entity.convert(email: evento.client_payload[:email])
       end
 
       #: (evento: Finance::Client::Enrolled) -> bool

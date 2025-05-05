@@ -32,6 +32,11 @@ module Finance
                              month_expiration:, year_expiration:, security_code:)
 
         # enviar mensagem para fila client_enrolled
+        # ActiveSupport::Notifications.instrument(
+        #   :item_pedido_alterado,
+        #   payload: { client_payload: JSON.parse(client.to_json) },
+        # ) {}
+
         evento = Enrolled.new(client_payload: JSON.parse(client.to_json))
         publicador_de_evento.publicar(evento:)
       end
