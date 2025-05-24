@@ -152,6 +152,9 @@ Style/TrailingCommaInHashLiteral:
 Style/TrivialAccessors:
   Enabled: false
 
+Style/GlobalVars:
+  Enabled: false
+
 # Layout Cops
 Layout/ArgumentAlignment:
   Exclude:
@@ -211,4 +214,4 @@ RSpec/ContextWording:
     - quando
 
 RSpec/ExampleLength:
-  Max: 15
+  Max: 50
