@@ -1,8 +1,7 @@
 module Finance
   module Client
     class Enroll
-      def initialize: (client: Finance::Client::Entity, card: Finance::Card::Entity,
-                       publicador_de_evento: Shared::Domain::Evento::Publicador) -> void
+      def initialize: (client: Finance::Client::Entity, card: Finance::Card::Entity) -> void
 
       def call: () -> void
 
@@ -10,7 +9,6 @@ module Finance
 
       attr_accessor client: Finance::Client::Entity
       attr_accessor card: Finance::Card::Entity
-      attr_accessor publicador_de_evento: Shared::Domain::Evento::Publicador
     end
   end
 end

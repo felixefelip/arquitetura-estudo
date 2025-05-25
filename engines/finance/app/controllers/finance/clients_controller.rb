@@ -7,8 +7,7 @@ class Finance::ClientsController < ApplicationController
     card = build_card
 
     ::Finance::Client::Enroll.new(
-      client: client, card: card,
-      publicador_de_evento: $publicador,
+      client: client, card: card
     ).call
 
     render :json, status: :created

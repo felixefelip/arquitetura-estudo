@@ -1,38 +1,33 @@
 module Academico::App::Aluno
-  class MatriculadoOuvinte < ::Shared::Domain::Evento::Ouvinte
-    def reage_ao(evento:)
-      self.evento = evento
+  class MatriculadoOuvinte
+    def reage_ao(payload:)
+      self.client_payload = payload.fetch(:client_payload)
 
-      evento.client_payload.deep_symbolize_keys!
+      momento = payload.fetch(:momento)
 
-      messagem = "Aluno com CPF #{evento.client_payload[:document]}
-                          foi matriculado na data #{evento.momento}"
+      messagem = "Aluno com CPF #{client_payload.fetch(:document)}
+                          foi matriculado na data #{momento}"
 
       Rails.logger.info messagem
 
       matricular_aluno
     end
 
-    def sabe_processar?(evento:)
-      evento.name == "finance_client_enrolled"
-    end
-
     private
 
-    attr_accessor :evento
+    attr_accessor :client_payload
 
     def matricular_aluno
       repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
 
       aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
-        cpf: evento.client_payload[:document],
-        nome: evento.client_payload[:full_name],
-        email: evento.client_payload[:email],
+        cpf: client_payload.fetch(:document),
+        nome: client_payload.fetch(:full_name),
+        email: client_payload.fetch(:email),
       )
 
       Academico::App::Aluno::Matricular.new(
         aluno_repository: repo,
-        publicador_de_evento: $publicador,
       ).call(aluno_dto:)
     end
   end

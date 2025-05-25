@@ -18,8 +18,7 @@ module Academico
       )
 
       Academico::App::Aluno::Matricular.new(
-        aluno_repository: repo,
-        publicador_de_evento: $publicador,
+        aluno_repository: repo
       ).call(aluno_dto:)
     end
   end

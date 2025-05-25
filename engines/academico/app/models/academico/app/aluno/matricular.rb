@@ -1,8 +1,7 @@
 module Academico::App::Aluno
   class Matricular
-    def initialize(aluno_repository:, publicador_de_evento:)
+    def initialize(aluno_repository:)
       self.aluno_repository = aluno_repository
-      self.publicador_de_evento = publicador_de_evento
     end
 
     def call(aluno_dto:)
@@ -12,14 +11,25 @@ module Academico::App::Aluno
 
       aluno_repository.adicionar(aluno:)
 
-      evento = ::Academico::Domain::Aluno::Matriculado.new(cpf_aluno: aluno.cpf)
-      publicador_de_evento.publicar(evento:)
+      publicar_evento(aluno:)
 
       SuccessMailer.send_mail(aluno).deliver
     end
 
     private
 
-    attr_accessor :aluno_repository, :publicador_de_evento
+    attr_accessor :aluno_repository
+
+    def publicar_evento(aluno:)
+      payload = {
+        cpf_aluno: aluno.cpf,
+        momento: DateTime.current,
+        name: "aluno_matriculado",
+      }
+
+      ActiveSupport::Notifications.instrument("aluno_matriculado", payload) do
+        Rails.logger.info "Evento aluno_matriculado publicado para o aluno #{aluno.nome}"
+      end
+    end
   end
 end

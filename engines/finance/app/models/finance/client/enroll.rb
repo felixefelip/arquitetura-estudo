@@ -1,10 +1,9 @@
 module Finance
   module Client
     class Enroll
-      def initialize(client:, card:, publicador_de_evento:)
+      def initialize(client:, card:)
         self.client = client
         self.card = card
-        self.publicador_de_evento = publicador_de_evento
       end
 
       def call
@@ -17,19 +16,22 @@ module Finance
           card.save!
         end
 
-        # enviar mensagem para fila client_enrolled
-        # ActiveSupport::Notifications.instrument(
-        #   :item_pedido_alterado,
-        #   payload: { client_payload: JSON.parse(client.to_json) },
-        # ) {}
+        # Publicar evento usando ActiveSupport::Notifications
+        payload = {
+          client_payload: JSON.parse(client.to_json).deep_symbolize_keys,
+          momento: DateTime.current,
+          name: "finance_client_enrolled",
+        }
 
-        evento = Enrolled.new(client_payload: JSON.parse(client.to_json))
-        publicador_de_evento.publicar(evento:)
+        # Ao invés de usar um bloco vazio, podemos fazer algo no bloco
+        ActiveSupport::Notifications.instrument("finance_client_enrolled", payload) do
+          Rails.logger.info "Evento finance_client_enrolled publicado para o cliente #{client.full_name}"
+        end
       end
 
       private
 
-      attr_accessor :client, :card, :publicador_de_evento
+      attr_accessor :client, :card
     end
   end
 end

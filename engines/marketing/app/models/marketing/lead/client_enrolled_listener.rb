@@ -1,21 +1,17 @@
 module Marketing
   module Lead
-    class ClientEnrolledListener < ::Shared::Domain::Evento::Ouvinte
-      #: (evento: Finance::Client::Enrolled) -> void
-      def reage_ao(evento:)
-        evento.client_payload.deep_symbolize_keys!
+    class ClientEnrolledListener
+      def reage_ao(payload:)
+        client_payload = payload.fetch(:client_payload)
 
-        messagem = "Lead com CPF #{evento.client_payload[:document]}
-					                   foi convertido na data #{evento.momento}"
+        momento = payload.fetch(:momento)
+
+        messagem = "Lead com CPF #{client_payload.fetch(:document)}
+					                   foi convertido na data #{momento}"
 
         Rails.logger.info messagem
 
-        Entity.convert(email: evento.client_payload[:email])
-      end
-
-      #: (evento: Finance::Client::Enrolled) -> bool
-      def sabe_processar?(evento:)
-        evento.name == "finance_client_enrolled"
+        Entity.convert(email: client_payload.fetch(:email))
       end
     end
   end

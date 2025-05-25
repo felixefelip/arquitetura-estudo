@@ -20,21 +20,24 @@ RSpec.describe Finance::Client::Enroll do
         client: client,
       )
 
+      # expect(ActiveSupport::Notifications).to(receive(:instrument).with(
+      #   "finance_client_enrolled",
+      #   hash_including(:client_payload, :momento, :name),
+      # ).once)
+
       described_class.new(
         client: client,
         card: card,
-        publicador_de_evento: $publicador,
       ).call
 
-      client_finance = Finance::Client::Entity.find_by(email: "felipe@email.com")
+      client_finance = Finance::Client::Entity.find_by!(email: "felipe@email.com")
       aluno_academico = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new.buscar_por_email(client_finance.email)
 
-      expect(client_finance).to be_present
       expect(aluno_academico).to be_present
 
       expect(Finance::Client::Entity.count).to eq 1
       expect(Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new.buscar_todos.count).to eq 1
-      expect(Marketing::Lead::Entity.find_by(email: client_finance.email)).to be_customer
+      expect(Marketing::Lead::Entity.find_by!(email: client_finance.email)).to be_customer
     end
   end
 end

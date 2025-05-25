@@ -1,14 +1,21 @@
-# Rails.application.config.after_initialize do
-#   subscriptions = [
-#     { class_name: "Academico::App::Aluno::MatriculadoOuvinte",
-#       event_name: :finance_client_enrolled },
-#     { class_name: "Academico::Domain::Aluno::LogMatriculado",
-#       event_name: :aluno_matriculado },
-#     { class_name: "Marketing::Lead::ClientEnrolledListener",
-#       event_name: :finance_client_enrolled },
-#   ]
+Rails.application.config.after_initialize do
+  # Registrando ouvintes para eventos com ActiveSupport::Notifications
 
-#   subscriptions.each do |subscription|
-#     ActiveSupport::Notifications.subscribe(subscription[:event_name], subscription[:class_name].constantize.new)
-#   end
-# end
+  # Ouvinte para finance_client_enrolled
+  ActiveSupport::Notifications.subscribe("finance_client_enrolled") do |_name, _start, _finish, _id, payload|
+    listener = Academico::App::Aluno::MatriculadoOuvinte.new
+    listener.reage_ao(payload: payload)
+  end
+
+  # Ouvinte para finance_client_enrolled (Marketing)
+  ActiveSupport::Notifications.subscribe("finance_client_enrolled") do |_name, _start, _finish, _id, payload|
+    listener = Marketing::Lead::ClientEnrolledListener.new
+    listener.reage_ao(payload: payload)
+  end
+
+  # Ouvinte para aluno_matriculado
+  ActiveSupport::Notifications.subscribe("aluno_matriculado") do |_name, _start, _finish, _id, payload|
+    listener = Academico::Domain::Aluno::LogMatriculado.new
+    listener.reage_ao(payload: payload)
+  end
+end

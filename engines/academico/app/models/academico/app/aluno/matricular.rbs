@@ -1,7 +1,6 @@
 module Academico::App::Aluno
   class Matricular
-    def initialize: (aluno_repository: Academico::Domain::Aluno::_Repository,
-                      publicador_de_evento: Shared::Domain::Evento::Publicador) -> void
+    def initialize: (aluno_repository: Academico::Domain::Aluno::_Repository) -> void
 
     def call: (aluno_dto: Dto) -> void
 
@@ -9,6 +8,6 @@ module Academico::App::Aluno
 
     attr_accessor aluno_repository: Academico::Domain::Aluno::_Repository
 
-    attr_accessor publicador_de_evento: Shared::Domain::Evento::Publicador
+    def publicar_evento: (aluno: Academico::Domain::Aluno::Entity) -> void
   end
 end

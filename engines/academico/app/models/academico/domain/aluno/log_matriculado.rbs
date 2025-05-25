@@ -1,8 +1,8 @@
 module Academico
   module Domain
     module Aluno
-      class LogMatriculado < ::Shared::Domain::Evento::Ouvinte
-        def reage_ao: (evento: Matriculado) -> void
+      class LogMatriculado
+        def reage_ao: (payload: Hash[Symbol, untyped]) -> void
       end
     end
   end

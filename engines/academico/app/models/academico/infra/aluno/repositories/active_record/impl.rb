@@ -5,21 +5,17 @@ module Academico
         module ActiveRecord
           class Impl
             def adicionar(aluno:)
-              Record.create(nome: aluno.nome, email: aluno.email, cpf: aluno.cpf, senha: aluno.senha)
+              Record.create!(nome: aluno.nome, email: aluno.email, cpf: aluno.cpf, senha: aluno.senha)
             end
 
             def buscar_por_cpf(cpf)
-              record = Record.find_by(cpf: cpf.to_s)
-
-              raise StandardError if record.nil?
+              record = Record.find_by!(cpf: cpf.to_s)
 
               aluno = Academico::Domain::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
 
               record.telefones.each do |telefone|
-                ddd = telefone.ddd
-                numero = telefone.numero
-
-                next if ddd.nil? || numero.nil?
+                next unless (ddd = telefone.ddd)
+                next unless (numero = telefone.numero)
 
                 aluno.adicionar_telefone(ddd:, numero:)
               end
@@ -28,9 +24,7 @@ module Academico
             end
 
             def buscar_por_email(email)
-              record = Record.find_by(email: email.to_s)
-
-              raise StandardError if record.nil?
+              record = Record.find_by!(email: email.to_s)
 
               aluno = Academico::Domain::Aluno::Entity.new(nome: record.nome, email: record.email, cpf: record.cpf)
 
