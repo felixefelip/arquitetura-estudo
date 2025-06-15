@@ -10,13 +10,13 @@ class Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy < ::Activ
 end
 module Finance::Card
 end
-module Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord
+module Academico::Aluno::TelefoneRepositories::ActiveRecord
 end
 class Academico::ApplicationRecord < ::ActiveRecord::Base
 end
-module Academico::Infra::Aluno::Repositories::ActiveRecord
+module Academico::Aluno::Repositories::ActiveRecord
 end
-class Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+class Academico::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
 end
 module Academico::Curso
 end
@@ -28,13 +28,11 @@ class ActiveRecord::Associations::CollectionProxy < ::ActiveRecord::Relation
 end
 module Academico
 end
-module Academico::Infra
+module Academico::Aluno
 end
-module Academico::Infra::Aluno
+module Academico::Aluno::TelefoneRepositories
 end
-module Academico::Infra::Aluno::TelefoneRepositories
-end
-module Academico::Infra::Aluno::Repositories
+module Academico::Aluno::Repositories
 end
 module Academico
 end

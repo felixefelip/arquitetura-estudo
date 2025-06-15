@@ -31,12 +31,12 @@ RSpec.describe Finance::Client::Enroll do
       ).call
 
       client_finance = Finance::Client::Entity.find_by!(email: "felipe@email.com")
-      aluno_academico = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new.buscar_por_email(client_finance.email)
+      aluno_academico = Academico::Aluno::Repositories::ActiveRecord::Impl.new.buscar_por_email(client_finance.email)
 
       expect(aluno_academico).to be_present
 
       expect(Finance::Client::Entity.count).to eq 1
-      expect(Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new.buscar_todos.count).to eq 1
+      expect(Academico::Aluno::Repositories::ActiveRecord::Impl.new.buscar_todos.count).to eq 1
       expect(Marketing::Lead::Entity.find_by!(email: client_finance.email)).to be_customer
     end
   end

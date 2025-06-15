@@ -1,7 +1,7 @@
 module Academico
   class AlunosController < ApplicationController
     def index
-      repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
+      repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 
       alunos = repo.buscar_todos
 
@@ -9,7 +9,7 @@ module Academico
     end
 
     def create
-      repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
+      repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 
       aluno_dto = Academico::Aluno::Matricular::Dto.new(
         cpf: "123456",

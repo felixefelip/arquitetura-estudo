@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Academico::Aluno::Matricular do
   describe "#call" do
     it "cria um aluno", :aggregate_failures do
-      repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
+      repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 
       # ouvinte_log_matriculado = Academico::Aluno::LogMatriculado.new
 
@@ -32,7 +32,7 @@ RSpec.describe Academico::Aluno::Matricular do
 
     context "quando com repo de memoria" do
       it "cria um aluno", :aggregate_failures do
-        repo = Academico::Infra::Aluno::Repositories::Memoria.new
+        repo = Academico::Aluno::Repositories::Memoria.new
 
         # Configurar o evento esperado com ActiveSupport::Notifications
         # expect(ActiveSupport::Notifications).to receive(:instrument).with(
