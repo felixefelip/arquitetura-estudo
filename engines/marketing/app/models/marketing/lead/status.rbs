@@ -1,0 +1,7 @@
+# typed: strict
+module Marketing
+  module Lead
+    class Status
+    end
+  end
+end

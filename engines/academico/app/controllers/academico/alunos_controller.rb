@@ -11,14 +11,14 @@ module Academico
     def create
       repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
 
-      aluno_dto = Academico::App::Aluno::Matricular::Dto.new(
+      aluno_dto = Academico::Aluno::Matricular::Dto.new(
         cpf: "123456",
         nome: "Felipe",
         email: "felipe@email.com",
       )
 
-      Academico::App::Aluno::Matricular.new(
-        aluno_repository: repo
+      Academico::Aluno::Matricular.new(
+        aluno_repository: repo,
       ).call(aluno_dto:)
     end
   end

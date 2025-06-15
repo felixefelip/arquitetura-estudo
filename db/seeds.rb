@@ -7,9 +7,9 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # aluno_repository = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
-# aluno_dto = Academico::App::Aluno::Matricular::Dto.new(cpf: "12345678912", nome: "Felipe", email: "felipe@gmail.com")
+# aluno_dto = Academico::Aluno::Matricular::Dto.new(cpf: "12345678912", nome: "Felipe", email: "felipe@gmail.com")
 
-# Academico::App::Aluno::Matricular::Create.new(aluno_repository:, publicador_de_evento: nil).call(aluno_dto:)
+# Academico::Aluno::Matricular::Create.new(aluno_repository:, publicador_de_evento: nil).call(aluno_dto:)
 
 
 cursos = [
@@ -70,5 +70,5 @@ cursos = [
 
 
 cursos.each do |curso|
-	Academico::Domain::Curso::Entity.create!(curso)
+	Academico::Curso::Entity.create!(curso)
 end

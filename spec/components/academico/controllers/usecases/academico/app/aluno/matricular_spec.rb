@@ -1,0 +1,59 @@
+require "rails_helper"
+
+RSpec.describe Academico::Aluno::Matricular do
+  describe "#call" do
+    it "cria um aluno", :aggregate_failures do
+      repo = Academico::Infra::Aluno::Repositories::ActiveRecord::Impl.new
+
+      # ouvinte_log_matriculado = Academico::Aluno::LogMatriculado.new
+
+      # expect(ouvinte_log_matriculado).to receive(:reage_ao).once
+
+      # Configurar o evento esperado com ActiveSupport::Notifications
+      # expect(ActiveSupport::Notifications).to receive(:instrument).with(
+      #   "aluno_matriculado",
+      #   hash_including(:cpf_aluno, :momento, :name)
+      # ).once
+
+      aluno_dto = Academico::Aluno::Matricular::Dto.new(
+        cpf: "123456",
+        nome: "Felipe",
+        email: "felipe@email.com",
+      )
+
+      described_class.new(
+        aluno_repository: repo,
+      ).call(aluno_dto:)
+
+      aluno_busca = repo.buscar_por_cpf(Shared::Cpf.new(numero: aluno_dto.cpf))
+      expect(aluno_busca).to be_present
+      expect(aluno_busca).to be_a(Academico::Aluno::Entity)
+    end
+
+    context "quando com repo de memoria" do
+      it "cria um aluno", :aggregate_failures do
+        repo = Academico::Infra::Aluno::Repositories::Memoria.new
+
+        # Configurar o evento esperado com ActiveSupport::Notifications
+        # expect(ActiveSupport::Notifications).to receive(:instrument).with(
+        #   "aluno_matriculado",
+        #   hash_including(:cpf_aluno, :momento, :name),
+        # ).once
+
+        aluno_dto = Academico::Aluno::Matricular::Dto.new(
+          cpf: "123456",
+          nome: "Felipe",
+          email: "felipe@email.com",
+        )
+
+        described_class.new(
+          aluno_repository: repo,
+        ).call(aluno_dto:)
+
+        aluno_busca = repo.buscar_por_cpf(Shared::Cpf.new(numero: aluno_dto.cpf))
+        expect(aluno_busca).to be_present
+        expect(aluno_busca).to be_a(Academico::Aluno::Entity)
+      end
+    end
+  end
+end

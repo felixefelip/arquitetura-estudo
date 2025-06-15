@@ -1,2 +1,2 @@
-class Gameficacao::App::Selo::BuscarDeUsuario
+class Gameficacao::Selo::BuscarDeUsuario
 end

@@ -1,2 +1,2 @@
-class Gameficacao::Domain::Selo::Entity
+class Gameficacao::Selo::Entity
 end

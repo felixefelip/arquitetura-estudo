@@ -18,7 +18,7 @@ module Academico::Infra::Aluno::Repositories::ActiveRecord
 end
 class Academico::Infra::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
 end
-module Academico::Domain::Curso
+module Academico::Curso
 end
 module Marketing
 end
@@ -36,7 +36,7 @@ module Academico::Infra::Aluno::TelefoneRepositories
 end
 module Academico::Infra::Aluno::Repositories
 end
-module Academico::Domain
+module Academico
 end
 class ActiveRecord::Relation < ::Object
 end
