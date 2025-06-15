@@ -1,8 +1,7 @@
 module Academico
   module Aluno
     class LogMatriculado
-      # def reage_ao: (payload: Hash[Symbol, untyped]) -> void
-      # end
+      def reage_ao: (payload: Hash[Symbol, untyped]) -> void
     end
   end
 end

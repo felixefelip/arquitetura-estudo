@@ -11,18 +11,6 @@ module Academico
                        class_name: "Academico::Infra::Aluno::Repositories::ActiveRecord::Record"
 
             validates :ddd, presence: true
-
-            def teste
-              self.ddd = "1"
-
-              ddd&.capitalize
-
-              aluno&.telefones&.first!&.numero = "1"
-
-              aluno.nome
-
-              # aluno.nome = 1
-            end
           end
 
           private_constant :Record

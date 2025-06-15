@@ -1,5 +1,5 @@
 module Academico::Indicacao
   class EnviarEmailIndicacao
-    def initialize; end
+    def initialize: () -> void
   end
 end
