@@ -9,8 +9,6 @@ module Academico
     end
 
     def create
-      repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
-
       aluno_dto = Academico::Aluno::Matricular::Dto.new(
         cpf: "123456",
         nome: "Felipe",
@@ -18,8 +16,10 @@ module Academico
       )
 
       Academico::Aluno::Matricular.new(
-        aluno_repository: repo,
-      ).call(aluno_dto:)
+        aluno_dto: aluno_dto,
+      ).call
+
+      render json: { message: "Aluno matriculado com sucesso!" }, status: :created
     end
   end
 end

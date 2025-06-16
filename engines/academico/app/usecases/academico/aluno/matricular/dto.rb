@@ -9,7 +9,6 @@ module Academico
         validates :cpf, presence: true
         validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
         validates :nome, presence: true
-        validates :senha, presence: true, length: { minimum: 6 }
 
         def initialize(cpf:, nome:, email:)
           self.cpf = cpf
@@ -17,9 +16,21 @@ module Academico
           self.email = email
         end
 
+        def cpf!
+          cpf || raise
+        end
+
+        def email!
+          email || raise
+        end
+
+        def nome!
+          nome || raise
+        end
+
         private
 
-        attr_writer :cpf, :email, :nome, :senha
+        attr_writer :cpf, :email, :nome
       end
     end
   end

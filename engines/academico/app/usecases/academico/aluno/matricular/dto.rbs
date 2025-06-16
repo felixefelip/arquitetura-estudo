@@ -2,6 +2,12 @@ module Academico
   module Aluno
     class Matricular
       class Dto
+        def self.validates: (*untyped) -> void
+        def valid?: -> bool
+        def invalid?: -> bool
+        def errors: -> ActiveModel::Errors
+        def validate!: -> void
+
         attr_reader cpf: String?
 
         attr_reader email: String?
@@ -11,6 +17,10 @@ module Academico
         attr_reader senha: String?
 
         def initialize: (cpf: String?, nome: String?, email: String?) -> void
+
+        def cpf!: -> String
+        def email!: -> String
+        def nome!: -> String
 
         private
 

@@ -1,12 +1,15 @@
 module Academico::Aluno
   class Matricular
-    def initialize: (aluno_repository: Academico::Aluno::_Repository) -> void
+    def initialize: (?aluno_repository: Academico::Aluno::_Repository, aluno_dto: Dto) -> void
 
-    def call: (aluno_dto: Dto) -> void
+    def call: () -> bool
+
+    attr_accessor errors: ActiveModel::Errors
 
     private
 
     attr_accessor aluno_repository: Academico::Aluno::_Repository
+    attr_accessor aluno_dto: Dto
 
     def publicar_evento: (aluno: Academico::Aluno::Entity) -> void
   end

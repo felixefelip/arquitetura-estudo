@@ -29,7 +29,8 @@ module Academico
 
         Academico::Aluno::Matricular.new(
           aluno_repository: repo,
-        ).call(aluno_dto:)
+          aluno_dto:,
+        ).call
       end
     end
   end

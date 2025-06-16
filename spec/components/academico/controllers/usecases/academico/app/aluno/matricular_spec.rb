@@ -23,7 +23,8 @@ RSpec.describe Academico::Aluno::Matricular do
 
       described_class.new(
         aluno_repository: repo,
-      ).call(aluno_dto:)
+        aluno_dto:,
+      ).call
 
       aluno_busca = repo.buscar_por_cpf(Shared::Cpf.new(numero: aluno_dto.cpf))
       expect(aluno_busca).to be_present
@@ -48,7 +49,8 @@ RSpec.describe Academico::Aluno::Matricular do
 
         described_class.new(
           aluno_repository: repo,
-        ).call(aluno_dto:)
+          aluno_dto:,
+        ).call
 
         aluno_busca = repo.buscar_por_cpf(Shared::Cpf.new(numero: aluno_dto.cpf))
         expect(aluno_busca).to be_present

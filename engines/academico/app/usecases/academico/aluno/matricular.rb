@@ -1,13 +1,19 @@
 module Academico
   module Aluno
     class Matricular
-      def initialize(aluno_repository:)
+      attr_accessor :errors
+
+      def initialize(aluno_dto:, aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl.new)
         self.aluno_repository = aluno_repository
+        self.aluno_dto = aluno_dto
+        self.errors = aluno_dto.errors
       end
 
-      def call(aluno_dto:)
+      def call
+        aluno_dto.validate!
+
         aluno = ::Academico::Aluno::Entity.new(
-          cpf: aluno_dto.cpf, nome: aluno_dto.nome, email: aluno_dto.email, senha: "123456",
+          cpf: aluno_dto.cpf!, nome: aluno_dto.nome!, email: aluno_dto.email!, senha: aluno_dto.senha,
         )
 
         aluno_repository.adicionar(aluno:)
@@ -15,11 +21,13 @@ module Academico
         publicar_evento(aluno:)
 
         SuccessMailer.send_mail(aluno).deliver
+
+        true
       end
 
       private
 
-      attr_accessor :aluno_repository
+      attr_accessor :aluno_repository, :aluno_dto
 
       def publicar_evento(aluno:)
         payload = {
