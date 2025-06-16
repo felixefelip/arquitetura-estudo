@@ -12,7 +12,7 @@ module Academico
       repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 
       aluno_dto = Academico::Aluno::Matricular::Dto.new(
-        cpf: nil,
+        cpf: "123456",
         nome: "Felipe",
         email: "felipe@email.com",
       )

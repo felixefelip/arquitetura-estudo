@@ -1,6 +1,6 @@
 module Marketing
   module Lead
-    class Entity < ::Marketing::ApplicationRecord
+    class Entity < ApplicationRecord
       extend ::_ActiveRecord_Relation_ClassMethods[::Marketing::Lead::Entity, ::Marketing::Lead::Entity::ActiveRecord_Relation, ::Integer]
 
       def self.convert: (email: String) -> void
