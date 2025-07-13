@@ -2,7 +2,7 @@ module Academico
   module Aluno
     module Repositories
       module ActiveRecord
-        class Record < ::Academico::ApplicationRecord
+        class Record < ::ApplicationRecord
           extend ::_ActiveRecord_Relation_ClassMethods[::Academico::Aluno::Repositories::ActiveRecord::Record, ::Academico::Aluno::Repositories::ActiveRecord::Record::ActiveRecord_Relation, ::Integer]
 
           module GeneratedAttributeMethods

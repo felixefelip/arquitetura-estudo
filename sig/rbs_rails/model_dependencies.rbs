@@ -1,7 +1,3 @@
-module Marketing::Lead
-end
-class Marketing::ApplicationRecord < ::ActiveRecord::Base
-end
 module Finance::Client
 end
 class Finance::ApplicationRecord < ::ActiveRecord::Base
@@ -10,9 +6,11 @@ class Finance::Card::Entity::ActiveRecord_Associations_CollectionProxy < ::Activ
 end
 module Finance::Card
 end
-module Academico::Aluno::TelefoneRepositories::ActiveRecord
+module Marketing::Lead
 end
-class Academico::ApplicationRecord < ::ActiveRecord::Base
+class ApplicationRecord < ::ActiveRecord::Base
+end
+module Academico::Aluno::TelefoneRepositories::ActiveRecord
 end
 module Academico::Aluno::Repositories::ActiveRecord
 end
@@ -20,11 +18,11 @@ class Academico::Aluno::TelefoneRepositories::ActiveRecord::Record::ActiveRecord
 end
 module Academico::Curso
 end
-module Marketing
-end
 module Finance
 end
 class ActiveRecord::Associations::CollectionProxy < ::ActiveRecord::Relation
+end
+module Marketing
 end
 module Academico
 end
@@ -33,8 +31,6 @@ end
 module Academico::Aluno::TelefoneRepositories
 end
 module Academico::Aluno::Repositories
-end
-module Academico
 end
 class ActiveRecord::Relation < ::Object
 end

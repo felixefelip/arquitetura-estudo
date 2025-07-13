@@ -12,6 +12,12 @@ module Finance
       validates :full_name, presence: true
       validates :email, presence: true
       validates :document, presence: true
+
+      delegate :number, to: :actual_card
+
+      def actual_card
+        cards.first!
+      end
     end
   end
 end

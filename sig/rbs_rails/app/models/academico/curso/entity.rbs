@@ -1,6 +1,6 @@
 module Academico
   module Curso
-    class Entity < ::Academico::ApplicationRecord
+    class Entity < ::ApplicationRecord
       extend ::_ActiveRecord_Relation_ClassMethods[::Academico::Curso::Entity, ::Academico::Curso::Entity::ActiveRecord_Relation, ::Integer]
 
       module GeneratedAttributeMethods

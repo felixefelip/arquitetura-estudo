@@ -1,0 +1,21 @@
+class FormTyped[Element]
+  def initialize: (Element) -> void
+
+  # def teste: (status: :postgres | :mysql) -> void
+
+  def text_field: (attribute: Element, klass: String) -> String
+
+end
+
+
+# interface _Foo[T = untyped]
+# end
+
+interface _Attributes[T]
+end
+
+class User
+  include _Attributes
+end
+
+type bar = _Attributes[:full_name | :email]  # equivalent to _Attributes[String, untyped]

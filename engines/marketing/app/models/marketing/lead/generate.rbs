@@ -7,6 +7,8 @@ module Marketing
 
       def call: () -> void
 
+      def teste: (status: :postgres | :mysql) -> void
+
       private
 
       attr_accessor full_name: String

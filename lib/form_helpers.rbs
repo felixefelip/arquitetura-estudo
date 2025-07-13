@@ -1,0 +1,8 @@
+class FormBuilder[T, Field]
+  def initialize: (T) -> void
+  def input: (Field) -> String
+end
+
+module FormHelpers
+  def self.form_for: [T, Field] (T, Array[Field]) { (FormBuilder[T, Field]) -> void } -> void
+end
