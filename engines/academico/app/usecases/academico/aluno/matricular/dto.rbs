@@ -2,11 +2,8 @@ module Academico
   module Aluno
     class Matricular
       class Dto
-        def self.validates: (*untyped) -> void
-        def valid?: -> bool
-        def invalid?: -> bool
-        def errors: -> ActiveModel::Errors
-        def validate!: -> void
+        include ActiveModel::Validations
+        extend ActiveModel::Validations::ClassMethods
 
         attr_reader cpf: String?
 
