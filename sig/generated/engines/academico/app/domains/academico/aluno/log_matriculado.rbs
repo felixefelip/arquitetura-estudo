@@ -1,0 +1,10 @@
+# Generated from engines/academico/app/domains/academico/aluno/log_matriculado.rb with RBS::Inline
+
+module Academico
+  module Aluno
+    class LogMatriculado
+      # @rbs (payload: Hash[Symbol, untyped]) -> ::String
+      def reage_ao: (payload: Hash[Symbol, untyped]) -> ::String
+    end
+  end
+end

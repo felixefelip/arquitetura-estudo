@@ -1,9 +1,0 @@
-class Finance::ClientsController < ApplicationController
-  def create: () -> void
-
-  private
-
-  def build_client: () -> Finance::Client::Entity
-
-  def build_card: () -> Finance::Card::Entity
-end

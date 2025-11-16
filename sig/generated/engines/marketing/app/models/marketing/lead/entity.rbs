@@ -1,0 +1,8 @@
+# Generated from engines/marketing/app/models/marketing/lead/entity.rb with RBS::Inline
+
+module Marketing::Lead
+  class Entity < ApplicationRecord
+    # @rbs (email: String) -> void
+    def self.convert: (email: String) -> void
+  end
+end

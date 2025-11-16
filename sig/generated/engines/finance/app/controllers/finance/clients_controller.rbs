@@ -1,0 +1,17 @@
+# Generated from engines/finance/app/controllers/finance/clients_controller.rb with RBS::Inline
+
+class Finance::ClientsController < ApplicationController
+  # @rbs () -> void
+  def create: () -> void
+
+  private
+
+  # @rbs () -> Finance::Client::Entity
+  def build_client: () -> Finance::Client::Entity
+
+  # @rbs () -> Finance::Card::Entity
+  def build_card: () -> Finance::Card::Entity
+
+  # @rbs () -> String
+  def teste: () -> String
+end

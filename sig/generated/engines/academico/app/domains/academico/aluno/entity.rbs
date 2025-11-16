@@ -1,0 +1,33 @@
+# Generated from engines/academico/app/domains/academico/aluno/entity.rb with RBS::Inline
+
+module Academico::Aluno
+  class Entity
+    attr_reader cpf: ::Shared::Cpf
+
+    attr_reader email: Email
+
+    attr_reader nome: String
+
+    attr_reader telefones: Array[Telefone]
+
+    attr_reader senha: String?
+
+    # @rbs (cpf: ::String, nome: ::String, email: ::String, ?senha: ::String?) -> void
+    def initialize: (cpf: ::String, nome: ::String, email: ::String, ?senha: ::String?) -> void
+
+    # @rbs (ddd: ::String, numero: ::String) -> void
+    def adicionar_telefone: (ddd: ::String, numero: ::String) -> void
+
+    private
+
+    attr_writer cpf: ::Shared::Cpf
+
+    attr_writer email: Email
+
+    attr_writer nome: String
+
+    attr_writer telefones: Array[Telefone]
+
+    attr_writer senha: String?
+  end
+end

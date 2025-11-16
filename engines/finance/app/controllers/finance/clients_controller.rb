@@ -7,8 +7,10 @@ class Finance::ClientsController < ApplicationController
     card = build_card
 
     ::Finance::Client::Enroll.new(
-      client: client, card: card
+      client: client, card: card,
     ).call
+
+    teste.strip
 
     render :json, status: :created
   end
@@ -32,5 +34,10 @@ class Finance::ClientsController < ApplicationController
       year_expiration: params[:cardExpirationYear],
       security_code: params[:cardSecurityCode],
     )
+  end
+
+  # @rbs () -> String
+  def teste
+    "teste"
   end
 end
