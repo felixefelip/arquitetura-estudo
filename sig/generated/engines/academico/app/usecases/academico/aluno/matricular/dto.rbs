@@ -1,8 +1,11 @@
+# Generated from engines/academico/app/usecases/academico/aluno/matricular/dto.rb with RBS::Inline
+
 module Academico
   module Aluno
     class Matricular
       class Dto
         include ActiveModel::Validations
+
         extend ActiveModel::Validations::ClassMethods
 
         attr_reader cpf: String?
@@ -13,11 +16,17 @@ module Academico
 
         attr_reader senha: String?
 
+        # @rbs (cpf: String?, nome: String?, email: String?) -> void
         def initialize: (cpf: String?, nome: String?, email: String?) -> void
 
-        def cpf!: -> String
-        def email!: -> String
-        def nome!: -> String
+        # @rbs () -> String
+        def cpf!: () -> String
+
+        # @rbs () -> String
+        def email!: () -> String
+
+        # @rbs () -> String
+        def nome!: () -> String
 
         private
 
@@ -26,8 +35,6 @@ module Academico
         attr_writer email: String?
 
         attr_writer nome: String?
-
-        attr_writer senha: String?
       end
     end
   end

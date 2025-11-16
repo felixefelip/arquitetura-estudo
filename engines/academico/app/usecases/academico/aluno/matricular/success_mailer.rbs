@@ -1,5 +1,0 @@
-class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
-  def send_mail: (Academico::Aluno::Entity aluno) -> untyped
-
-  def self.send_mail: (Academico::Aluno::Entity aluno) -> untyped
-end
