@@ -1,0 +1,24 @@
+# Generated from engines/academico/app/usecases/academico/aluno/matricular.rb with RBS::Inline
+
+module Academico
+  module Aluno
+    class Matricular
+      attr_accessor errors: ActiveModel::Errors
+
+      # @rbs (aluno_dto: Dto, ?aluno_repository: Academico::Aluno::_Repository) -> void
+      def initialize: (aluno_dto: Dto, ?aluno_repository: Academico::Aluno::_Repository) -> void
+
+      # @rbs -> bool
+      def call: () -> bool
+
+      private
+
+      attr_accessor aluno_repository: Academico::Aluno::_Repository
+
+      attr_accessor aluno_dto: Dto
+
+      # @rbs (aluno: Academico::Aluno::Entity) -> void
+      def publicar_evento: (aluno: Academico::Aluno::Entity) -> void
+    end
+  end
+end

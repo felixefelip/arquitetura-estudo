@@ -1,0 +1,17 @@
+# Generated from engines/academico/app/usecases/academico/aluno/matriculado_ouvinte.rb with RBS::Inline
+
+module Academico
+  module Aluno
+    class MatriculadoOuvinte
+      # @rbs (payload: Hash[Symbol, untyped]) -> void
+      def reage_ao: (payload: Hash[Symbol, untyped]) -> void
+
+      private
+
+      attr_accessor client_payload: Hash[Symbol, untyped]
+
+      # @rbs -> void
+      def matricular_aluno: () -> void
+    end
+  end
+end

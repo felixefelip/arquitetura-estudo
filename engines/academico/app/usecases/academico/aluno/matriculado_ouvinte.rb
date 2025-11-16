@@ -1,6 +1,9 @@
+# rbs_inline: enabled
+
 module Academico
   module Aluno
     class MatriculadoOuvinte
+      # @rbs (payload: Hash[Symbol, untyped]) -> void
       def reage_ao(payload:)
         self.client_payload = payload.fetch(:client_payload)
 
@@ -16,8 +19,9 @@ module Academico
 
       private
 
-      attr_accessor :client_payload
+      attr_accessor :client_payload #: Hash[Symbol, untyped]
 
+      # @rbs -> void
       def matricular_aluno
         repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 

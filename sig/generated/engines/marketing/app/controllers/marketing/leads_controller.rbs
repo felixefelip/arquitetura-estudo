@@ -1,0 +1,6 @@
+# Generated from engines/marketing/app/controllers/marketing/leads_controller.rb with RBS::Inline
+
+class Marketing::LeadsController < ApplicationController
+  # @rbs -> void
+  def create: () -> void
+end

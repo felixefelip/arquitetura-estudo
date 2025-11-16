@@ -1,9 +1,0 @@
-module Academico::Aluno
-  class MatriculadoOuvinte
-    attr_accessor client_payload: Hash[Symbol, untyped]
-
-    def reage_ao: (payload: Hash[Symbol, untyped]) -> void
-
-    def matricular_aluno: () -> void
-  end
-end

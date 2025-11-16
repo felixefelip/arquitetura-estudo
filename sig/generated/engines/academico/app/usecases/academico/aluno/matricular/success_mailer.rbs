@@ -4,5 +4,7 @@ class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
   # @rbs (Academico::Aluno::Entity aluno) -> Mail::Message
   def send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message
 
+  @mensagem: String
+
   def self.send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message
 end

@@ -1,14 +1,18 @@
+# rbs_inline: enabled
+
 module Academico
   module Aluno
     class Matricular
-      attr_accessor :errors
+      attr_accessor :errors #: ActiveModel::Errors
 
+      # @rbs (aluno_dto: Dto, ?aluno_repository: Academico::Aluno::_Repository) -> void
       def initialize(aluno_dto:, aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl.new)
         self.aluno_repository = aluno_repository
         self.aluno_dto = aluno_dto
         self.errors = aluno_dto.errors
       end
 
+      # @rbs -> bool
       def call
         aluno_dto.validate!
 
@@ -27,8 +31,10 @@ module Academico
 
       private
 
-      attr_accessor :aluno_repository, :aluno_dto
+      attr_accessor :aluno_repository #: Academico::Aluno::_Repository
+      attr_accessor :aluno_dto #: Dto
 
+      # @rbs (aluno: Academico::Aluno::Entity) -> void
       def publicar_evento(aluno:)
         payload = {
           cpf_aluno: aluno.cpf,
