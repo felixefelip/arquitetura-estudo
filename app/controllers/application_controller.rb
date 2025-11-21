@@ -5,5 +5,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # @rbs!
-  #    include _RbsRailsPathHelpers
+  #   include _RbsRailsPathHelpers
+  #   include ActionView::Helpers
+  #
+  #   def javascript_importmap_tags: () -> untyped
+  #   def render: (*untyped) -> untyped
 end

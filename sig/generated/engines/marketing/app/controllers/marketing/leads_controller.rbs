@@ -1,12 +1,17 @@
 # Generated from engines/marketing/app/controllers/marketing/leads_controller.rb with RBS::Inline
 
 class Marketing::LeadsController < ApplicationController
-  # @rbs -> void
+  # : -> void
   def new: () -> void
 
-  # @rbs -> void
+  # : -> void
   def create: () -> void
 
-  # @rbs -> void
+  # : -> void
   def sucesso: () -> void
+
+  private
+
+  # : -> Hash[Symbol, untyped]
+  def build_plans: () -> Hash[Symbol, untyped]
 end

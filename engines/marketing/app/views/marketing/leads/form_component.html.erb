@@ -1,3 +1,5 @@
+<%# @type self: Marketing::Leads::FormComponent %>
+
 <div class="compra-container">
   <div class="compra-grid">
     <div class="compra-form">
@@ -17,7 +19,7 @@
           </div>
 
           <div class="form-actions">
-            <%= button_tag "Próximo", type: "button", class: "btn btn-primary", onclick: "nextStep()" %>
+            <%= button_tag("Próximo", type: "button", class: "btn btn-primary", onclick: "nextStep()") {} %>
           </div>
         </div>
 
@@ -53,7 +55,7 @@
           </div>
 
           <div class="form-actions">
-            <%= button_tag "Voltar", type: "button", class: "btn btn-secondary", onclick: "prevStep()" %>
+            <%= button_tag("Voltar", type: "button", class: "btn btn-secondary", onclick: "prevStep()") {} %>
             <%= f.submit "Finalizar compra", class: "btn btn-primary" %>
           </div>
         </div>

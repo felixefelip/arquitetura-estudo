@@ -5,6 +5,8 @@ module ViewComponent
     # @return [ActiveSupport::OrderedOptions]
     def self.config: () -> untyped
 
+    include _RbsRailsPathHelpers
+
     include ActionView::Helpers
 
     include ERB::Escape
@@ -59,7 +61,7 @@ module ViewComponent
     # `super` also doesn't consider the current variant. `render_parent` renders the
     # parent template considering the current variant and emits the result without
     # double-rendering.
-    def render_parent: () -> nil
+    # def render_parent: () -> nil
 
     # Renders the parent component to a string and returns it. This method is meant
     # to be used inside custom #call methods when a string result is desired, eg.
@@ -108,13 +110,13 @@ module ViewComponent
     # to maintain backwards compatibility.
     #
     # @private
-    def render: (?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] args) ?{ () -> untyped } -> untyped
+    def render: (*untyped args) ?{ () -> untyped } -> untyped
 
     # The current controller. Use sparingly as doing so introduces coupling
     # that inhibits encapsulation & reuse, often making testing difficult.
     #
     # @return [ActionController::Base]
-    def controller: () -> untyped
+    # def controller: () -> untyped
 
     # A proxy through which to access helpers. Use sparingly as doing so introduces
     # coupling that inhibits encapsulation & reuse, often making testing difficult.
@@ -123,7 +125,7 @@ module ViewComponent
     def helpers: () -> untyped
 
     # @private
-    def method_missing: (untyped method_name, *untyped args) -> untyped
+    # def method_missing: (untyped method_name, *untyped args) -> untyped
 
     # Exposes .virtual_path as an instance method
     #
@@ -142,7 +144,7 @@ module ViewComponent
     # inhibits encapsulation & reuse, often making testing difficult.
     #
     # @return [ActionDispatch::Request]
-    def request: () -> untyped
+    # def request: () -> untyped
 
     # @private
     def __vc_request: () -> (untyped | nil)

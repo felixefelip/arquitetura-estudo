@@ -12,7 +12,7 @@ module Academico::Cursos
 
     #: -> bool
     def disabled?
-      @curso.assistido?
+      @curso.icone.present?
     end
 
     #: -> String

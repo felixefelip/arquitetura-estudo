@@ -1,3 +1,5 @@
+<%# @type self: Academico::Cursos::CardComponent %>
+
 <div class="curso-item">
   <% if @curso.icone.present? %>
     <%= image_tag @curso.icone, alt: @curso.titulo, class: "curso-icone" %>

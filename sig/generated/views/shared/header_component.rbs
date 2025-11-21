@@ -1,0 +1,10 @@
+# Generated from app/views/shared/header_component.rb with RBS::Inline
+
+class Shared::HeaderComponent < ViewComponent::Base
+  @usuario: untyped
+
+  @show_logout: bool
+
+  # : (?usuario: untyped, ?show_logout: bool) -> void
+  def initialize: (?usuario: untyped, ?show_logout: bool) -> void
+end

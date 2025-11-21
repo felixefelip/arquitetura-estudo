@@ -1,7 +1,14 @@
+<%# @type self: ApplicationController %>
+
 <!DOCTYPE html>
+
 <html>
   <head>
-    <title>Alura - <%= content_for?(:title) ? yield(:title) : "Cursos Online" %></title>
+    <title>
+      Alura -
+      <%= content_for?(:title) ? yield(:title) : "Cursos Online" %>
+    </title>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,15 +19,11 @@
 
   <body>
     <% if flash[:notice] %>
-      <div class="alert alert-success">
-        <%= flash[:notice] %>
-      </div>
+      <div class="alert alert-success"><%= flash[:notice] %></div>
     <% end %>
-    
+
     <% if flash[:alert] %>
-      <div class="alert alert-error">
-        <%= flash[:alert] %>
-      </div>
+      <div class="alert alert-error"><%= flash[:alert] %></div>
     <% end %>
 
     <%= yield %>

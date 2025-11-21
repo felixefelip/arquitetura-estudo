@@ -31,6 +31,8 @@
 target :app do
   check "app"
   check "engines"
+  check "app/views/**/*.erb"
+  check "engines/**/views/**/*.erb"
   signature "app"
   signature "engines"
   signature "sig"
