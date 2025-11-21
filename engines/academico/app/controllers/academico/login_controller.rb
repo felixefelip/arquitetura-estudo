@@ -14,9 +14,9 @@ class Academico::LoginController < ApplicationController
 
     if aluno.present?
       # Armazena dados do usuário na sessão
-      session[:user_id] = aluno.id
-      session[:user_name] = aluno.nome
-      session[:user_email] = aluno.email
+      # session[:user_id] = aluno.id
+      # session[:user_name] = aluno.nome
+      # session[:user_email] = aluno.email
 
       redirect_to academico_cursos_path, notice: "Login realizado com sucesso!"
     else

@@ -11,7 +11,4 @@ class Finance::ClientsController < ApplicationController
 
   # @rbs () -> Finance::Card::Entity
   def build_card: () -> Finance::Card::Entity
-
-  # @rbs () -> String
-  def teste: () -> String
 end

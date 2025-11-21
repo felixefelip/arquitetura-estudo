@@ -1,0 +1,12 @@
+# Generated from engines/academico/app/views/academico/cursos/index_component.rb with RBS::Inline
+
+module Academico::Cursos
+  class IndexComponent < ViewComponent::Base
+    @cursos: Academico::Curso::Entity::ActiveRecord_Relation
+
+    @usuario: String?
+
+    # : (cursos: Academico::Curso::Entity::ActiveRecord_Relation, usuario: String?) -> void
+    def initialize: (cursos: Academico::Curso::Entity::ActiveRecord_Relation, usuario: String?) -> void
+  end
+end

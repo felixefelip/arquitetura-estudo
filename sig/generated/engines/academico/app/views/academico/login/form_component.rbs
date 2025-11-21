@@ -1,0 +1,10 @@
+# Generated from engines/academico/app/views/academico/login/form_component.rb with RBS::Inline
+
+module Academico::Login
+  class FormComponent < ViewComponent::Base
+    @error_message: String?
+
+    # : (error_message: String?) -> void
+    def initialize: (error_message: String?) -> void
+  end
+end

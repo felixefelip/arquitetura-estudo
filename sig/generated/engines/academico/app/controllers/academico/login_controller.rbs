@@ -2,5 +2,11 @@
 
 class Academico::LoginController < ApplicationController
   # : -> void
-  def login: () -> void
+  def new: () -> void
+
+  # : -> void
+  def create: () -> void
+
+  # : -> void
+  def destroy: () -> void
 end

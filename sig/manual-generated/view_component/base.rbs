@@ -1,0 +1,285 @@
+module ViewComponent
+  class Base
+    # Returns the current config.
+    #
+    # @return [ActiveSupport::OrderedOptions]
+    def self.config: () -> untyped
+
+    include ActionView::Helpers
+
+    include ERB::Escape
+
+    # include ActiveSupport::CoreExt::ERBUtil
+
+    # include ViewComponent::InlineTemplate
+
+    include ViewComponent::Slotable
+
+    # include ViewComponent::Translatable
+
+    # include ViewComponent::WithContentHelper
+
+    attr_accessor __vc_original_view_context: untyped
+
+    attr_reader current_template: untyped
+
+    # Components render in their own view context. Helpers and other functionality
+    # require a reference to the original Rails view context, an instance of
+    # `ActionView::Base`. Use this method to set a reference to the original
+    # view context. Objects that implement this method will render in the component's
+    # view context, while objects that don't will render in the original view context
+    # so helpers, etc work as expected.
+    #
+    # @param view_context [ActionView::Base] The original view context.
+    # @return [void]
+    def set_original_view_context: (untyped view_context) -> nil
+
+    # Including `Rails.application.routes.url_helpers` defines an initializer that accepts (...),
+    # so we have to define our own empty initializer to overwrite it.
+    def initialize: () -> void
+
+    # Entrypoint for rendering components.
+    #
+    # - `view_context`: ActionView context from calling view
+    # - `block`: optional block to be captured within the view context
+    #
+    # Returns HTML that has been escaped by the respective template handler.
+    #
+    # @return [String]
+    def render_in: (untyped view_context) ?{ () -> untyped } -> untyped
+
+    # Subclass components that call `super` inside their template code will cause a
+    # double render if they emit the result.
+    #
+    # ```erb
+    # <%= super %> # double-renders
+    # <% super %> # doesn't double-render
+    # ```
+    #
+    # `super` also doesn't consider the current variant. `render_parent` renders the
+    # parent template considering the current variant and emits the result without
+    # double-rendering.
+    def render_parent: () -> nil
+
+    # Renders the parent component to a string and returns it. This method is meant
+    # to be used inside custom #call methods when a string result is desired, eg.
+    #
+    # ```ruby
+    # def call
+    #   "<div>#{render_parent_to_string}</div>"
+    # end
+    # ```
+    #
+    # When rendering the parent inside an .erb template, use `#render_parent` instead.
+    def render_parent_to_string: () -> untyped
+
+    # Optional content to be returned before the rendered template.
+    #
+    # @return [String]
+    def output_preamble: () -> untyped
+
+    # Optional content to be returned after the rendered template.
+    #
+    # @return [String]
+    def output_postamble: () -> untyped
+
+    # Called before rendering the component. Override to perform operations that
+    # depend on having access to the view context, such as helpers.
+    #
+    # @return [void]
+    def before_render: () -> nil
+
+    # Called around rendering the component. Override to wrap the rendering of a
+    # component in custom instrumentation, etc.
+    #
+    # @return [void]
+    def around_render: () { () -> untyped } -> untyped
+
+    # Override to determine whether the ViewComponent should render.
+    #
+    # @return [Boolean]
+    def render?: () -> true
+
+    # Re-use original view_context if we're not rendering a component.
+    #
+    # As of v4, ViewComponent::Base re-uses the existing view context created
+    # by ActionView, meaning the current view context and the original view
+    # context are the same object. set_original_view_context is still called
+    # to maintain backwards compatibility.
+    #
+    # @private
+    def render: (?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] args) ?{ () -> untyped } -> untyped
+
+    # The current controller. Use sparingly as doing so introduces coupling
+    # that inhibits encapsulation & reuse, often making testing difficult.
+    #
+    # @return [ActionController::Base]
+    def controller: () -> untyped
+
+    # A proxy through which to access helpers. Use sparingly as doing so introduces
+    # coupling that inhibits encapsulation & reuse, often making testing difficult.
+    #
+    # @return [ActionView::Base]
+    def helpers: () -> untyped
+
+    # @private
+    def method_missing: (untyped method_name, *untyped args) -> untyped
+
+    # Exposes .virtual_path as an instance method
+    #
+    # @private
+    def virtual_path: () -> untyped
+
+    # For caching, such as #cache_if
+    # @private
+    def view_cache_dependencies: () -> ::Array[untyped]
+
+    # Rails expects us to define `format` on all renderables,
+    # but we do not know the `format` of a ViewComponent until runtime.
+    def format: () -> nil
+
+    # The current request. Use sparingly as doing so introduces coupling that
+    # inhibits encapsulation & reuse, often making testing difficult.
+    #
+    # @return [ActionDispatch::Request]
+    def request: () -> untyped
+
+    # @private
+    def __vc_request: () -> (untyped | nil)
+
+    # The content passed to the component instance as a block.
+    #
+    # @return [String]
+    def content: () -> untyped
+
+    # Whether `content` has been passed to the component.
+    #
+    # @return [Boolean]
+    def content?: () -> untyped
+
+    # @private
+    def with_original_virtual_path: () { () -> untyped } -> untyped
+
+    private
+
+    attr_reader view_context: untyped
+
+    def __vc_render_in_block_provided?: () -> untyped
+
+    def __vc_content_set_by_with_content_defined?: () -> untyped
+
+    def __vc_maybe_escape_html: (untyped text) { () -> untyped } -> untyped
+
+    def __vc_safe_output_preamble: () -> untyped
+
+    def __vc_safe_output_postamble: () -> untyped
+
+    # The file path of the component Ruby file.
+    #
+    # @return [String]
+    attr_reader self.identifier: untyped
+
+    # @private
+    attr_writer self.identifier: untyped
+
+    # @private
+    attr_accessor self.virtual_path: untyped
+
+    # Find sidecar files for the given extensions.
+    #
+    # The provided array of extensions is expected to contain
+    # strings starting without the dot, example: `["erb", "haml"]`.
+    #
+    # For example, one might collect sidecar CSS files that need to be compiled.
+    # @param extensions [Array<String>] Extensions of which to return matching sidecar files.
+    def self.sidecar_files: (untyped extensions) -> (::Array[untyped] | untyped)
+
+    # Render a component for each element in a collection ([documentation](/guide/collections)):
+    #
+    # ```ruby
+    # render(ProductsComponent.with_collection(@products, foo: :bar))
+    # ```
+    #
+    # @param collection [Enumerable] A list of items to pass the ViewComponent one at a time.
+    # @param spacer_component [ViewComponent::Base] Component instance to be rendered between items.
+    # @param args [Arguments] Arguments to pass to the ViewComponent every time.
+    def self.with_collection: (untyped collection, ?spacer_component: untyped?, **untyped args) -> untyped
+
+    # @private
+    def self.__vc_compile: (?raise_errors: bool, ?force: bool) -> untyped
+
+    # @private
+    def self.inherited: (untyped child) -> untyped
+
+    # @private
+    def self.__vc_compiled?: () -> untyped
+
+    # @private
+    def self.__vc_ensure_compiled: () -> (untyped | nil)
+
+    # @private
+    def self.__vc_compiler: () -> untyped
+
+    # Set the parameter name used when rendering elements of a collection ([documentation](/guide/collections)):
+    #
+    # ```ruby
+    # with_collection_parameter :item
+    # ```
+    #
+    # @param parameter [Symbol] The parameter name used when rendering elements of a collection.
+    def self.with_collection_parameter: (untyped parameter) -> untyped
+
+    # Strips trailing whitespace from templates before compiling them.
+    #
+    # ```ruby
+    # class MyComponent < ViewComponent::Base
+    #   strip_trailing_whitespace
+    # end
+    # ```
+    #
+    # @param value [Boolean] Whether to strip newlines.
+    def self.strip_trailing_whitespace: (?bool value) -> untyped
+
+    # Whether trailing whitespace will be stripped before compilation.
+    #
+    # @return [Boolean]
+    def self.strip_trailing_whitespace?: () -> untyped
+
+    # Ensure the component initializer accepts the
+    # collection parameter. By default, we don't
+    # validate that the default parameter name
+    # is accepted, as support for collection
+    # rendering is optional.
+    # @private
+    def self.__vc_validate_collection_parameter!: (?validate_default: bool) -> (nil | untyped)
+
+    # Ensure the component initializer doesn't define
+    # invalid parameters that could override the framework's
+    # methods.
+    # @private
+    def self.__vc_validate_initialization_parameters!: () -> (nil | untyped)
+
+    # @private
+    def self.__vc_collection_parameter: () -> untyped
+
+    # @private
+    def self.__vc_collection_counter_parameter: () -> untyped
+
+    # @private
+    def self.__vc_counter_argument_present?: () -> untyped
+
+    # @private
+    def self.__vc_collection_iteration_parameter: () -> untyped
+
+    # @private
+    def self.__vc_iteration_argument_present?: () -> untyped
+
+    def self.__vc_splatted_keyword_argument_present?: () -> untyped
+
+    def self.__vc_initialize_parameter_names: () -> untyped
+
+    def self.__vc_initialize_parameters: () -> untyped
+
+    def self.__vc_provided_collection_parameter: () -> untyped
+  end
+end

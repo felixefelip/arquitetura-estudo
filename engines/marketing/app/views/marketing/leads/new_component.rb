@@ -1,7 +1,13 @@
-# frozen_string_literal: true
+# rbs_inline: enabled
 
-class Marketing::Leads::NewComponent < ViewComponent::Base
-  def initialize(plano:)
-    @plano = plano
+module Marketing::Leads
+  class NewComponent < ViewComponent::Base
+    # @rbs @plano: Hash[Symbol, untyped]
+
+    #: (plano: Hash[Symbol, untyped]) -> void
+    def initialize(plano:)
+      super
+      @plano = plano
+    end
   end
 end

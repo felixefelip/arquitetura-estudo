@@ -1,0 +1,135 @@
+module ViewComponent
+  module Slotable
+    extend ActiveSupport::Concern
+
+    RESERVED_NAMES: { singular: ::Array[:content | :render], plural: ::Array[:contents | :renders] }
+
+    #
+    # Registers a sub-component
+    #
+    # = Example
+    #
+    #   renders_one :header -> (classes:) do
+    #     HeaderComponent.new(classes: classes)
+    #   end
+    #
+    #   # OR
+    #
+    #   renders_one :header, HeaderComponent
+    #
+    #   where `HeaderComponent` is defined as:
+    #
+    #   class HeaderComponent < ViewComponent::Base
+    #     def initialize(classes:)
+    #       @classes = classes
+    #     end
+    #   end
+    #
+    #   and has the following template:
+    #
+    #   <header class="<%= @classes %>">
+    #     <%= content %>
+    #   </header>
+    #
+    # = Rendering sub-component content
+    #
+    # The component's sidecar template can access the sub-component by calling a
+    # helper method with the same name as the sub-component.
+    #
+    #   <h1>
+    #     <%= header do %>
+    #       My header title
+    #     <% end %>
+    #   </h1>
+    #
+    # = Setting sub-component content
+    #
+    # Consumers of the component can render a sub-component by calling a
+    # helper method with the same name as the slot prefixed with `with_`.
+    #
+    #   <%= render_inline(MyComponent.new) do |component| %>
+    #     <% component.with_header(classes: "Foo") do %>
+    #       <p>Bar</p>
+    #     <% end %>
+    #   <% end %>
+    #
+    # Additionally, content can be set by calling `with_SLOT_NAME_content`
+    # on the component instance.
+    #
+    #   <%= render_inline(MyComponent.new.with_header_content("Foo")) %>
+    def renders_one: (untyped slot_name, ?untyped? callable) -> untyped
+
+    #
+    # Registers a collection sub-component
+    #
+    # = Example
+    #
+    #   renders_many :items, -> (name:) { ItemComponent.new(name: name }
+    #
+    #   # OR
+    #
+    #   renders_many :items, ItemComponent
+    #
+    # = Rendering sub-components
+    #
+    # The component's sidecar template can access the slot by calling a
+    # helper method with the same name as the slot.
+    #
+    #   <h1>
+    #     <% items.each do |item| %>
+    #       <%= item %>
+    #     <% end %>
+    #   </h1>
+    #
+    # = Setting sub-component content
+    #
+    # Consumers of the component can set the content of a slot by calling a
+    # helper method with the same name as the slot prefixed with `with_`. The
+    # method can be called multiple times to append to the slot.
+    #
+    #   <%= render_inline(MyComponent.new) do |component| %>
+    #     <% component.with_item(name: "Foo") do %>
+    #       <p>One</p>
+    #     <% end %>
+    #
+    #     <% component.with_item(name: "Bar") do %>
+    #       <p>two</p>
+    #     <% end %>
+    #   <% end %>
+    def renders_many: (untyped slot_name, ?untyped? callable) -> untyped
+
+    def slot_type: (untyped slot_name) -> untyped
+
+    def inherited: (untyped child) -> untyped
+
+    # @private
+    # Called by the compiler, as instance methods are not defined when slots are first registered
+    def __vc_register_default_slots: () -> untyped
+
+    private
+
+    def __vc_register_slot: (untyped slot_name, **untyped kwargs) -> untyped
+
+    def __vc_register_polymorphic_slot: (untyped slot_name, untyped types, collection: untyped) -> untyped
+
+    def __vc_define_slot: (untyped slot_name, collection: untyped, callable: untyped) -> untyped
+
+    def __vc_validate_plural_slot_name: (untyped slot_name) -> untyped
+
+    def __vc_validate_singular_slot_name: (untyped slot_name) -> untyped
+
+    def __vc_raise_if_slot_registered: (untyped slot_name) -> (untyped | nil)
+
+    def __vc_raise_if_slot_ends_with_question_mark: (untyped slot_name) -> (untyped | nil)
+
+    def __vc_raise_if_slot_conflicts_with_call: (untyped slot_name) -> (untyped | nil)
+
+    def __vc_raise_if_slot_name_uncountable: (untyped slot_name) -> untyped
+
+    def __vc_get_slot: (untyped slot_name) -> untyped
+
+    def __vc_set_slot: (untyped slot_name, ?untyped? slot_definition, *untyped args, **untyped kwargs) ?{ () -> untyped } -> untyped
+
+    def __vc_set_polymorphic_slot: (untyped slot_name, ?untyped? poly_type, *untyped args, **untyped kwargs) ?{ () -> untyped } -> untyped
+  end
+end

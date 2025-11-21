@@ -1,8 +1,15 @@
-# frozen_string_literal: true
+# rbs_inline: enabled
 
-class Academico::Cursos::IndexComponent < ViewComponent::Base
-  def initialize(cursos:, usuario:)
-    @cursos = cursos
-    @usuario = usuario
+module Academico::Cursos
+  class IndexComponent < ViewComponent::Base
+    # @rbs @cursos: Academico::Curso::Entity::ActiveRecord_Relation
+    # @rbs @usuario: String?
+
+    #: (cursos: Academico::Curso::Entity::ActiveRecord_Relation, usuario: String?) -> void
+    def initialize(cursos:, usuario:)
+      super
+      @cursos = cursos
+      @usuario = usuario
+    end
   end
 end

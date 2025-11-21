@@ -2,5 +2,11 @@
 
 class Marketing::LeadsController < ApplicationController
   # @rbs -> void
+  def new: () -> void
+
+  # @rbs -> void
   def create: () -> void
+
+  # @rbs -> void
+  def sucesso: () -> void
 end

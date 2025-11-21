@@ -1,15 +1,23 @@
-# frozen_string_literal: true
+# rbs_inline: enabled
 
-class Academico::Cursos::CardComponent < ViewComponent::Base
-  def initialize(curso:)
-    @curso = curso
-  end
+module Academico::Cursos
+  class CardComponent < ViewComponent::Base
+    # @rbs @curso: Academico::Curso::Entity
 
-  def disabled?
-    @curso.assistido
-  end
+    #: (curso: Academico::Curso::Entity) -> void
+    def initialize(curso:)
+      super
+      @curso = curso
+    end
 
-  def button_text
-    disabled? ? "Assistido" : "Marcar como assistido"
+    #: -> bool
+    def disabled?
+      @curso.assistido?
+    end
+
+    #: -> String
+    def button_text
+      disabled? ? "Assistido" : "Marcar como assistido"
+    end
   end
 end
