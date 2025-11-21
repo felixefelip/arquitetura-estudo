@@ -8,7 +8,7 @@ module Academico::Login
 
     #: (error_message: String?) -> void
     def initialize(error_message: nil)
-      super
+      super()
       @error_message = error_message
     end
   end

@@ -6,7 +6,7 @@ module Academico::Cursos
 
     #: (curso: Academico::Curso::Entity) -> void
     def initialize(curso:)
-      super
+      super()
       @curso = curso
     end
 

@@ -1,6 +1,6 @@
 # rbs_inline: enabled
 
-class Academico::LoginController < ApplicationController
+class Academico::LoginsController < ApplicationController
   #: -> void
   def new
     render Academico::Login::NewComponent.new(error_message: flash[:alert])

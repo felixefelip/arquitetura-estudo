@@ -7,7 +7,7 @@ module Academico::Cursos
 
     #: (cursos: Academico::Curso::Entity::ActiveRecord_Relation, usuario: String?) -> void
     def initialize(cursos:, usuario:)
-      super
+      super()
       @cursos = cursos
       @usuario = usuario
     end
