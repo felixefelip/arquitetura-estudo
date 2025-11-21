@@ -3,9 +3,9 @@
 # test case (for non-Rails projects). You can then use `packwerk check` to check your code.
 
 # Turn on dependency checks for this package
-enforce_dependencies: false
+enforce_dependencies: true
 
 # A list of this package's dependencies
 # Note that packages in this list require their own `package.yml` file
-# dependencies:
-# - "app/models/shared"
+dependencies:
+- "."

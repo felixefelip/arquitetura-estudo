@@ -14,10 +14,6 @@ module Finance
       validates :document, presence: true
 
       delegate :number, to: :actual_card
-
-      def actual_card
-        cards.first!
-      end
     end
   end
 end

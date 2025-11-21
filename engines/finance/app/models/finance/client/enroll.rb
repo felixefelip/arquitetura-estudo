@@ -1,11 +1,15 @@
+# rbs_inline: enabled
+
 module Finance
   module Client
     class Enroll
+      #: (client: Finance::Client::Entity, card: Finance::Card::Entity) -> void
       def initialize(client:, card:)
         self.client = client
         self.card = card
       end
 
+      #: -> void
       def call
         puts "Processando pagamento de #{client.full_name}"
 
@@ -16,6 +20,16 @@ module Finance
           card.save!
         end
 
+        send_event_client_enrolled
+      end
+
+      private
+
+      attr_accessor :client #: Finance::Client::Entity
+      attr_accessor :card #: Finance::Card::Entity
+
+      #: -> void
+      def send_event_client_enrolled
         # Publicar evento usando ActiveSupport::Notifications
         payload = {
           client_payload: JSON.parse(client.to_json).deep_symbolize_keys,
@@ -28,10 +42,6 @@ module Finance
           Rails.logger.info "Evento finance_client_enrolled publicado para o cliente #{client.full_name}"
         end
       end
-
-      private
-
-      attr_accessor :client, :card
     end
   end
 end
