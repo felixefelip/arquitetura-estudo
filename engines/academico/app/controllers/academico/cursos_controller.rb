@@ -4,9 +4,8 @@ module Academico
   class CursosController < ApplicationController
     #: -> void
     def index
-      cursos = ::Academico::Curso::Entity.all
-
-      render json: cursos
+      @cursos = ::Academico::Curso::Entity.all
+      @usuario = session[:user_name]
     end
 
     #: -> void
@@ -15,7 +14,7 @@ module Academico
 
       curso.update!(assistido: true)
 
-      render :json, status: :no_content
+      redirect_to academico_cursos_path, notice: "Curso marcado como assistido!"
     end
   end
 end

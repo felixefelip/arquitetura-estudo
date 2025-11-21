@@ -1,17 +1,33 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
-  post "/login" => "academico/login#login"
-  post "/cursos" => "academico/cursos#index"
-  patch "/cursos/:id" => "academico/cursos#update"
+  # Rota raiz redireciona para página de compra
+  root "marketing/leads#new"
 
-  post "/leads" => "marketing/leads#create"
-  post "/clients" => "finance/clients#create"
+  # Namespace Marketing
+  namespace :marketing do
+    resources :leads, only: [:new, :create] do
+      collection do
+        get :sucesso
+      end
+    end
+  end
 
+  # Namespace Academico
   namespace :academico do
     resources :alunos
+
+    resources :cursos, only: [:index, :update] do
+      member do
+        patch :assistir
+      end
+    end
+
+    resource :login, only: [:new, :create, :destroy]
   end
-  resource :cursos, only: %i[update], controller: "academico/cursos"
+
+  # Namespace Finance
+  namespace :finance do
+    resources :clients, only: [:create]
+  end
 end

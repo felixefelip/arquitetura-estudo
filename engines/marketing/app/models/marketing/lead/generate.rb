@@ -12,12 +12,6 @@ module Marketing
 
       def call
         Entity.create!(full_name:, email:, status: :interested)
-
-        teste(status: :postgres)
-      end
-
-      def teste(status:)
-        puts "Status is: #{status}"
       end
 
       private

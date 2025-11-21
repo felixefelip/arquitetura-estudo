@@ -10,9 +10,7 @@ class Finance::ClientsController < ApplicationController
       client: client, card: card,
     ).call
 
-    teste.strip
-
-    render :json, status: :created
+    render json: { message: "Client created successfully" }, status: :created
   end
 
   private
@@ -34,10 +32,5 @@ class Finance::ClientsController < ApplicationController
       year_expiration: params[:cardExpirationYear],
       security_code: params[:cardSecurityCode],
     )
-  end
-
-  # @rbs () -> String
-  def teste
-    "teste"
   end
 end

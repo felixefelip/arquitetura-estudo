@@ -1,0 +1,13 @@
+<%= render HeaderComponent.new %>
+
+<div class="container">
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+    <h1>Compra realizada com sucesso!</h1>
+    <p>Parabéns! Você agora tem acesso a todos os nossos cursos.</p>
+
+    <div class="success-actions">
+      <%= link_to "Acessar meus cursos", academico_cursos_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

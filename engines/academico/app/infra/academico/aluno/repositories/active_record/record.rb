@@ -10,6 +10,8 @@ module Academico
                     inverse_of: :aluno,
                     dependent: :destroy,
                     class_name: "::Academico::Aluno::TelefoneRepositories::ActiveRecord::Record"
+
+          validates :email, presence: true, uniqueness: true
         end
 
         private_constant :Record

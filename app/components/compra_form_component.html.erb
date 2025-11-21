@@ -1,0 +1,118 @@
+<div class="compra-container">
+  <div class="compra-grid">
+    <div class="compra-form">
+      <%= form_with url: marketing_leads_path, method: :post, local: true, class: "stepper-form", id: "compraForm" do |f| %>
+        <!-- Passo 1: Dados Pessoais -->
+        <div class="step" data-step="1">
+          <h2>Dados pessoais</h2>
+
+          <div class="form-field">
+            <%= f.label :nome, "Nome completo" %>
+            <%= f.text_field :nome, required: true, class: "form-input" %>
+          </div>
+
+          <div class="form-field">
+            <%= f.label :email, "E-mail" %>
+            <%= f.email_field :email, required: true, class: "form-input" %>
+          </div>
+
+          <div class="form-actions">
+            <%= button_tag "Próximo", type: "button", class: "btn btn-primary", onclick: "nextStep()" %>
+          </div>
+        </div>
+
+        <!-- Passo 2: Detalhes de Pagamento -->
+        <div class="step" data-step="2" style="display: none;">
+          <h2>Detalhes de pagamento</h2>
+
+          <div class="form-field">
+            <%= f.label :cpf, "CPF" %>
+            <%= f.text_field :cpf, required: true, pattern: "\\d{11}", class: "form-input", placeholder: "Apenas números" %>
+          </div>
+
+          <div class="form-field">
+            <%= f.label :titular, "Nome do titular" %>
+            <%= f.text_field :titular, required: true, class: "form-input" %>
+          </div>
+
+          <div class="form-field">
+            <%= f.label :numero, "Número do cartão" %>
+            <%= f.text_field :numero, required: true, pattern: "\\d{14,16}", class: "form-input", placeholder: "Apenas números" %>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <%= f.label :dataExpiracao, "Data de expiração" %>
+              <%= f.text_field :dataExpiracao, required: true, class: "form-input", placeholder: "MM/AA" %>
+            </div>
+
+            <div class="form-field">
+              <%= f.label :cvv, "CVV" %>
+              <%= f.text_field :cvv, required: true, pattern: "\\d{3,4}", class: "form-input", placeholder: "3 ou 4 dígitos" %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= button_tag "Voltar", type: "button", class: "btn btn-secondary", onclick: "prevStep()" %>
+            <%= f.submit "Finalizar compra", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="compra-resumo">
+      <div class="resumo-card">
+        <div class="card-header">
+          <h2>Informações da sua compra</h2>
+          <p><%= @plano[:nome] %></p>
+        </div>
+
+        <div class="card-content">
+          <p class="valor-total">
+            Valor total do plano <strong><%= @plano[:valor] %></strong>
+          </p>
+
+          <p><%= @plano[:total_cursos] %> cursos</p>
+
+          <ul class="beneficios-list">
+            <% @plano[:beneficios].each do |beneficio| %>
+              <li>- <%= beneficio %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentStep = 1;
+
+  function nextStep() {
+    const step1 = document.querySelector('[data-step="1"]');
+    const step2 = document.querySelector('[data-step="2"]');
+
+    if (step1.querySelectorAll('input[required]').length > 0) {
+      const valid = Array.from(step1.querySelectorAll('input[required]')).every(input => input.checkValidity());
+      if (!valid) {
+        step1.querySelectorAll('input[required]').forEach(input => {
+          if (!input.checkValidity()) input.reportValidity();
+        });
+        return;
+      }
+    }
+
+    step1.style.display = 'none';
+    step2.style.display = 'block';
+    currentStep = 2;
+  }
+
+  function prevStep() {
+    const step1 = document.querySelector('[data-step="1"]');
+    const step2 = document.querySelector('[data-step="2"]');
+
+    step2.style.display = 'none';
+    step1.style.display = 'block';
+    currentStep = 1;
+  }
+</script>

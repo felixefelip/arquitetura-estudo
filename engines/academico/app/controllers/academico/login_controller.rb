@@ -2,15 +2,35 @@
 
 class Academico::LoginController < ApplicationController
   #: -> void
-  def login
+  def new
+    # Renderiza formulário de login (HTML)
+  end
+
+  #: -> void
+  def create
     repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 
     aluno = repo.buscar_por_email(params[:email])
 
     if aluno.present?
-      render json: { nome: aluno.nome, email: aluno.email }, status: :ok
+      # Armazena dados do usuário na sessão
+      session[:user_id] = aluno.id
+      session[:user_name] = aluno.nome
+      session[:user_email] = aluno.email
+
+      redirect_to academico_cursos_path, notice: "Login realizado com sucesso!"
     else
-      render json: "Usuário ou senha inválidos", status: :unauthorized
+      flash.now[:alert] = "Usuário e/ou senha inválidos"
+      render :new, status: :unauthorized
     end
+  end
+
+  #: -> void
+  def destroy
+    session.delete(:user_id)
+    session.delete(:user_name)
+    session.delete(:user_email)
+
+    redirect_to new_academico_login_path, notice: "Logout realizado com sucesso!"
   end
 end
