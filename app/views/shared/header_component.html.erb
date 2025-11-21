@@ -1,10 +1,10 @@
 <header class="header <%= @show_logout ? 'header-logado' : '' %>">
   <%= image_tag "https://cursos.alura.com.br/assets/images/logos/logo-alura.svg", alt: "Logo Alura", class: "logo" %>
-  
+
   <% if @show_logout && @usuario.present? %>
     <div class="user-info">
       <span class="user-name"><%= @usuario %></span>
-      <%= link_to "Sair", logout_path, method: :delete, class: "btn-logout" %>
+      <%= link_to "Sair", academico_login_path, method: :delete, class: "btn-logout" %>
     </div>
   <% end %>
 </header>

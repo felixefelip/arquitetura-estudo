@@ -4,25 +4,23 @@
       <h1>Já estuda com a gente?</h1>
       <p>Faça seu login e boa aula!</p>
     </div>
-    
+
     <% if @error_message.present? %>
-      <div class="alert alert-error">
-        <%= @error_message %>
-      </div>
+      <div class="alert alert-error"><%= @error_message %></div>
     <% end %>
-    
+
     <div class="card-content">
-      <%= form_with url: login_path, method: :post, local: true, class: "login-form" do |f| %>
+      <%= form_with url: academico_login_path, method: :post, local: true, class: "login-form" do |f| %>
         <div class="form-field">
           <%= f.label :email, "E-mail" %>
           <%= f.email_field :email, required: true, class: "form-input" %>
         </div>
-        
+
         <div class="form-field">
           <%= f.label :senha, "Senha" %>
           <%= f.password_field :senha, required: true, class: "form-input" %>
         </div>
-        
+
         <div class="form-actions">
           <%= f.submit "Login", class: "btn btn-primary" %>
         </div>

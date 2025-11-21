@@ -21,6 +21,10 @@ module ArquiteturaEstudo
     #
     ## Custom directories with classes and modules you want to be autoloadable.
 
+    # Add app/views to autoload paths for ViewComponents
+    config.autoload_paths << Rails.root.join("app", "views")
+    config.eager_load_paths << Rails.root.join("app", "views")
+
     Dir["./engines/*"].each do |path|
       next unless File.directory?(path)
 

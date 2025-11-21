@@ -3,7 +3,7 @@
 class Marketing::LeadsController < ApplicationController
   # @rbs -> void
   def new
-    @plano = {
+    plano = {
       nome: "Plano mega power",
       valor: "R$ 123,45",
       total_cursos: 1234,
@@ -13,6 +13,8 @@ class Marketing::LeadsController < ApplicationController
         "Apps para Android e iOS",
       ],
     }
+
+    render Marketing::Leads::NewComponent.new(plano: plano)
   end
 
   # @rbs -> void
@@ -27,6 +29,6 @@ class Marketing::LeadsController < ApplicationController
 
   # @rbs -> void
   def sucesso
-    # Página de sucesso da compra
+    render Marketing::Leads::SucessoComponent.new
   end
 end

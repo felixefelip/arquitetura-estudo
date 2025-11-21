@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CompraFormComponent < ViewComponent::Base
+class Marketing::Leads::NewComponent < ViewComponent::Base
   def initialize(plano:)
     @plano = plano
   end

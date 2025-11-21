@@ -4,8 +4,10 @@ module Academico
   class CursosController < ApplicationController
     #: -> void
     def index
-      @cursos = ::Academico::Curso::Entity.all
-      @usuario = session[:user_name]
+      cursos = ::Academico::Curso::Entity.all
+      usuario = session[:user_name]
+
+      render Academico::Cursos::IndexComponent.new(cursos: cursos, usuario: usuario)
     end
 
     #: -> void

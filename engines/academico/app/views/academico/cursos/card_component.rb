@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CursoCardComponent < ViewComponent::Base
+class Academico::Cursos::CardComponent < ViewComponent::Base
   def initialize(curso:)
     @curso = curso
   end

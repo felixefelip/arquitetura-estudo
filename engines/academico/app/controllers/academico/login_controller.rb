@@ -3,7 +3,7 @@
 class Academico::LoginController < ApplicationController
   #: -> void
   def new
-    # Renderiza formulário de login (HTML)
+    render Academico::Login::NewComponent.new(error_message: flash[:alert])
   end
 
   #: -> void
@@ -21,7 +21,7 @@ class Academico::LoginController < ApplicationController
       redirect_to academico_cursos_path, notice: "Login realizado com sucesso!"
     else
       flash.now[:alert] = "Usuário e/ou senha inválidos"
-      render :new, status: :unauthorized
+      render Academico::Login::NewComponent.new(error_message: flash[:alert]), status: :unauthorized
     end
   end
 

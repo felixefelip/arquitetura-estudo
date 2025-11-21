@@ -1,16 +1,24 @@
 interface _RbsRailsPathHelpers
   def rails_mailers_path: (*untyped) -> String
+  def preview_view_components_path: (*untyped) -> String
+  def preview_view_component_path: (*untyped) -> String
   def rails_info_properties_path: (*untyped) -> String
   def rails_info_routes_path: (*untyped) -> String
   def rails_info_path: (*untyped) -> String
-  def login_path: (*untyped) -> String
-  def cursos_path: (*untyped) -> String
-  def leads_path: (*untyped) -> String
-  def clients_path: (*untyped) -> String
+  def root_path: (*untyped) -> String
+  def sucesso_marketing_leads_path: (*untyped) -> String
+  def marketing_leads_path: (*untyped) -> String
+  def new_marketing_lead_path: (*untyped) -> String
   def academico_alunos_path: (*untyped) -> String
   def new_academico_aluno_path: (*untyped) -> String
   def edit_academico_aluno_path: (*untyped) -> String
   def academico_aluno_path: (*untyped) -> String
+  def assistir_academico_curso_path: (*untyped) -> String
+  def academico_cursos_path: (*untyped) -> String
+  def academico_curso_path: (*untyped) -> String
+  def new_academico_login_path: (*untyped) -> String
+  def academico_login_path: (*untyped) -> String
+  def finance_clients_path: (*untyped) -> String
   def turbo_recede_historical_location_path: (*untyped) -> String
   def turbo_resume_historical_location_path: (*untyped) -> String
   def turbo_refresh_historical_location_path: (*untyped) -> String
@@ -39,17 +47,25 @@ interface _RbsRailsPathHelpers
   def rails_storage_proxy_path: (*untyped) -> String
   def rails_storage_redirect_path: (*untyped) -> String
   def rails_mailers_url: (*untyped) -> String
+  def preview_view_components_url: (*untyped) -> String
+  def preview_view_component_url: (*untyped) -> String
   def rails_info_properties_url: (*untyped) -> String
   def rails_info_routes_url: (*untyped) -> String
   def rails_info_url: (*untyped) -> String
-  def login_url: (*untyped) -> String
-  def cursos_url: (*untyped) -> String
-  def leads_url: (*untyped) -> String
-  def clients_url: (*untyped) -> String
+  def root_url: (*untyped) -> String
+  def sucesso_marketing_leads_url: (*untyped) -> String
+  def marketing_leads_url: (*untyped) -> String
+  def new_marketing_lead_url: (*untyped) -> String
   def academico_alunos_url: (*untyped) -> String
   def new_academico_aluno_url: (*untyped) -> String
   def edit_academico_aluno_url: (*untyped) -> String
   def academico_aluno_url: (*untyped) -> String
+  def assistir_academico_curso_url: (*untyped) -> String
+  def academico_cursos_url: (*untyped) -> String
+  def academico_curso_url: (*untyped) -> String
+  def new_academico_login_url: (*untyped) -> String
+  def academico_login_url: (*untyped) -> String
+  def finance_clients_url: (*untyped) -> String
   def turbo_recede_historical_location_url: (*untyped) -> String
   def turbo_resume_historical_location_url: (*untyped) -> String
   def turbo_refresh_historical_location_url: (*untyped) -> String
