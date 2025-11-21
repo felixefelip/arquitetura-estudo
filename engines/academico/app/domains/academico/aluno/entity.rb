@@ -8,7 +8,7 @@ module Academico::Aluno
     attr_reader :telefones #: Array[Telefone]
     attr_reader :senha #: String?
 
-    # @rbs (cpf: ::String, nome: ::String, email: ::String, ?senha: ::String?) -> void
+    #: (cpf: ::String, nome: ::String, email: ::String, ?senha: ::String?) -> void
     def initialize(nome:, email:, cpf:, senha: nil)
       self.nome = nome
       self.email = Email.new(endereco: email)
@@ -16,7 +16,7 @@ module Academico::Aluno
       self.senha = senha
     end
 
-    # @rbs (ddd: ::String, numero: ::String) -> void
+    #: (ddd: ::String, numero: ::String) -> void
     def adicionar_telefone(ddd:, numero:)
       raise StandardError if telefones.count == 2
 

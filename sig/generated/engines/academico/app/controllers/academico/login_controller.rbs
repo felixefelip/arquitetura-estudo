@@ -1,0 +1,6 @@
+# Generated from engines/academico/app/controllers/academico/login_controller.rb with RBS::Inline
+
+class Academico::LoginController < ApplicationController
+  # : -> void
+  def login: () -> void
+end

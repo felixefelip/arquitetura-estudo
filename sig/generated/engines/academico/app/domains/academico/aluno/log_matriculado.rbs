@@ -3,7 +3,7 @@
 module Academico
   module Aluno
     class LogMatriculado
-      # @rbs (payload: Hash[Symbol, untyped]) -> ::String
+      # : (payload: Hash[Symbol, untyped]) -> ::String
       def reage_ao: (payload: Hash[Symbol, untyped]) -> ::String
     end
   end

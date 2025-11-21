@@ -3,17 +3,17 @@
 module Academico
   module Aluno
     class Email
-      # @rbs (endereco: ::String) -> void
+      # : (endereco: ::String) -> void
       def initialize: (endereco: ::String) -> void
 
-      # @rbs () -> ::String
+      # : -> ::String
       def to_s: () -> ::String
 
       private
 
       attr_accessor endereco: String
 
-      # @rbs () -> bool
+      # : -> bool
       def endereco_valido?: () -> bool
     end
   end

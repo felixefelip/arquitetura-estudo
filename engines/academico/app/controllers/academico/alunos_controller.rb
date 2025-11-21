@@ -1,5 +1,8 @@
+# rbs_inline: enabled
+
 module Academico
   class AlunosController < ApplicationController
+    #: -> void
     def index
       repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 
@@ -8,6 +11,7 @@ module Academico
       render json: alunos
     end
 
+    #: -> void
     def create
       aluno_dto = Academico::Aluno::Matricular::Dto.new(
         cpf: "123456",

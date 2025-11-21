@@ -15,24 +15,24 @@ module Academico
         validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
         validates :nome, presence: true
 
-        # @rbs (cpf: String?, nome: String?, email: String?) -> void
+        #: (cpf: String?, nome: String?, email: String?) -> void
         def initialize(cpf:, nome:, email:)
           self.cpf = cpf
           self.nome = nome
           self.email = email
         end
 
-        # @rbs () -> String
+        #: -> String
         def cpf!
           cpf || raise
         end
 
-        # @rbs () -> String
+        #: -> String
         def email!
           email || raise
         end
 
-        # @rbs () -> String
+        #: -> String
         def nome!
           nome || raise
         end

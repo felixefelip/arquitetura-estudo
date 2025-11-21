@@ -7,10 +7,10 @@ module Academico
 
       attr_reader numero: String
 
-      # @rbs (ddd: ::String, numero: ::String) -> void
+      # : (ddd: ::String, numero: ::String) -> void
       def initialize: (ddd: ::String, numero: ::String) -> void
 
-      # @rbs () -> ::String
+      # : -> ::String
       def to_s: () -> ::String
 
       private

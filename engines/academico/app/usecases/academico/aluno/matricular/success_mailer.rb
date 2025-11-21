@@ -1,7 +1,7 @@
 # rbs_inline: enabled
 
 class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
-  # @rbs (Academico::Aluno::Entity aluno) -> Mail::Message
+  #: (Academico::Aluno::Entity aluno) -> Mail::Message
   def send_mail(aluno)
     @mensagem = "
     Olá, #{aluno.nome}! Seu pagamento foi confirmado e sua matrícula foi criada com sucesso.

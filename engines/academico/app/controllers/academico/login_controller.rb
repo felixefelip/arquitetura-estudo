@@ -1,4 +1,7 @@
+# rbs_inline: enabled
+
 class Academico::LoginController < ApplicationController
+  #: -> void
   def login
     repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 

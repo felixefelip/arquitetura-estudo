@@ -1,3 +1,0 @@
-class Academico::LoginController < ApplicationController
-  def login: () -> void
-end

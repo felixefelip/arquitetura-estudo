@@ -16,16 +16,16 @@ module Academico
 
         attr_reader senha: String?
 
-        # @rbs (cpf: String?, nome: String?, email: String?) -> void
+        # : (cpf: String?, nome: String?, email: String?) -> void
         def initialize: (cpf: String?, nome: String?, email: String?) -> void
 
-        # @rbs () -> String
+        # : -> String
         def cpf!: () -> String
 
-        # @rbs () -> String
+        # : -> String
         def email!: () -> String
 
-        # @rbs () -> String
+        # : -> String
         def nome!: () -> String
 
         private

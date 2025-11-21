@@ -5,13 +5,13 @@ module Academico
     class Telefone
       attr_reader :ddd, :numero #: String
 
-      # @rbs (ddd: ::String, numero: ::String) -> void
+      #: (ddd: ::String, numero: ::String) -> void
       def initialize(ddd:, numero:)
         self.ddd = ddd
         self.numero = numero
       end
 
-      # @rbs () -> ::String
+      #: -> ::String
       def to_s
         "(#{ddd}) #{numero}"
       end
