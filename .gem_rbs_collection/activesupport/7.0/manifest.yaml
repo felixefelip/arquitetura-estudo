@@ -8,9 +8,9 @@ dependencies:
   - name: logger
   - name: minitest
   - name: monitor
-  - name: mutex_m
   - name: openssl
   - name: singleton
   - name: time
   - name: securerandom
   - name: erb
+  - name: stringio

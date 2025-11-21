@@ -1,0 +1,19 @@
+# Generated from engines/marketing/app/models/marketing/lead/generate.rb with RBS::Inline
+
+module Marketing
+  module Lead
+    class Generate
+      # : (full_name: String, email: String) -> void
+      def initialize: (full_name: String, email: String) -> void
+
+      # : -> Marketing::Lead::Entity
+      def call: () -> Marketing::Lead::Entity
+
+      private
+
+      attr_accessor full_name: String
+
+      attr_accessor email: String
+    end
+  end
+end

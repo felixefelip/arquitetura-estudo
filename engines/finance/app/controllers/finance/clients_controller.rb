@@ -10,7 +10,7 @@ class Finance::ClientsController < ApplicationController
       client: client, card: card,
     ).call
 
-    render json: { message: "Client created successfully" }, status: :created
+    redirect_to sucesso_marketing_leads_path, notice: "Compra realizada com sucesso!"
   end
 
   private

@@ -15,6 +15,8 @@ module Finance
 
         sleep 3 if ENV["RAILS_ENV"] != "test"
 
+        card.client = client
+
         ApplicationRecord.transaction do
           client.save!
           card.save!

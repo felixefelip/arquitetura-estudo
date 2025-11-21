@@ -3,18 +3,21 @@
 class Marketing::LeadsController < ApplicationController
   #: -> void
   def new
+    lead = Marketing::Lead::Entity.new
+
     plano = build_plans
-    render Marketing::Leads::NewComponent.new(plano: plano)
+    render Marketing::Leads::NewComponent.new(lead: lead, plano: plano)
   end
 
   #: -> void
   def create
-    ::Marketing::Lead::Generate.call(
-      full_name: params["nome"],
-      email: params["email"],
-    )
+    lead = ::Marketing::Lead::Generate.new(
+      full_name: params[:marketing_lead_entity][:full_name],
+      email: params[:marketing_lead_entity][:email],
+    ).call
 
-    redirect_to sucesso_marketing_leads_path, notice: "Compra realizada com sucesso!"
+    plano = build_plans
+    render Marketing::Leads::PaymentStepComponent.new(lead: lead, plano: plano)
   end
 
   #: -> void
@@ -23,6 +26,8 @@ class Marketing::LeadsController < ApplicationController
   end
 
   private
+
+  attr_accessor :lead #: Marketing::Lead::Entity
 
   #: -> Hash[Symbol, untyped]
   def build_plans

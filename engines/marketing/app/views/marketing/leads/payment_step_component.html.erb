@@ -1,0 +1,78 @@
+<%# @type self: Marketing::Leads::PaymentStepComponent %>
+
+<div class="compra-container">
+  <div class="compra-grid">
+    <div class="compra-form">
+      <turbo-frame id="purchase_form">
+        <div class="step" data-step="2">
+          <%= form_with url: finance_clients_path, method: :post, html: { class: "stepper-form" } do |f| %>
+            <h2>Detalhes de pagamento</h2>
+
+            <%= f.hidden_field :email, value: lead.email %>
+            <%= f.hidden_field :full_name, value: lead.full_name %>
+
+            <div class="form-field">
+              <%= f.label :clientDocument, "CPF" %>
+              <%= f.text_field :clientDocument, required: true, pattern: "\\d{11}", class: "form-input", placeholder: "Apenas números" %>
+            </div>
+
+            <div class="form-field">
+              <%= f.label :cardOwnerFullName, "Nome do titular" %>
+              <%= f.text_field :cardOwnerFullName, required: true, class: "form-input" %>
+            </div>
+
+            <div class="form-field">
+              <%= f.label :cardNumber, "Número do cartão" %>
+              <%= f.text_field :cardNumber, required: true, pattern: "\\d{14,16}", class: "form-input", placeholder: "Apenas números" %>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <%= f.label :cardExpirationMonth, "Mês" %>
+                <%= f.text_field :cardExpirationMonth, required: true, pattern: "\\d{2}", class: "form-input", placeholder: "MM" %>
+              </div>
+
+              <div class="form-field">
+                <%= f.label :cardExpirationYear, "Ano" %>
+                <%= f.text_field :cardExpirationYear, required: true, pattern: "\\d{2}", class: "form-input", placeholder: "AA" %>
+              </div>
+
+              <div class="form-field">
+                <%= f.label :cardSecurityCode, "CVV" %>
+                <%= f.text_field :cardSecurityCode, required: true, pattern: "\\d{3,4}", class: "form-input", placeholder: "3 ou 4 dígitos" %>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <%= link_to "Voltar", new_marketing_lead_path, class: "btn btn-secondary" %>
+              <%= f.submit "Finalizar compra", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </turbo-frame>
+    </div>
+
+    <div class="compra-resumo">
+      <div class="resumo-card">
+        <div class="card-header">
+          <h2>Informações da sua compra</h2>
+          <p><%= plano[:nome] %></p>
+        </div>
+
+        <div class="card-content">
+          <p class="valor-total">
+            Valor total do plano <strong><%= plano[:valor] %></strong>
+          </p>
+
+          <p><%= plano[:total_cursos] %> cursos</p>
+
+          <ul class="beneficios-list">
+            <% plano[:beneficios].each do |beneficio| %>
+              <li>- <%= beneficio %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

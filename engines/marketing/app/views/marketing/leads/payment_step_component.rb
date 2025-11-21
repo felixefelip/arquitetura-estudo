@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # rbs_inline: enabled
 
 module Marketing::Leads
-  class NewComponent < ViewComponent::Base
+  class PaymentStepComponent < ViewComponent::Base
     #: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
     def initialize(lead:, plano:)
       super()

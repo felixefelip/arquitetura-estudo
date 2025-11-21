@@ -2,9 +2,13 @@
 
 module Marketing::Leads
   class FormComponent < ViewComponent::Base
-    @plano: Hash[Symbol, untyped]
+    # : (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
+    def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
 
-    # : (plano: Hash[Symbol, untyped]) -> void
-    def initialize: (plano: Hash[Symbol, untyped]) -> void
+    private
+
+    attr_accessor lead: Marketing::Lead::Entity
+
+    attr_accessor plano: Hash[Symbol, untyped]
   end
 end

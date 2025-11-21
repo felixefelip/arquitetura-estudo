@@ -12,6 +12,8 @@ class Marketing::LeadsController < ApplicationController
 
   private
 
+  attr_accessor lead: Marketing::Lead::Entity
+
   # : -> Hash[Symbol, untyped]
   def build_plans: () -> Hash[Symbol, untyped]
 end

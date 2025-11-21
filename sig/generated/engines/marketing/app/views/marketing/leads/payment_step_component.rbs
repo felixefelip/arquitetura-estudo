@@ -1,7 +1,7 @@
-# Generated from engines/marketing/app/views/marketing/leads/new_component.rb with RBS::Inline
+# Generated from engines/marketing/app/views/marketing/leads/payment_step_component.rb with RBS::Inline
 
 module Marketing::Leads
-  class NewComponent < ViewComponent::Base
+  class PaymentStepComponent < ViewComponent::Base
     # : (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
     def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
 

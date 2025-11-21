@@ -4314,15 +4314,6 @@ module ActiveRecord
 
         def define_method_attribute: (untyped name) -> untyped
       end
-
-      # Returns the value of the attribute identified by <tt>attr_name</tt> after
-      # it has been typecast (for example, "2004-12-12" in a date column is cast
-      # to a date object, like Date.new(2004, 12, 12)).
-      def read_attribute: (untyped attr_name) { () -> untyped } -> untyped
-
-      def _read_attribute: (untyped attr_name) { () -> untyped } -> untyped
-
-      alias attribute _read_attribute
     end
   end
 end
@@ -4473,8 +4464,6 @@ module ActiveRecord
     RESTRICTED_CLASS_METHODS: ::Array[untyped]
 
     class GeneratedAttributeMethods < Module
-      # nodoc:
-      include Mutex_m
     end
 
     module ClassMethods
@@ -17644,9 +17633,6 @@ module ActiveRecord
     end
 
     class GeneratedRelationMethods < Module
-      # :nodoc:
-      include Mutex_m
-
       def generate_method: (untyped method) -> untyped
     end
 
