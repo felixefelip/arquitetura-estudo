@@ -112,8 +112,8 @@ end
 
 module ActionView
   module Helpers
-    class FormBuilder
-      def text_field: (untyped method, ?Hash[untyped, untyped] options) -> String
+    class FormBuilder[F]
+      def text_field: (F method, ?Hash[untyped, untyped] options) -> String
       def password_field: (untyped method, ?Hash[untyped, untyped] options) -> String
       def text_area: (untyped method, ?Hash[untyped, untyped] options) -> String
       def color_field: (untyped method, ?Hash[untyped, untyped] options) -> String
@@ -651,7 +651,7 @@ end
 
 module ActionView
   module Helpers
-    module FormHelper
+    module FormHelper[F]
       # Creates a scope around a specific model object like form_for, but
       # doesn't create the form tags themselves. This makes fields_for suitable
       # for specifying additional model objects in the same form.
@@ -893,7 +893,7 @@ module ActionView
       # to store the ID of the record. There are circumstances where this
       # hidden field is not needed and you can pass <tt>include_id: false</tt>
       # to prevent fields_for from rendering it automatically.
-      def fields_for: (untyped record_name, ?untyped? record_object, ?::Hash[untyped, untyped] options) { (Helpers::FormBuilder) -> untyped } -> String
+      def fields_for: (untyped record_name, ?untyped? record_object, ?::Hash[untyped, untyped] options) { (Helpers::FormBuilder[untyped]) -> untyped } -> String
 
       # Creates a form that allows the user to create or update the attributes
       # of a specific model object.
@@ -1204,7 +1204,7 @@ module ActionView
       #   <%= form_for @invoice, url: external_url, authenticity_token: false do |f| %>
       #     ...
       #   <% end %>
-      def form_for: (untyped record, ?::Hash[untyped, untyped] options) { (Helpers::FormBuilder) -> untyped } -> String
+      def form_for: (untyped record, ?::Hash[untyped, untyped] options) { (Helpers::FormBuilder[:full_name | :email]) -> untyped } -> String
 
       # Creates a form tag based on mixing URLs, scopes, or models.
       #
@@ -1465,7 +1465,7 @@ module ActionView
       #   def labelled_form_with(**options, &block)
       #     form_with(**options.merge(builder: LabellingFormBuilder), &block)
       #   end
-      def form_with: (?format: untyped? format, ?url: untyped? url, ?scope: untyped? scope, ?model: untyped? model, **untyped options) { (Helpers::FormBuilder) -> String } -> String
+      def form_with: (?format: untyped? format, ?url: untyped? url, ?scope: untyped? scope, ?model: untyped? model, **untyped options) { (Helpers::FormBuilder[untyped]) -> String } -> String
 
       # Returns a label tag tailored for labelling an input field for a specified attribute (identified by +method+) on an object
       # assigned to the template (identified by +object+). The text of label will default to the attribute name unless a translation

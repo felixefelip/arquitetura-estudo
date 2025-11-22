@@ -1,8 +1,13 @@
-class FormBuilder[T, Field]
-  def initialize: (T) -> void
-  def input: (Field) -> String
+class FormBuilder[F]
+  def initialize: (untyped) -> void
+  def input: (F) -> String
 end
 
 module FormHelpers
-  def self.form_for: [T, Field] (T, Array[Field]) { (FormBuilder[T, Field]) -> void } -> void
+  type model_attributes = :full_name | :email
+  def self.form_for: (untyped) { (FormBuilder[model_attributes]) -> void } -> void
+end
+
+module FormOuter
+  def self.form_for: (untyped) { (FormBuilder[String]) -> void } -> void
 end

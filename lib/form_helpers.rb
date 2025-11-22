@@ -10,13 +10,13 @@ class FormBuilder
 end
 
 module FormHelpers
-  def self.form_for(model, fields)
+  def self.form_for(model)
     builder = FormBuilder.new(model)
     yield builder
   end
 end
 
-FormHelpers.form_for(Marketing::Lead::Entity.new, [:full_name, :email]) do |form|
+FormHelpers.form_for(Marketing::Lead::Entity.new) do |form|
   form.input(:full_name)
 
 	form.input(:email)

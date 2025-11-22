@@ -2,8 +2,6 @@
 
 module Academico::Cursos
   class CardComponent < ViewComponent::Base
-    @curso: Academico::Curso::Entity
-
     # : (curso: Academico::Curso::Entity) -> void
     def initialize: (curso: Academico::Curso::Entity) -> void
 
@@ -12,5 +10,9 @@ module Academico::Cursos
 
     # : -> String
     def button_text: () -> String
+
+    private
+
+    attr_accessor curso: Academico::Curso::Entity
   end
 end

@@ -33,9 +33,11 @@ target :app do
   check "engines"
   check "app/views/**/*.erb"
   check "engines/**/views/**/*.erb"
+  check "lib"
   signature "app"
   signature "engines"
   signature "sig"
+  signature "lib"
 
   library "pathname"
 

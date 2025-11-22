@@ -2,22 +2,25 @@
 
 module Academico::Cursos
   class CardComponent < ViewComponent::Base
-    # @rbs @curso: Academico::Curso::Entity
-
     #: (curso: Academico::Curso::Entity) -> void
     def initialize(curso:)
       super()
-      @curso = curso
+      self.curso = curso
     end
 
     #: -> bool
     def disabled?
-      @curso.icone.present?
+      # @curso.icone.present?
+      false
     end
 
     #: -> String
     def button_text
       disabled? ? "Assistido" : "Marcar como assistido"
     end
+
+    private
+
+    attr_accessor :curso #: Academico::Curso::Entity
   end
 end

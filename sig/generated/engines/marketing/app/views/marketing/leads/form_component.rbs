@@ -5,6 +5,8 @@ module Marketing::Leads
     # : (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
     def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
 
+    include ActionView::Helpers::FormHelper[:full_name | :email]
+
     private
 
     attr_accessor lead: Marketing::Lead::Entity

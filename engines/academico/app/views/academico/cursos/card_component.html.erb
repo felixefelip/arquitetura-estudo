@@ -1,16 +1,16 @@
 <%# @type self: Academico::Cursos::CardComponent %>
 
 <div class="curso-item">
-  <% if @curso.icone.present? %>
-    <%= image_tag @curso.icone, alt: @curso.titulo, class: "curso-icone" %>
+  <% if curso.icone.present? %>
+    <%= image_tag curso.icone, alt: curso.titulo, class: "curso-icone" %>
   <% end %>
 
   <div class="curso-info">
-    <h3 class="curso-titulo"><%= @curso.titulo %></h3>
+    <h3 class="curso-titulo"><%= curso.titulo %></h3>
   </div>
 
   <div class="curso-actions">
-    <%= button_to "Assistir", assistir_academico_curso_path(@curso),
+    <%= button_to "Assistir", assistir_academico_curso_path(curso),
         method: :patch,
         class: "btn btn-primary #{'btn-disabled' if disabled?}",
         disabled: disabled?,

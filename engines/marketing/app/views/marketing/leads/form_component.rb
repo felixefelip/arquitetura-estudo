@@ -9,6 +9,9 @@ module Marketing::Leads
       self.plano = plano
     end
 
+    # @rbs!
+    #   include ActionView::Helpers::FormHelper[:full_name | :email]
+
     private
 
     attr_accessor :lead #: Marketing::Lead::Entity

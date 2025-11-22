@@ -2454,7 +2454,7 @@ module ActionView
       def separator: (untyped `type`) -> (::String | untyped)
     end
 
-    class FormBuilder
+    class FormBuilder[F]
       # Wraps ActionView::Helpers::DateHelper#date_select for form builders:
       #
       #   <%= form_for @person do |f| %>
@@ -2614,7 +2614,7 @@ module ActionView
     #   end
     #
     # That's how you typically work with resources.
-    module FormHelper
+    module FormHelper[F]
       extend ActiveSupport::Concern
 
       include FormTagHelper
@@ -3105,7 +3105,7 @@ module ActionView
     #
     # The standard set of helper methods for form building are located in the
     # +field_helpers+ class attribute.
-    class FormBuilder
+    class FormBuilder[F]
       include ModelNaming
 
       attr_accessor object_name: untyped
@@ -4014,7 +4014,7 @@ module ActionView
       def prompt_text: (untyped prompt) -> untyped
     end
 
-    class FormBuilder
+    class FormBuilder[F]
       # Wraps ActionView::Helpers::FormOptionsHelper#collection_select for form builders:
       #
       #   <%= form_for @post do |f| %>
@@ -6781,7 +6781,7 @@ module ActionView
 
     include DebugHelper
 
-    include FormHelper
+    include FormHelper[untyped]
 
     include FormOptionsHelper
 

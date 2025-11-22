@@ -2,14 +2,16 @@
 
 module Academico::Cursos
   class IndexComponent < ViewComponent::Base
-    # @rbs @cursos: Academico::Curso::Entity::ActiveRecord_Relation
-    # @rbs @usuario: String?
-
     #: (cursos: Academico::Curso::Entity::ActiveRecord_Relation, usuario: String?) -> void
     def initialize(cursos:, usuario:)
       super()
-      @cursos = cursos
-      @usuario = usuario
+      self.cursos = cursos
+      self.usuario = usuario
     end
+
+    private
+
+    attr_accessor :cursos #: Academico::Curso::Entity::ActiveRecord_Relation
+    attr_accessor :usuario #: String?
   end
 end
