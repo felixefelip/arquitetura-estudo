@@ -9,7 +9,7 @@ module Marketing::Lead
     validates :status, presence: true
 
     class << self
-      # @rbs (email: String) -> void
+      #: (email: String) -> void
       def convert(email:)
         lead = find_by!(email:)
 

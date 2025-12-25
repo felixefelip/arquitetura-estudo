@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Finance::Client::Enroll do
   describe "#call" do
     it "cria um aluno", :aggregate_failures do
-      Marketing::Lead::Generate.call(full_name: "Felipe Feliz", email: "felipe@email.com")
+      Marketing::Lead::Generate.new(full_name: "Felipe Feliz", email: "felipe@email.com").call
 
       client = Finance::Client::Entity.new(
         full_name: "Felipe Feliz",
