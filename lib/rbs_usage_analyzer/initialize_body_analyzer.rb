@@ -77,9 +77,11 @@ class RbsUsageAnalyzer
       when Prism::ConstantReadNode, Prism::ConstantPathNode
         { kind: :constant, type: RbsUsageAnalyzer.extract_constant_path(node) }
       when Prism::ArrayNode
-        { kind: :literal, type: "Array[untyped]" }
+        element_type = infer_collection_element_type(node.elements)
+        { kind: :literal, type: "Array[#{element_type}]" }
       when Prism::HashNode
-        { kind: :literal, type: "Hash[untyped, untyped]" }
+        key_type, value_type = infer_hash_types(node.elements)
+        { kind: :literal, type: "Hash[#{key_type}, #{value_type}]" }
       else
         { kind: :unknown }
       end
@@ -99,6 +101,30 @@ class RbsUsageAnalyzer
       when Prism::TrueNode, Prism::FalseNode then "bool"
       # NilNode ignorado: default nil indica parâmetro opcional, não tipo nil
       end
+    end
+
+    def infer_collection_element_type(elements)
+      return "untyped" if elements.empty?
+
+      types = elements.filter_map { |el| infer_type_from_node(el) }.uniq
+      return "untyped" if types.empty?
+
+      types.join(" | ")
+    end
+
+    def infer_hash_types(elements)
+      return ["untyped", "untyped"] if elements.empty?
+
+      assocs = elements.select { |el| el.is_a?(Prism::AssocNode) }
+      return ["untyped", "untyped"] if assocs.empty?
+
+      key_types = assocs.filter_map { |a| infer_type_from_node(a.key) }.uniq
+      value_types = assocs.filter_map { |a| infer_type_from_node(a.value) }.uniq
+
+      key_type = key_types.empty? ? "untyped" : key_types.join(" | ")
+      value_type = value_types.empty? ? "untyped" : value_types.join(" | ")
+
+      [key_type, value_type]
     end
   end
 end

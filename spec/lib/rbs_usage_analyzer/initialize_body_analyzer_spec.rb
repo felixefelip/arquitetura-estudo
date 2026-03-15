@@ -124,7 +124,7 @@ RSpec.describe RbsUsageAnalyzer::InitializeBodyAnalyzer do
     expect(visitor.self_assignments["options"][:type]).to eq("Hash[untyped, untyped]")
   end
 
-  it "detecta self.attr = [] com elementos como Array[untyped]" do
+  it "detecta self.attr = [1, 2, 3] como Array[Integer]" do
     source = <<~RUBY
       class Entity
         def initialize
@@ -135,10 +135,10 @@ RSpec.describe RbsUsageAnalyzer::InitializeBodyAnalyzer do
 
     visitor = analyze(source)
     expect(visitor.self_assignments["items"][:kind]).to eq(:literal)
-    expect(visitor.self_assignments["items"][:type]).to eq("Array[untyped]")
+    expect(visitor.self_assignments["items"][:type]).to eq("Array[Integer]")
   end
 
-  it "detecta self.attr = {} com pares como Hash[untyped, untyped]" do
+  it "detecta self.attr = { foo: 'bar', baz: 42 } como Hash[Symbol, String | Integer]" do
     source = <<~RUBY
       class Config
         def initialize
@@ -149,6 +149,34 @@ RSpec.describe RbsUsageAnalyzer::InitializeBodyAnalyzer do
 
     visitor = analyze(source)
     expect(visitor.self_assignments["options"][:kind]).to eq(:literal)
-    expect(visitor.self_assignments["options"][:type]).to eq("Hash[untyped, untyped]")
+    expect(visitor.self_assignments["options"][:type]).to eq("Hash[Symbol, String | Integer]")
+  end
+
+  it "detecta self.attr = ['a', 'b'] como Array[String]" do
+    source = <<~RUBY
+      class Entity
+        def initialize
+          self.tags = ["ruby", "rails"]
+        end
+      end
+    RUBY
+
+    visitor = analyze(source)
+    expect(visitor.self_assignments["tags"][:kind]).to eq(:literal)
+    expect(visitor.self_assignments["tags"][:type]).to eq("Array[String]")
+  end
+
+  it "detecta self.attr = [1, 'a'] como Array[Integer | String]" do
+    source = <<~RUBY
+      class Entity
+        def initialize
+          self.items = [1, "a"]
+        end
+      end
+    RUBY
+
+    visitor = analyze(source)
+    expect(visitor.self_assignments["items"][:kind]).to eq(:literal)
+    expect(visitor.self_assignments["items"][:type]).to eq("Array[Integer | String]")
   end
 end
