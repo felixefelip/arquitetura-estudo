@@ -42,8 +42,8 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-gem "rbs-inline", require: false
 gem "rbs_infer", path: "../rbs_infer", require: false
+gem "rbs-inline", require: false
 
 # gem "rbs", require: false
 gem "rbs_rails", require: false
