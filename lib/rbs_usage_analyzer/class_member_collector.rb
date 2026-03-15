@@ -147,9 +147,10 @@ class RbsUsageAnalyzer
           return $1.strip
         end
 
-        # @rbs (args) -> ReturnType
-        if text =~ /@rbs\s+(.+)/
-          return $1.strip
+        # @rbs (args) -> ReturnType  (pular @rbs @ivar: que são anotações de ivar)
+        if text =~ /@rbs\s+(@?)(.+)/
+          next if $1 == "@"
+          return $2.strip
         end
       end
       nil

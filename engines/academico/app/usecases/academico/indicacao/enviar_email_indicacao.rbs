@@ -1,5 +1,0 @@
-module Academico::Indicacao
-  class EnviarEmailIndicacao
-    def initialize: () -> void
-  end
-end

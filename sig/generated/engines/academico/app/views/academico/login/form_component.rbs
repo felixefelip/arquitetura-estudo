@@ -1,7 +1,7 @@
 module Academico
   module Login
     class FormComponent < ViewComponent::Base
-      def initialize: @error_message: String?
+      def initialize: (error_message: String?) -> void
     end
   end
 end
