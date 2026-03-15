@@ -16,7 +16,7 @@ module Academico
 
       private
 
-      attr_writer :ddd, :numero#
+      attr_writer :ddd, :numero
     end
   end
 end

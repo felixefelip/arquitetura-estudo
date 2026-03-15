@@ -9,6 +9,7 @@ module Academico::Aluno
       self.email = Email.new(endereco: email)
       self.cpf = ::Shared::Cpf.new(numero: cpf)
       self.senha = senha
+      self.telefones = []
     end
 
     def adicionar_telefone(ddd:, numero:)
