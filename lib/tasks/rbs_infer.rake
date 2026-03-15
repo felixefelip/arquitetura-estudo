@@ -1,4 +1,4 @@
-require_relative "../../lib/rbs_usage_analyzer"
+require "rbs_infer"
 
 def resolve_infer_args(input)
   source_files = Dir["app/**/*.rb", "engines/**/*.rb", "lib/**/*.rb"]
@@ -21,7 +21,7 @@ namespace :rbs do
       exit 1
     end
 
-    analyzer = RbsUsageAnalyzer.new(**resolve_infer_args(target))
+    analyzer = RbsInfer::Analyzer.new(**resolve_infer_args(target))
     rbs = analyzer.generate_rbs
 
     if rbs
@@ -41,7 +41,7 @@ namespace :rbs do
       exit 1
     end
 
-    analyzer = RbsUsageAnalyzer.new(**resolve_infer_args(target))
+    analyzer = RbsInfer::Analyzer.new(**resolve_infer_args(target))
     rbs = analyzer.generate_rbs
 
     if rbs
