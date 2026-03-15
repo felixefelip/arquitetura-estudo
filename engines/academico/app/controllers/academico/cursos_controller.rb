@@ -2,7 +2,6 @@
 
 module Academico
   class CursosController < ApplicationController
-    #: -> void
     def index
       cursos = ::Academico::Curso::Entity.all
       usuario = session[:user_name]
@@ -10,7 +9,6 @@ module Academico
       render Academico::Cursos::IndexComponent.new(cursos: cursos, usuario: usuario)
     end
 
-    #: -> void
     def update
       curso = ::Academico::Curso::Entity.find(params[:id])
 

@@ -1,11 +1,6 @@
-# Generated from engines/academico/app/controllers/academico/cursos_controller.rb with RBS::Inline
-
 module Academico
   class CursosController < ApplicationController
-    # : -> void
     def index: () -> void
-
-    # : -> void
     def update: () -> void
   end
 end

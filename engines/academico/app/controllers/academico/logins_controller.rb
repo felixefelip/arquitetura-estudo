@@ -1,12 +1,10 @@
 # rbs_inline: enabled
 
 class Academico::LoginsController < ApplicationController
-  #: -> void
   def new
     render Academico::Login::NewComponent.new(error_message: flash[:alert])
   end
 
-  #: -> void
   def create
     repo = Academico::Aluno::Repositories::ActiveRecord::Impl.new
 
@@ -25,7 +23,6 @@ class Academico::LoginsController < ApplicationController
     end
   end
 
-  #: -> void
   def destroy
     session.delete(:user_id)
     session.delete(:user_name)
