@@ -6,7 +6,7 @@ RSpec.describe RbsUsageAnalyzer::ClassBodyAttrAnalyzer do
     result = Prism.parse(source)
     visitor = described_class.new(attr_names: attr_names.to_set)
     result.value.accept(visitor)
-    visitor.attr_types
+    visitor
   end
 
   it "detecta self.attr = Klass.new() em qualquer método" do
@@ -20,8 +20,8 @@ RSpec.describe RbsUsageAnalyzer::ClassBodyAttrAnalyzer do
       end
     RUBY
 
-    types = analyze(source, ["widget"])
-    expect(types["widget"]).to eq("Widget")
+    visitor = analyze(source, ["widget"])
+    expect(visitor.attr_types["widget"]).to eq("Widget")
   end
 
   it "detecta variável local com mesmo nome de attr" do
@@ -35,7 +35,71 @@ RSpec.describe RbsUsageAnalyzer::ClassBodyAttrAnalyzer do
       end
     RUBY
 
-    types = analyze(source, ["result"])
-    expect(types["result"]).to eq("Something")
+    visitor = analyze(source, ["result"])
+    expect(visitor.attr_types["result"]).to eq("Something")
+  end
+
+  it "detecta attr << Klass.new(...) como elemento da coleção" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :telefones
+
+        def adicionar_telefone(ddd:, numero:)
+          telefones << Telefone.new(ddd:, numero:)
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["telefones"])
+    expect(visitor.collection_element_types["telefones"]).to contain_exactly("Telefone")
+  end
+
+  it "detecta self.attr << Klass.new(...) como elemento da coleção" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def add_item(name:)
+          self.items << Item.new(name:)
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types["items"]).to contain_exactly("Item")
+  end
+
+  it "coleta múltiplos tipos de elementos via << em métodos diferentes" do
+    source = <<~RUBY
+      class Log
+        attr_reader :entries
+
+        def add_error(msg:)
+          entries << ErrorEntry.new(msg:)
+        end
+
+        def add_info(msg:)
+          entries << InfoEntry.new(msg:)
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["entries"])
+    expect(visitor.collection_element_types["entries"]).to contain_exactly("ErrorEntry", "InfoEntry")
+  end
+
+  it "ignora << quando o receiver não é um attr conhecido" do
+    source = <<~RUBY
+      class Foo
+        attr_reader :items
+
+        def process
+          other_list << Item.new
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types).to be_empty
   end
 end

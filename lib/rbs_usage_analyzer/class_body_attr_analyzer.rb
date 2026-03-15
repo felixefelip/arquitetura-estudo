@@ -1,10 +1,11 @@
 class RbsUsageAnalyzer
   class ClassBodyAttrAnalyzer < Prism::Visitor
-    attr_reader :attr_types
+    attr_reader :attr_types, :collection_element_types
 
     def initialize(attr_names:)
       @attr_names = attr_names
       @attr_types = {}
+      @collection_element_types = {}
       @in_method = false
     end
 
@@ -32,6 +33,18 @@ class RbsUsageAnalyzer
             @attr_types[attr_name] = type if type && !@attr_types[attr_name]
           end
         end
+
+        # attr << Foo.new(...) — infer element type for collection attrs
+        if node.name == :<<
+          attr_name = receiver_attr_name(node.receiver)
+          if attr_name && @attr_names.include?(attr_name)
+            value = node.arguments&.arguments&.first
+            type = infer_type_from_node(value) if value
+            if type
+              (@collection_element_types[attr_name] ||= Set.new) << type
+            end
+          end
+        end
       end
       super
     end
@@ -48,6 +61,17 @@ class RbsUsageAnalyzer
     end
 
     private
+
+    # Extracts the attr name from the receiver of a << call.
+    # Handles: telefones << ... (implicit self) and self.telefones << ...
+    def receiver_attr_name(receiver)
+      case receiver
+      when Prism::CallNode
+        if receiver.receiver.nil? || receiver.receiver.is_a?(Prism::SelfNode)
+          receiver.name.to_s
+        end
+      end
+    end
 
     def infer_type_from_node(node)
       case node

@@ -58,10 +58,13 @@ class RbsUsageAnalyzer
 
     # Inferir tipos dos attrs a partir de todos os métodos da classe
     # (self.x = Foo.new ou variável local com mesmo nome do attr)
-    attr_types_from_class = infer_attr_types_from_class_body(target_members)
+    attr_types_from_class, collection_element_types = infer_attr_types_from_class_body(target_members)
     attr_types_from_class.each do |name, type|
       attr_types[name] ||= type
     end
+
+    # Refinar Array[untyped] usando tipos inferidos de << usage
+    refine_collection_types(attr_types, collection_element_types)
 
     # Enriquecer init_arg_types com tipos inferidos (defaults, attrs)
     attr_types.each do |attr_name, type|
@@ -220,12 +223,12 @@ class RbsUsageAnalyzer
   # e variáveis locais com mesmo nome de um attr_accessor.
 
   def infer_attr_types_from_class_body(members)
-    return {} unless @target_file && File.exist?(@target_file)
+    return [{}, {}] unless @target_file && File.exist?(@target_file)
 
     attr_names = members.select { |m| [:attr_accessor, :attr_reader, :attr_writer].include?(m.kind) }
                         .map(&:name)
                         .to_set
-    return {} if attr_names.empty?
+    return [{}, {}] if attr_names.empty?
 
     source = File.read(@target_file)
     result = Prism.parse(source)
@@ -233,7 +236,18 @@ class RbsUsageAnalyzer
     visitor = ClassBodyAttrAnalyzer.new(attr_names: attr_names)
     result.value.accept(visitor)
 
-    visitor.attr_types
+    [visitor.attr_types, visitor.collection_element_types]
+  end
+
+  # Refina tipos Array[untyped] com tipos de elementos inferidos via <<
+  def refine_collection_types(attr_types, collection_element_types)
+    collection_element_types.each do |attr_name, element_types|
+      current = attr_types[attr_name]
+      next unless current&.start_with?("Array[untyped]")
+
+      element_type = element_types.to_a.join(" | ")
+      attr_types[attr_name] = "Array[#{element_type}]"
+    end
   end
 
   # ─── Inferir tipos do initialize via call-sites ────────────────────
