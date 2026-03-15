@@ -1,22 +1,14 @@
-# Generated from engines/academico/app/domains/academico/aluno/telefone.rb with RBS::Inline
-
 module Academico
   module Aluno
     class Telefone
       attr_reader ddd: String
-
       attr_reader numero: String
-
-      # : (ddd: ::String, numero: ::String) -> void
-      def initialize: (ddd: ::String, numero: ::String) -> void
-
-      # : -> ::String
-      def to_s: () -> ::String
+      def initialize: (ddd: untyped, numero: untyped) -> void
+      def to_s: -> ::String
 
       private
 
       attr_writer ddd: String
-
       attr_writer numero: String
     end
   end
