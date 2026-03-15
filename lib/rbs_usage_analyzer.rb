@@ -40,6 +40,13 @@ class RbsUsageAnalyzer
     # Inferir tipos dos attrs a partir do initialize (self.x = param)
     attr_types = infer_attr_types_from_initialize(init_arg_types)
 
+    # Enriquecer init_arg_types com tipos inferidos (defaults, attrs)
+    attr_types.each do |attr_name, type|
+      if init_arg_types[attr_name] == "untyped"
+        init_arg_types[attr_name] = type
+      end
+    end
+
     build_full_rbs(target_members, init_arg_types, attr_types)
   end
 
@@ -128,7 +135,9 @@ class RbsUsageAnalyzer
              when :param
                # self.x = x → tipo vem dos call-sites ou do default
                param_name = expr_info[:name]
-               init_arg_types[param_name] || default_types[param_name]
+               call_site_type = init_arg_types[param_name]
+               call_site_type = nil if call_site_type == "untyped"
+               call_site_type || default_types[param_name]
              when :call
                # self.x = algo.method → tentar resolver
                expr_info[:type]
@@ -585,10 +594,17 @@ class RbsUsageAnalyzer
       stmts.each do |stmt|
         if stmt.is_a?(Prism::LocalVariableWriteNode)
           var_name = stmt.name.to_s
-          if stmt.value.is_a?(Prism::CallNode) && stmt.value.receiver.nil?
-            method_name = stmt.value.name.to_s
-            if @method_return_types[method_name]
-              @local_var_types[var_name] = @method_return_types[method_name]
+          if stmt.value.is_a?(Prism::CallNode)
+            if stmt.value.receiver.nil?
+              # aluno_dto = build_dto
+              method_name = stmt.value.name.to_s
+              if @method_return_types[method_name]
+                @local_var_types[var_name] = @method_return_types[method_name]
+              end
+            elsif stmt.value.name == :new && stmt.value.receiver
+              # aluno_dto = Academico::Aluno::Matricular::Dto.new(...)
+              class_name = RbsUsageAnalyzer.extract_constant_path(stmt.value.receiver)
+              @local_var_types[var_name] = class_name if class_name
             end
           end
         end
@@ -643,6 +659,8 @@ class RbsUsageAnalyzer
       when Prism::HashNode then "Hash[untyped, untyped]"
       when Prism::ConstantReadNode, Prism::ConstantPathNode
         RbsUsageAnalyzer.extract_constant_path(node) || "untyped"
+      when Prism::ImplicitNode
+        resolve_value_type(node.value)
       else
         "untyped"
       end

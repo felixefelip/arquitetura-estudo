@@ -30,8 +30,8 @@ module Academico
 
       private
 
-      attr_accessor :aluno_repository #: Academico::Aluno::_Repository
-      attr_accessor :aluno_dto #: Dto
+      attr_accessor :aluno_repository
+      attr_accessor :aluno_dto
 
       #: (aluno: Academico::Aluno::Entity) -> void
       def publicar_evento(aluno:)

@@ -8,7 +8,6 @@ module Finance
         self.card = card
       end
 
-      #: -> void
       def call
         puts "Processando pagamento de #{client.full_name}"
 
@@ -29,7 +28,6 @@ module Finance
       attr_accessor :client
       attr_accessor :card
 
-      #: -> void
       def send_event_client_enrolled
         # Publicar evento usando ActiveSupport::Notifications
         payload = {
