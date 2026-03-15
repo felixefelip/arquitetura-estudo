@@ -7,7 +7,7 @@ module Academico
       attr_reader telefones: Array[Telefone]
       attr_reader senha: String?
       def initialize: (nome: String, email: String, cpf: String, ?senha: String?) -> void
-      def adicionar_telefone: (ddd: String?, numero: String?) -> untyped
+      def adicionar_telefone: (ddd: String?, numero: String?) -> Array[Telefone]
 
       private
 

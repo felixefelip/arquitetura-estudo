@@ -1,5 +1,8 @@
 class RbsUsageAnalyzer
   class TypeMerger
+    # Métodos de Array que retornam self (o próprio array)
+    ARRAY_SELF_RETURN_METHODS = %i[<< push append unshift prepend insert concat].to_set
+
     def initialize(target_file:)
       @target_file = target_file
     end
@@ -101,7 +104,18 @@ class RbsUsageAnalyzer
           method_last_exprs[method_name] = last_stmt.name.to_s
         end
 
-        # 4. receiver.method() na última expressão
+        # 4. attr.mutation_method(expr) → return type é o tipo do attr (Array retorna self)
+        if last_stmt.is_a?(Prism::CallNode) && ARRAY_SELF_RETURN_METHODS.include?(last_stmt.name) && last_stmt.receiver
+          receiver_name = implicit_self_method_name(last_stmt.receiver)
+          if receiver_name && known_return_types[receiver_name]
+            resolved = known_return_types[receiver_name]
+            member.signature = member.signature.sub("-> untyped", "-> #{resolved}")
+            known_return_types[method_name] = resolved
+            next
+          end
+        end
+
+        # 5. receiver.method() na última expressão
         if last_stmt.is_a?(Prism::CallNode) && last_stmt.receiver && method_type_resolver
           resolved = infer_call_return_type(last_stmt, known_return_types, method_type_resolver)
           if resolved
@@ -128,6 +142,12 @@ class RbsUsageAnalyzer
     end
 
     private
+
+    # Extrai nome do método quando o receiver é self implícito ou explícito
+    def implicit_self_method_name(node)
+      return unless node.is_a?(Prism::CallNode)
+      return node.name.to_s if node.receiver.nil? || node.receiver.is_a?(Prism::SelfNode)
+    end
 
     # Resolve return type de receiver.method() ou method() com args
     def infer_call_return_type(call_node, known_return_types, method_type_resolver)

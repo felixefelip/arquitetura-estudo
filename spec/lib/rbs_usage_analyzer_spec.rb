@@ -539,6 +539,70 @@ RSpec.describe RbsUsageAnalyzer do
       end
     end
 
+    it "infere return type de attr << Klass.new como Array[Klass]" do
+      entity_src = <<~RUBY
+        module MyApp
+          class Entity
+            attr_reader :items
+
+            def initialize
+              self.items = []
+            end
+
+            def add_item(name:)
+              items << Item.new(name:)
+            end
+
+            private
+
+            attr_writer :items
+          end
+        end
+      RUBY
+
+      with_temp_files("my_app/entity.rb" => entity_src) do |dir, paths|
+        entity = paths.find { |p| p.end_with?("entity.rb") }
+        analyzer = described_class.new(target_file: entity, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        expect(rbs).to include("attr_reader items: Array[Item]")
+        expect(rbs).to include("def add_item: (name: untyped) -> Array[Item]")
+      end
+    end
+
+    %i[push append unshift prepend].each do |method_name|
+      it "infere return type de attr.#{method_name}(Klass.new) como Array[Klass]" do
+        entity_src = <<~RUBY
+          module MyApp
+            class Entity
+              attr_reader :items
+
+              def initialize
+                self.items = []
+              end
+
+              def add_item(name:)
+                items.#{method_name}(Item.new(name:))
+              end
+
+              private
+
+              attr_writer :items
+            end
+          end
+        RUBY
+
+        with_temp_files("my_app/entity.rb" => entity_src) do |dir, paths|
+          entity = paths.find { |p| p.end_with?("entity.rb") }
+          analyzer = described_class.new(target_file: entity, source_files: paths)
+          rbs = analyzer.generate_rbs
+
+          expect(rbs).to include("attr_reader items: Array[Item]")
+          expect(rbs).to include("def add_item: (name: untyped) -> Array[Item]")
+        end
+      end
+    end
+
     it "infere tipo de attr via param.method quando tipo do param é conhecido" do
       dto_src = <<~RUBY
         module MyApp
