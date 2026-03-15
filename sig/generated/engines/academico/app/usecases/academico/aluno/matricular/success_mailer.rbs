@@ -1,10 +1,9 @@
-# Generated from engines/academico/app/usecases/academico/aluno/matricular/success_mailer.rb with RBS::Inline
-
-class Academico::Aluno::Matricular::SuccessMailer < ApplicationMailer
-  # : (Academico::Aluno::Entity aluno) -> Mail::Message
-  def send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message
-
-  @mensagem: String
-
-  def self.send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message
+module Academico
+  module Aluno
+    module Matricular
+      class SuccessMailer < ApplicationMailer
+        def send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message
+      end
+    end
+  end
 end

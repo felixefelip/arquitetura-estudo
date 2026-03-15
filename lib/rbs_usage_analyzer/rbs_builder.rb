@@ -19,13 +19,22 @@ class RbsUsageAnalyzer
       end
       lines << "#{base_indent}class #{class_name}#{@superclass_name ? " < #{@superclass_name}" : ""}"
 
+      # Emitir include/extend para módulos incluídos (concerns)
+      includes = members.select { |m| m.kind == :include }
+      includes.each do |inc|
+        lines << "#{member_indent}include #{inc.name}"
+        if has_class_methods_module?(inc.name)
+          lines << "#{member_indent}extend #{inc.name}::ClassMethods"
+        end
+      end
+
       current_visibility = :public
       has_private = members.any? { |m| m.visibility == :private }
       has_protected = members.any? { |m| m.visibility == :protected }
 
       # Agrupar por visibilidade: public -> protected -> private
       [:public, :protected, :private].each do |vis|
-        vis_members = members.select { |m| m.visibility == vis }
+        vis_members = members.select { |m| m.visibility == vis && m.kind != :include }
         next if vis_members.empty?
 
         if vis != :public
@@ -79,6 +88,45 @@ class RbsUsageAnalyzer
         signature = signature.gsub(/(\??)#{Regexp.escape(param_name)}:\s*untyped/, "\\1#{param_name}: #{type}")
       end
       signature
+    end
+
+    # Verifica se o módulo incluído tem um sub-módulo ClassMethods em .gem_rbs_collection/
+    def has_class_methods_module?(module_name)
+      parts = module_name.split("::")
+      first = parts.first
+
+      gem_hints = [
+        first.downcase,
+        first.gsub(/([a-z])([A-Z])/, '\1_\2').downcase,
+        first.gsub(/([a-z])([A-Z])/, '\1-\2').downcase,
+      ].uniq
+
+      rbs_files = gem_hints.flat_map { |hint| Dir[".gem_rbs_collection/#{hint}/**/*.rbs"] }.uniq
+      return false if rbs_files.empty?
+
+      # Procurar "module ClassMethods" dentro do módulo alvo
+      target_suffix = parts[1..].join("::")
+      nesting = []
+      target_depth = nil
+
+      rbs_files.each do |file|
+        File.foreach(file) do |line|
+          stripped = line.strip
+          if stripped =~ /\A(module|class)\s+(\S+)/
+            nesting << $2
+            if target_depth.nil? && nesting.join("::").end_with?(target_suffix)
+              target_depth = nesting.size
+            elsif target_depth && nesting.size == target_depth + 1 && $2 == "ClassMethods"
+              return true
+            end
+          elsif stripped == "end"
+            target_depth = nil if target_depth && nesting.size == target_depth
+            nesting.pop if nesting.any?
+          end
+        end
+      end
+
+      false
     end
   end
 end

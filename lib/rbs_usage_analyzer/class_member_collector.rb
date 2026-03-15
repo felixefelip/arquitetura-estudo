@@ -69,12 +69,30 @@ class RbsUsageAnalyzer
         end
       when :attr_accessor, :attr_reader, :attr_writer
         extract_attrs(node)
+      when :include
+        extract_includes(node)
       end
 
       super
     end
 
     private
+
+    def extract_includes(node)
+      return unless node.arguments
+
+      node.arguments.arguments.each do |arg|
+        name = RbsUsageAnalyzer.extract_constant_path(arg)
+        next unless name
+
+        @members << Member.new(
+          kind: :include,
+          name: name,
+          signature: name,
+          visibility: :public
+        )
+      end
+    end
 
     def extract_attrs(node)
       return unless node.arguments

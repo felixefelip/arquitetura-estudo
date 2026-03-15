@@ -6,9 +6,6 @@ module Academico
       class Dto
         include ActiveModel::Validations
 
-        # @rbs!
-        #   extend ActiveModel::Validations::ClassMethods
-
         attr_reader :cpf, :email, :nome, :senha #: String?
 
         validates :cpf, presence: true
