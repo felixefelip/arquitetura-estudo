@@ -1,0 +1,10 @@
+module Academico
+  module Aluno
+    module TelefoneRepositories
+      module ActiveRecord
+        class Record < ApplicationRecord
+        end
+      end
+    end
+  end
+end

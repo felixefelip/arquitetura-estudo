@@ -45,7 +45,7 @@ class RbsUsageAnalyzer
   end
 
   def generate_rbs
-    return nil unless @target_file && File.exist?(@target_file)
+    return nil unless @target_file && @target_class && File.exist?(@target_file)
 
     # Parsear o arquivo-alvo para extrair todos os membros da classe
     target_members = parse_target_class

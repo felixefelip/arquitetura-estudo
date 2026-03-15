@@ -1,0 +1,8 @@
+module Gameficacao
+  module Selo
+    module Repositories
+      class ActiveRecord
+      end
+    end
+  end
+end

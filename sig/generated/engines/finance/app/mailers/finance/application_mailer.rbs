@@ -1,0 +1,4 @@
+module Finance
+  class ApplicationMailer < ActionMailer::Base
+  end
+end

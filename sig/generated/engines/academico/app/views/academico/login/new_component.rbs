@@ -1,10 +1,7 @@
-# Generated from engines/academico/app/views/academico/login/new_component.rb with RBS::Inline
-
-module Academico::Login
-  class NewComponent < ViewComponent::Base
-    @error_message: String?
-
-    # : (error_message: String?) -> void
-    def initialize: (error_message: String?) -> void
+module Academico
+  module Login
+    class NewComponent < ViewComponent::Base
+      def initialize: (?error_message: untyped) -> void
+    end
   end
 end

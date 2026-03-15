@@ -1,16 +1,12 @@
-# Generated from engines/marketing/app/views/marketing/leads/payment_step_component.rb with RBS::Inline
+module Marketing
+  module Leads
+    class PaymentStepComponent < ViewComponent::Base
+      def initialize: (lead: untyped, plano: Hash[untyped, untyped]) -> void
 
-module Marketing::Leads
-  class PaymentStepComponent < ViewComponent::Base
-    include ActionView::Helpers::FormHelper[:full_name | :email]
+      private
 
-    # : (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
-    def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
-
-    private
-
-    attr_accessor lead: Marketing::Lead::Entity
-
-    attr_accessor plano: Hash[Symbol, untyped]
+      attr_accessor lead: Marketing::Lead::Entity
+      attr_accessor plano: Hash[Symbol, untyped]
+    end
   end
 end

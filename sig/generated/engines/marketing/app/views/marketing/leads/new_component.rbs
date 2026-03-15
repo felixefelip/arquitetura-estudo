@@ -1,14 +1,12 @@
-# Generated from engines/marketing/app/views/marketing/leads/new_component.rb with RBS::Inline
+module Marketing
+  module Leads
+    class NewComponent < ViewComponent::Base
+      def initialize: (lead: Marketing::Lead::Entity, plano: Hash[untyped, untyped]) -> void
 
-module Marketing::Leads
-  class NewComponent < ViewComponent::Base
-    # : (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
-    def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
+      private
 
-    private
-
-    attr_accessor lead: Marketing::Lead::Entity
-
-    attr_accessor plano: Hash[Symbol, untyped]
+      attr_accessor lead: Marketing::Lead::Entity
+      attr_accessor plano: Hash[Symbol, untyped]
+    end
   end
 end

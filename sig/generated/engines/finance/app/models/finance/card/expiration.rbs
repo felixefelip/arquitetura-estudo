@@ -1,0 +1,6 @@
+module Finance
+  module Card
+    class Expiration
+    end
+  end
+end

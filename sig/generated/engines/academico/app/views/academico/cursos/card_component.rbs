@@ -1,18 +1,13 @@
-# Generated from engines/academico/app/views/academico/cursos/card_component.rb with RBS::Inline
+module Academico
+  module Cursos
+    class CardComponent < ViewComponent::Base
+      def initialize: (curso: Academico::Curso::Entity) -> void
+      def disabled?: -> bool
+      def button_text: -> String
 
-module Academico::Cursos
-  class CardComponent < ViewComponent::Base
-    # : (curso: Academico::Curso::Entity) -> void
-    def initialize: (curso: Academico::Curso::Entity) -> void
+      private
 
-    # : -> bool
-    def disabled?: () -> bool
-
-    # : -> String
-    def button_text: () -> String
-
-    private
-
-    attr_accessor curso: Academico::Curso::Entity
+      attr_accessor curso: Academico::Curso::Entity
+    end
   end
 end

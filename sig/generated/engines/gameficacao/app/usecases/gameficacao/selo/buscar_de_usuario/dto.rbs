@@ -1,0 +1,8 @@
+module Gameficacao
+  module Selo
+    class BuscarDeUsuario
+      class Dto
+      end
+    end
+  end
+end

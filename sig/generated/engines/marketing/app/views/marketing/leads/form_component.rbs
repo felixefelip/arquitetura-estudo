@@ -1,16 +1,12 @@
-# Generated from engines/marketing/app/views/marketing/leads/form_component.rb with RBS::Inline
+module Marketing
+  module Leads
+    class FormComponent < ViewComponent::Base
+      def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
 
-module Marketing::Leads
-  class FormComponent < ViewComponent::Base
-    # : (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
-    def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
+      private
 
-    include ActionView::Helpers::FormHelper[:full_name | :email]
-
-    private
-
-    attr_accessor lead: Marketing::Lead::Entity
-
-    attr_accessor plano: Hash[Symbol, untyped]
+      attr_accessor lead: Marketing::Lead::Entity
+      attr_accessor plano: Hash[Symbol, untyped]
+    end
   end
 end

@@ -1,4 +1,6 @@
-# Generated from engines/marketing/app/views/marketing/leads/sucesso_component.rb with RBS::Inline
-
-class Marketing::Leads::SucessoComponent < ViewComponent::Base
+module Marketing
+  module Leads
+    class SucessoComponent < ViewComponent::Base
+    end
+  end
 end

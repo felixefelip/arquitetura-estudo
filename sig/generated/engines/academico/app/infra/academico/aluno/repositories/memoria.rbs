@@ -1,0 +1,15 @@
+module Academico
+  module Aluno
+    module Repositories
+      class Memoria
+        def adicionar: (aluno: untyped) -> untyped
+        def buscar_por_cpf: (untyped cpf) -> untyped
+        def buscar_todos: () -> untyped
+
+        private
+
+        def alunos: () -> untyped
+      end
+    end
+  end
+end

@@ -175,7 +175,8 @@ RSpec.describe "bin/rbs_infer" do
 
       _stdout, stderr, status = run_rbs_infer("app/models/empty.rb", dir: @tmpdir)
 
-      expect(status).not_to be_success
+      expect(status).to be_success
+      expect(stderr).to include("class not found")
     end
   end
 

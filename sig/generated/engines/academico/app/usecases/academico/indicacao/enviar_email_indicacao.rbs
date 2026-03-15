@@ -1,0 +1,7 @@
+module Academico
+  module Indicacao
+    class EnviarEmailIndicacao
+      def initialize: () -> untyped
+    end
+  end
+end
