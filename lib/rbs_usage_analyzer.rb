@@ -656,7 +656,8 @@ class RbsUsageAnalyzer
       target_class: @target_class,
       method_return_types: method_return_types,
       local_var_types: local_var_types,
-      method_type_resolver: method_type_resolver
+      method_type_resolver: method_type_resolver,
+      caller_class_name: caller_visitor.class_name
     )
     result.value.accept(visitor)
     visitor.usages
@@ -770,11 +771,12 @@ class RbsUsageAnalyzer
 
     AR_FINDER_METHODS = %i[find find_by find_by! first first! last last! take take! create create! find_or_create_by find_or_create_by! find_sole_by].freeze
 
-    def initialize(target_class:, method_return_types:, local_var_types:, method_type_resolver: nil)
+    def initialize(target_class:, method_return_types:, local_var_types:, method_type_resolver: nil, caller_class_name: nil)
       @target_class = target_class
       @method_return_types = method_return_types
       @local_var_types = local_var_types
       @method_type_resolver = method_type_resolver
+      @caller_class_name = caller_class_name
       @usages = []
     end
 
@@ -801,10 +803,15 @@ class RbsUsageAnalyzer
     def match_class?(name)
       normalized_target = @target_class.sub(/\A::/, "")
       normalized_name = name.sub(/\A::/, "")
-      normalized_name == normalized_target
+      # Match exato ou referência relativa (ex: Email == Academico::Aluno::Email)
+      normalized_name == normalized_target ||
+        normalized_target.end_with?("::#{normalized_name}")
     end
 
     def collect_local_assignments(defn)
+      # Resolver tipos dos parâmetros do método via call-sites
+      collect_param_types(defn)
+
       body = defn.body
       return unless body
 
@@ -833,6 +840,38 @@ class RbsUsageAnalyzer
               @local_var_types[var_name] = class_name if class_name
             end
           end
+        end
+      end
+    end
+
+    # Resolver tipos dos parâmetros do método via call-sites do caller class
+    # Ex: Entity#initialize(email:) → email é String (inferido dos call-sites de Entity.new)
+    # Usa resolve_init_param_types (o que callers passam), NÃO resolve_all (tipos dos attrs)
+    # Motivo: param email recebe String, mas attr email é Email (self.email = Email.new(...))
+    def collect_param_types(defn)
+      return unless @method_type_resolver && @caller_class_name
+
+      # Só resolvo initialize por enquanto (caso mais comum e útil)
+      return unless defn.name == :initialize
+
+      init_param_types = @method_type_resolver.resolve_init_param_types(@caller_class_name)
+      params = defn.parameters
+      return unless params
+
+      if params.respond_to?(:keywords)
+        params.keywords.each do |kw|
+          name = kw.name.to_s
+          type = init_param_types[name]
+          @local_var_types[name] = type if type && type != "untyped"
+        end
+      end
+
+      if params.respond_to?(:requireds)
+        params.requireds.each do |p|
+          next unless p.respond_to?(:name)
+          name = p.name.to_s
+          type = init_param_types[name]
+          @local_var_types[name] = type if type && type != "untyped"
         end
       end
     end
@@ -944,7 +983,87 @@ class RbsUsageAnalyzer
       @cache[class_name] ||= build_class_types(class_name)
     end
 
+    # Retorna os tipos dos parâmetros do initialize inferidos via call-sites
+    # Ex: Entity.new(nome: "x", email: "y") → {"nome" => "String", "email" => "String"}
+    def resolve_init_param_types(class_name)
+      return {} unless class_name && class_name != "untyped"
+      return {} if @building_init_params&.include?(class_name)
+      @init_params_cache ||= {}
+      @init_params_cache[class_name] ||= build_init_param_types(class_name)
+    end
+
     private
+
+    def build_init_param_types(class_name)
+      @building_init_params ||= Set.new
+      return {} if @building_init_params.include?(class_name)
+      @building_init_params.add(class_name)
+
+      types = {}
+      short_name = class_name.split("::").last
+      all_usages = []
+
+      @source_files.each do |file|
+        source = File.read(file) rescue next
+        next unless source.include?(short_name)
+
+        result = Prism.parse(source)
+        comments = result.comments
+        lines = source.lines
+
+        # Montar method_return_types do caller
+        mrt = {}
+        member_collector = RbsUsageAnalyzer::ClassMemberCollector.new(comments: comments, lines: lines)
+        result.value.accept(member_collector)
+        member_collector.members.each do |m|
+          case m.kind
+          when :method
+            if m.signature =~ /->\s*(.+)$/
+              mrt[m.name] = $1.strip
+            end
+          when :attr_accessor, :attr_reader
+            if m.signature =~ /\w+:\s*(.+)/
+              type = $1.strip
+              mrt[m.name] ||= type unless type == "untyped"
+            end
+          end
+        end
+
+        # Resolver caller class types
+        caller_ext = RbsUsageAnalyzer::ClassNameExtractor.new
+        result.value.accept(caller_ext)
+        caller_class_name = caller_ext.class_name
+        if caller_class_name
+          caller_types = resolve_all(caller_class_name)
+          caller_types.each { |name, type| mrt[name] ||= type }
+        end
+
+        local_var_types = {}
+        visitor = RbsUsageAnalyzer::NewCallCollector.new(
+          target_class: class_name,
+          method_return_types: mrt,
+          local_var_types: local_var_types,
+          method_type_resolver: self,
+          caller_class_name: caller_class_name
+        )
+        result.value.accept(visitor)
+        all_usages.concat(visitor.usages)
+      end
+
+      # Merge: preferir tipos resolvidos sobre untyped
+      all_types = Hash.new { |h, k| h[k] = [] }
+      all_usages.each { |u| u.each { |k, v| all_types[k] << v } }
+
+      all_types.each do |name, ts|
+        resolved = ts.reject { |t| t == "untyped" }
+        resolved = ts if resolved.empty?
+        unique = resolved.map { |t| t.sub(/\A::/, "") }.uniq
+        types[name] = unique.size == 1 ? unique.first : "(#{unique.join(" | ")})"
+      end
+
+      @building_init_params.delete(class_name)
+      types
+    end
 
     def build_class_types(class_name)
       return {} if @building.include?(class_name)
@@ -991,7 +1110,18 @@ class RbsUsageAnalyzer
           end
         end
 
-        # 3. Inferir attrs restantes via call-sites de ClassName.new(...)
+        # 3. Tipos inferidos via self.attr = Algo.new(...) ou constante
+        init_visitor.self_assignments.each do |attr_name, info|
+          next if types[attr_name]
+          next unless attr_names.include?(attr_name)
+
+          case info[:kind]
+          when :constant, :call
+            types[attr_name] = info[:type] if info[:type]
+          end
+        end
+
+        # 4. Inferir attrs restantes via call-sites de ClassName.new(...)
         untyped_attr_params = {}
         init_visitor.self_assignments.each do |attr_name, info|
           if info[:kind] == :param && attr_names.include?(attr_name) && !types[attr_name]
@@ -1022,13 +1152,52 @@ class RbsUsageAnalyzer
         next unless source.include?(short_name)
 
         result = Prism.parse(source)
+        comments = result.comments
+        lines = source.lines
+
+        # Extrair tipos de métodos e attrs anotados do caller
+        method_return_types = {}
+        def_visitor = RbsUsageAnalyzer::DefCollector.new
+        result.value.accept(def_visitor)
+        def_visitor.defs.each do |defn|
+          def_line = defn.location.start_line
+          comments.each do |comment|
+            cl = comment.location.start_line
+            next unless cl.between?(def_line - 3, def_line - 1)
+            text = comment.location.slice
+            if text =~ /#:\s*(?:\(.*?\)\s*)?->\s*(.+)/
+              method_return_types[defn.name.to_s] = $1.strip
+            end
+          end
+        end
+
+        # Incluir attr types anotados
+        member_collector = RbsUsageAnalyzer::ClassMemberCollector.new(comments: comments, lines: lines)
+        result.value.accept(member_collector)
+        member_collector.members.each do |m|
+          next unless [:attr_accessor, :attr_reader].include?(m.kind)
+          if m.signature =~ /\w+:\s*(.+)/
+            type = $1.strip
+            method_return_types[m.name] ||= type unless type == "untyped"
+          end
+        end
+
+        # Resolver caller class types via MethodTypeResolver
+        caller_ext = RbsUsageAnalyzer::ClassNameExtractor.new
+        result.value.accept(caller_ext)
+        caller_class_name = caller_ext.class_name
+        if caller_class_name
+          caller_types = resolve_all(caller_class_name)
+          caller_types.each { |name, type| method_return_types[name] ||= type }
+        end
 
         local_var_types = {}
         visitor = RbsUsageAnalyzer::NewCallCollector.new(
           target_class: class_name,
-          method_return_types: {},
+          method_return_types: method_return_types,
           local_var_types: local_var_types,
-          method_type_resolver: nil
+          method_type_resolver: self,
+          caller_class_name: caller_class_name
         )
         result.value.accept(visitor)
 

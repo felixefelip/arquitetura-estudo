@@ -3,7 +3,6 @@
 module Academico
   module Aluno
     class Email
-      #: (endereco: ::String) -> void
       def initialize(endereco:)
         raise ArgumentError unless endereco_valido?
 
@@ -17,9 +16,8 @@ module Academico
 
       private
 
-      attr_accessor :endereco #: String
+      attr_accessor :endereco
 
-      #: -> bool
       def endereco_valido?
         true
       end
