@@ -6,7 +6,7 @@ module Academico
       attr_reader nome: String
       attr_reader telefones: untyped
       attr_reader senha: String?
-      def initialize: (nome: String, email: String, cpf: String, senha: String?) -> void
+      def initialize: (nome: String, email: String, cpf: String, ?senha: String?) -> void
       def adicionar_telefone: (ddd: untyped, numero: untyped) -> untyped
 
       private

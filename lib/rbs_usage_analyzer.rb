@@ -54,10 +54,49 @@ class RbsUsageAnalyzer
       end
     end
 
-    build_full_rbs(target_members, init_arg_types, attr_types)
+    # Identificar parâmetros opcionais do initialize
+    optional_params = extract_optional_init_params
+
+    build_full_rbs(target_members, init_arg_types, attr_types, optional_params)
   end
 
   private
+
+  # ─── Extrair nomes dos keyword params opcionais do initialize ─────
+
+  def extract_optional_init_params
+    return Set.new unless @target_file && File.exist?(@target_file)
+
+    source = File.read(@target_file)
+    result = Prism.parse(source)
+    visitor = OptionalParamExtractor.new
+    result.value.accept(visitor)
+    visitor.optional_params
+  end
+
+  class OptionalParamExtractor < Prism::Visitor
+    attr_reader :optional_params
+
+    def initialize
+      @optional_params = Set.new
+    end
+
+    def visit_def_node(node)
+      return super unless node.name == :initialize
+      params = node.parameters
+      return unless params&.respond_to?(:keywords)
+
+      params.keywords.each do |kw|
+        if kw.is_a?(Prism::OptionalKeywordParameterNode)
+          @optional_params.add(kw.name.to_s)
+        end
+      end
+
+      params.optionals.each do |p|
+        @optional_params.add(p.name.to_s) if p.respond_to?(:name)
+      end if params.respond_to?(:optionals)
+    end
+  end
 
   # ─── Localizar arquivo da classe-alvo ──────────────────────────────
 
@@ -1074,7 +1113,7 @@ class RbsUsageAnalyzer
 
   # ─── Gerar RBS completo ────────────────────────────────────────────
 
-  def build_full_rbs(members, init_arg_types, attr_types)
+  def build_full_rbs(members, init_arg_types, attr_types, optional_params = Set.new)
     parts = @target_class.split("::")
     class_name = parts.pop
     modules = parts
@@ -1109,7 +1148,10 @@ class RbsUsageAnalyzer
           sig = member.signature
           # Substituir initialize com tipos inferidos dos call-sites
           if member.name == "initialize" && !init_arg_types.empty?
-            sig_args = init_arg_types.map { |name, type| "#{name}: #{type}" }.join(", ")
+            sig_args = init_arg_types.map { |name, type|
+              prefix = optional_params.include?(name) ? "?" : ""
+              "#{prefix}#{name}: #{type}"
+            }.join(", ")
             sig = "initialize: (#{sig_args}) -> void"
           end
           lines << "#{member_indent}def #{sig}"
