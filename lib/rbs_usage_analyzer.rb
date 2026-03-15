@@ -1,9 +1,19 @@
 require "prism"
 
-# Analisador que gera RBS completo de uma classe Ruby, combinando:
-# - Anotações rbs-inline existentes (#: e @rbs)
-# - Inferência de tipos do initialize via análise dos call-sites (quem chama .new)
-# - Tipos de attr_accessor/reader/writer via anotações inline
+# Analisador que gera assinaturas RBS completas a partir de código Ruby puro,
+# sem exigir anotações de tipo, comentários especiais ou arquivos extras.
+# Toda a inferência é feita por análise estática do código-fonte via Prism.
+#
+# Estratégias de inferência:
+# - Tipos do initialize via call-sites (quem chama .new) e forwarding wrappers
+# - Tipos de attrs via assignments no initialize (self.x = param) e corpo da classe
+# - Tipos de parâmetros de métodos via chamadas intra-classe
+# - Tipos de parâmetros de blocos iteradores (collection.each do |item|)
+# - Return types de métodos via literais, Klass.new, method calls e method chains
+# - Resolução cross-class via MethodTypeResolver (lê RBS existentes em sig/)
+# - Detecção de class vs module para namespaces
+# - Geração de `def self.send_mail` para subclasses de ApplicationMailer
+# - Aproveitamento de anotações rbs-inline (#: e @rbs) quando presentes
 #
 # Uso:
 #   analyzer = RbsUsageAnalyzer.new(
