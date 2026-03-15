@@ -6,12 +6,7 @@ rbs-i:
 
 # Infer RBS types and write to sig/generated/
 rbs-infer:
-	ruby bin/rbs_infer --output \
-		engines/finance/app/models/finance/client/enroll.rb \
-		engines/finance/app/controllers/finance/clients_controller.rb \
-		engines/academico/app/usecases/academico/aluno/matricular.rb \
-		engines/academico/app/domains/academico/aluno/entity.rb \
-		engines/academico/app/domains/academico/aluno/email.rb
+	ruby bin/rbs_infer --output	engines/academico/app/domains/academico/aluno
 
 # Run tests
 test:

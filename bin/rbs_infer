@@ -10,7 +10,7 @@ output_dir = "sig/generated"
 files = []
 
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: bin/rbs_infer [options] FILE_OR_CLASS [...]"
+  opts.banner = "Usage: bin/rbs_infer [options] FILE_OR_DIR_OR_CLASS [...]"
 
   opts.on("--output", "Write RBS to sig/generated/ (based on source file path)") do
     output = true
@@ -28,10 +28,24 @@ parser = OptionParser.new do |opts|
 end
 
 parser.parse!
-files = ARGV
+inputs = ARGV
+
+if inputs.empty?
+  puts parser
+  exit 1
+end
+
+# Expandir diretórios para todos os .rb contidos neles (recursivamente)
+files = inputs.flat_map do |input|
+  if File.directory?(input)
+    Dir[File.join(input, "**/*.rb")]
+  else
+    [input]
+  end
+end
 
 if files.empty?
-  puts parser
+  warn "No .rb files found in: #{inputs.join(', ')}"
   exit 1
 end
 

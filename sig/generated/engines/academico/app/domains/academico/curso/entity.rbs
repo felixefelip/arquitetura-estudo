@@ -1,0 +1,6 @@
+module Academico
+  module Curso
+    class Entity < ApplicationRecord
+    end
+  end
+end
