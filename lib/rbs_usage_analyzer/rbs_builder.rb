@@ -73,6 +73,14 @@ class RbsUsageAnalyzer
         end
       end
 
+      # Mailers: emitir método de classe send_mail (ActionMailer pattern)
+      if mailer_class?
+        send_mail = members.find { |m| m.kind == :method && m.name == "send_mail" }
+        if send_mail
+          lines << "#{member_indent}def self.#{send_mail.signature}"
+        end
+      end
+
       lines << "#{base_indent}end"
       modules.each_with_index do |_, i|
         lines << "#{"  " * (modules.size - 1 - i)}end"
@@ -82,6 +90,12 @@ class RbsUsageAnalyzer
     end
 
     private
+
+    MAILER_BASES = %w[ApplicationMailer ActionMailer::Base].freeze
+
+    def mailer_class?
+      MAILER_BASES.include?(@superclass_name)
+    end
 
     # Substitui parâmetros `untyped` na assinatura por tipos inferidos
     # Ex: "publicar_evento: (aluno: untyped) -> untyped" com {aluno: "Entity"}

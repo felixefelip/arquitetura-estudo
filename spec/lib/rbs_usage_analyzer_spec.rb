@@ -249,6 +249,48 @@ RSpec.describe RbsUsageAnalyzer do
       end
     end
 
+    it "gera def self.send_mail para mailers que herdam de ApplicationMailer" do
+      files = {
+        "mailer.rb" => <<~RUBY
+          class MyMailer < ApplicationMailer
+            #: (String nome) -> Mail::Message
+            def send_mail(nome)
+              mail to: "test@test.com", subject: nome
+            end
+          end
+        RUBY
+      }
+
+      with_temp_files(files) do |dir, paths|
+        analyzer = described_class.new(target_file: paths.first, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        aggregate_failures do
+          expect(rbs).to include("class MyMailer < ApplicationMailer")
+          expect(rbs).to include("def send_mail: (String nome) -> Mail::Message")
+          expect(rbs).to include("def self.send_mail: (String nome) -> Mail::Message")
+        end
+      end
+    end
+
+    it "não gera def self.send_mail para classes que não são mailers" do
+      files = {
+        "service.rb" => <<~RUBY
+          class MyService
+            def send_mail(nome)
+            end
+          end
+        RUBY
+      }
+
+      with_temp_files(files) do |dir, paths|
+        analyzer = described_class.new(target_file: paths.first, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        expect(rbs).not_to include("def self.send_mail")
+      end
+    end
+
     it "resolve tipos inter-procedurais via method chain (receiver.method)" do
       dto_src = <<~RUBY
         class Dto
@@ -508,6 +550,21 @@ RSpec.describe RbsUsageAnalyzer do
           expect(rbs).to include("aluno_dto: Academico::Aluno::Matricular::Dto")
           expect(rbs).to match(/aluno_repository:.*Impl/)
           expect(rbs).to include("def publicar_evento: (aluno: ::Academico::Aluno::Entity)")
+        end
+      end
+    end
+
+    context "Academico::Aluno::Matricular::SuccessMailer" do
+      let(:target_file) { "engines/academico/app/usecases/academico/aluno/matricular/success_mailer.rb" }
+
+      it "gera def self.send_mail automaticamente" do
+        analyzer = described_class.new(target_file: target_file, source_files: source_files)
+        rbs = analyzer.generate_rbs
+
+        aggregate_failures do
+          expect(rbs).to include("class SuccessMailer < ApplicationMailer")
+          expect(rbs).to include("def send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message")
+          expect(rbs).to include("def self.send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message")
         end
       end
     end
