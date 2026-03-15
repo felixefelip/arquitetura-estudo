@@ -1,7 +1,6 @@
 # rbs_inline: enabled
 
 class Finance::ClientsController < ApplicationController
-  # @rbs () -> void
   def create
     client = build_client
     card = build_card

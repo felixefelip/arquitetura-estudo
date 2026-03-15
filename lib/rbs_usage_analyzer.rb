@@ -256,11 +256,22 @@ class RbsUsageAnalyzer
   class ClassMemberCollector < Prism::Visitor
     attr_reader :members
 
+    CONTROLLER_BASES = %w[ApplicationController ActionController::Base ActionController::API].freeze
+
     def initialize(comments:, lines:)
       @comments = comments
       @lines = lines
       @members = []
       @current_visibility = :public
+      @is_controller = false
+    end
+
+    def visit_class_node(node)
+      if node.superclass
+        superclass_name = RbsUsageAnalyzer.extract_constant_path(node.superclass)
+        @is_controller = CONTROLLER_BASES.include?(superclass_name)
+      end
+      super
     end
 
     def visit_def_node(node)
@@ -273,7 +284,11 @@ class RbsUsageAnalyzer
       signature = if sig
                     "#{name}: #{sig}"
                   else
-                    return_type = infer_return_type(node) || "untyped"
+                    return_type = if @is_controller && @current_visibility == :public
+                                   "void"
+                                 else
+                                   infer_return_type(node) || "untyped"
+                                 end
                     "#{name}: #{params_sig} -> #{return_type}"
                   end
 
