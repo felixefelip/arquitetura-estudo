@@ -1,7 +1,7 @@
 module Academico
   module Aluno
     class Matricular
-      attr_accessor errors: untyped
+      attr_accessor errors: ActiveModel::Errors
       def initialize: (aluno_dto: Academico::Aluno::Matricular::Dto, ?aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl) -> void
       def call: -> void
 
