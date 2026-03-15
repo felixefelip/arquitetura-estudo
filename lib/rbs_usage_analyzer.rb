@@ -40,6 +40,13 @@ class RbsUsageAnalyzer
     # Inferir tipos dos attrs a partir do initialize (self.x = param)
     attr_types = infer_attr_types_from_initialize(init_arg_types)
 
+    # Inferir tipos dos attrs a partir de todos os métodos da classe
+    # (self.x = Foo.new ou variável local com mesmo nome do attr)
+    attr_types_from_class = infer_attr_types_from_class_body(target_members)
+    attr_types_from_class.each do |name, type|
+      attr_types[name] ||= type
+    end
+
     # Enriquecer init_arg_types com tipos inferidos (defaults, attrs)
     attr_types.each do |attr_name, type|
       if init_arg_types[attr_name] == "untyped"
@@ -149,6 +156,89 @@ class RbsUsageAnalyzer
     end
 
     attr_types
+  end
+
+  # ─── Inferir tipos dos attrs via corpo de todos os métodos ─────────
+  # Procura `self.attr = Foo.new(...)` em qualquer método da classe
+  # e variáveis locais com mesmo nome de um attr_accessor.
+
+  def infer_attr_types_from_class_body(members)
+    return {} unless @target_file && File.exist?(@target_file)
+
+    attr_names = members.select { |m| [:attr_accessor, :attr_reader, :attr_writer].include?(m.kind) }
+                        .map(&:name)
+                        .to_set
+    return {} if attr_names.empty?
+
+    source = File.read(@target_file)
+    result = Prism.parse(source)
+
+    visitor = ClassBodyAttrAnalyzer.new(attr_names: attr_names)
+    result.value.accept(visitor)
+
+    visitor.attr_types
+  end
+
+  class ClassBodyAttrAnalyzer < Prism::Visitor
+    attr_reader :attr_types
+
+    def initialize(attr_names:)
+      @attr_names = attr_names
+      @attr_types = {}
+      @in_method = false
+    end
+
+    def visit_def_node(node)
+      @in_method = true
+      @current_local_types = {}
+      super
+      # Após visitar o método, verificar variáveis locais que batem com attrs
+      @current_local_types.each do |name, type|
+        if @attr_names.include?(name) && !@attr_types[name]
+          @attr_types[name] = type
+        end
+      end
+      @in_method = false
+    end
+
+    def visit_call_node(node)
+      if @in_method
+        # self.attr = Foo.new(...)
+        if node.name.to_s.end_with?("=") && node.receiver.is_a?(Prism::SelfNode)
+          attr_name = node.name.to_s.chomp("=")
+          if @attr_names.include?(attr_name)
+            value = node.arguments&.arguments&.first
+            type = infer_type_from_node(value) if value
+            @attr_types[attr_name] = type if type && !@attr_types[attr_name]
+          end
+        end
+      end
+      super
+    end
+
+    def visit_local_variable_write_node(node)
+      if @in_method
+        name = node.name.to_s
+        if @attr_names.include?(name)
+          type = infer_type_from_node(node.value)
+          @current_local_types[name] = type if type
+        end
+      end
+      super
+    end
+
+    private
+
+    def infer_type_from_node(node)
+      case node
+      when Prism::CallNode
+        if node.name == :new && node.receiver
+          RbsUsageAnalyzer.extract_constant_path(node.receiver)
+        end
+      when Prism::ConstantReadNode, Prism::ConstantPathNode
+        RbsUsageAnalyzer.extract_constant_path(node)
+      end
+    end
   end
 
   class InitializeBodyAnalyzer < Prism::Visitor

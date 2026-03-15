@@ -1,19 +1,12 @@
-# Generated from engines/marketing/app/controllers/marketing/leads_controller.rb with RBS::Inline
+module Marketing
+  class LeadsController
+    def new: () -> void
+    def create: () -> void
+    def sucesso: () -> void
 
-class Marketing::LeadsController < ApplicationController
-  # : -> void
-  def new: () -> void
+    private
 
-  # : -> void
-  def create: () -> void
-
-  # : -> void
-  def sucesso: () -> void
-
-  private
-
-  attr_accessor lead: Marketing::Lead::Entity
-
-  # : -> Hash[Symbol, untyped]
-  def build_plans: () -> Hash[Symbol, untyped]
+    attr_accessor lead: untyped
+    def build_plans: () -> Hash[untyped, untyped]
+  end
 end

@@ -1,7 +1,6 @@
 # rbs_inline: enabled
 
 class Marketing::LeadsController < ApplicationController
-  #: -> void
   def new
     lead = Marketing::Lead::Entity.new
 
@@ -9,7 +8,6 @@ class Marketing::LeadsController < ApplicationController
     render Marketing::Leads::NewComponent.new(lead: lead, plano: plano)
   end
 
-  #: -> void
   def create
     lead = ::Marketing::Lead::Generate.new(
       full_name: params[:marketing_lead_entity][:full_name],
@@ -20,16 +18,14 @@ class Marketing::LeadsController < ApplicationController
     render Marketing::Leads::PaymentStepComponent.new(lead: lead, plano: plano)
   end
 
-  #: -> void
   def sucesso
     render Marketing::Leads::SucessoComponent.new
   end
 
   private
 
-  attr_accessor :lead #: Marketing::Lead::Entity
+  attr_accessor :lead
 
-  #: -> Hash[Symbol, untyped]
   def build_plans
     {
       nome: "Plano mega power",
