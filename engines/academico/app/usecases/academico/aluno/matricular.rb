@@ -3,7 +3,7 @@
 module Academico
   module Aluno
     class Matricular
-      attr_accessor :errors #: ActiveModel::Errors
+      attr_accessor :errors
 
       def initialize(aluno_dto:, aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl.new)
         self.aluno_repository = aluno_repository

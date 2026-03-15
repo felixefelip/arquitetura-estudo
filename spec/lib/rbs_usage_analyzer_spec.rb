@@ -375,6 +375,56 @@ RSpec.describe RbsUsageAnalyzer do
         expect(rbs).not_to include("def to_s: () -> untyped")
       end
     end
+
+    it "infere tipo de attr via param.method quando tipo do param é conhecido" do
+      dto_src = <<~RUBY
+        module MyApp
+          class Dto
+            attr_reader :nome #: String
+
+            def initialize(nome:)
+              self.nome = nome
+            end
+
+            #: -> String
+            def resultado
+              nome
+            end
+
+            private
+
+            attr_writer :nome
+          end
+        end
+      RUBY
+      usecase_src = <<~RUBY
+        module MyApp
+          class Usecase
+            attr_accessor :resultado
+
+            def initialize(dto:)
+              self.resultado = dto.resultado
+            end
+          end
+        end
+      RUBY
+      caller_src = <<~RUBY
+        class Caller
+          def call
+            dto = MyApp::Dto.new(nome: "test")
+            MyApp::Usecase.new(dto: dto)
+          end
+        end
+      RUBY
+
+      with_temp_files("my_app/dto.rb" => dto_src, "my_app/usecase.rb" => usecase_src, "caller.rb" => caller_src) do |dir, paths|
+        usecase = paths.find { |p| p.end_with?("usecase.rb") }
+        analyzer = described_class.new(target_file: usecase, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        expect(rbs).to include("attr_accessor resultado: String")
+      end
+    end
   end
 
   # ─── Integração com arquivos reais do projeto ───────────────────

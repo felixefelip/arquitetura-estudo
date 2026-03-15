@@ -174,7 +174,16 @@ class RbsUsageAnalyzer
         end
       end
 
-      # 4. Fallback: buscar em arquivos RBS (ex: rbs_rails para AR models)
+      # 5. Tipos de módulos incluídos (via RBS collection)
+      if file && File.exist?(file)
+        included_modules = extract_includes(File.read(file))
+        included_modules.each do |mod_name|
+          mod_types = lookup_rbs_collection_module_types(mod_name)
+          mod_types.each { |name, type| types[name] ||= type }
+        end
+      end
+
+      # 6. Fallback: buscar em arquivos RBS (ex: rbs_rails para AR models)
       rbs_types = lookup_rbs_types(class_name)
       rbs_types.each { |name, type| types[name] ||= type }
 
@@ -270,6 +279,83 @@ class RbsUsageAnalyzer
     def find_class_file(class_name)
       class_path = class_name.sub(/\A::/, "").gsub("::", "/").gsub(/([a-z])([A-Z])/, '\1_\2').downcase
       @source_files.find { |f| f.end_with?("#{class_path}.rb") }
+    end
+
+    # Extrai nomes de módulos incluídos via `include Foo::Bar` no source
+    def extract_includes(source)
+      result = Prism.parse(source)
+      includes = []
+      extract_include_nodes(result.value, includes)
+      includes
+    end
+
+    def extract_include_nodes(node, includes)
+      case node
+      when Prism::CallNode
+        if node.name == :include && node.arguments
+          node.arguments.arguments.each do |arg|
+            name = RbsUsageAnalyzer.extract_constant_path(arg)
+            includes << name if name
+          end
+        end
+      end
+      node.child_nodes.compact.each { |child| extract_include_nodes(child, includes) }
+    end
+
+    # Busca tipos de métodos de um módulo nos arquivos RBS collection
+    def lookup_rbs_collection_module_types(module_name)
+      @rbs_collection_cache ||= {}
+      @rbs_collection_cache[module_name] ||= build_rbs_collection_module_types(module_name)
+    end
+
+    def build_rbs_collection_module_types(module_name)
+      types = {}
+      parts = module_name.split("::")
+      first = parts.first
+
+      # Tentar vários padrões de nome de gem
+      gem_hints = [
+        first.downcase,
+        first.gsub(/([a-z])([A-Z])/, '\1_\2').downcase,
+        first.gsub(/([a-z])([A-Z])/, '\1-\2').downcase,
+      ].uniq
+
+      rbs_files = gem_hints.flat_map { |hint| Dir[".gem_rbs_collection/#{hint}/**/*.rbs"] }.uniq
+      return types if rbs_files.empty?
+
+      content = rbs_files.map { |f| File.read(f) }.join("\n")
+      target_suffix = parts[1..].join("::")
+
+      nesting = []
+      target_depth = nil
+
+      content.lines.each do |line|
+        stripped = line.strip
+
+        if stripped =~ /\A(module|class)\s+(\S+)/
+          nesting << $2
+          if target_depth.nil? && nesting.join("::").end_with?(target_suffix)
+            target_depth = nesting.size
+          end
+        elsif stripped == "end"
+          target_depth = nil if target_depth && nesting.size == target_depth
+          nesting.pop if nesting.any?
+        elsif target_depth && nesting.size == target_depth && stripped =~ /\Adef (\w+[\?\!]?)\s*:\s*(.+)/
+          method_name = $1
+          signature = $2
+          if signature =~ /->\s*(.+)\z/
+            ret_type = $1.strip
+            # Qualificar tipos relativos (ex: Errors → ActiveModel::Errors)
+            parent_module = parts[0..-2].join("::")
+            if ret_type !~ /::/ && ret_type =~ /\A[A-Z]/
+              ret_type = "#{parent_module}::#{ret_type}"
+            end
+            types[method_name] = ret_type
+          end
+        end
+      end
+
+      types
     end
   end
 end

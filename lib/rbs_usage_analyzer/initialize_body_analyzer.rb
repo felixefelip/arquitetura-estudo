@@ -65,9 +65,9 @@ class RbsUsageAnalyzer
           { kind: :unknown }
         end
       when Prism::CallNode
-        if node.receiver.is_a?(Prism::LocalVariableReadNode)
-          # aluno_dto.errors → tipo depende do que aluno_dto retorna
-          { kind: :call, type: nil }
+        if node.receiver.is_a?(Prism::LocalVariableReadNode) && @param_names.include?(node.receiver.name.to_s)
+          # aluno_dto.errors → tipo depende do tipo do param + método chamado
+          { kind: :param_method, param_name: node.receiver.name.to_s, method_name: node.name.to_s }
         elsif node.name == :new && node.receiver
           class_name = RbsUsageAnalyzer.extract_constant_path(node.receiver)
           { kind: :constant, type: class_name }

@@ -160,6 +160,14 @@ class RbsUsageAnalyzer
                call_site_type = init_arg_types[param_name]
                call_site_type = nil if call_site_type == "untyped"
                call_site_type || default_types[param_name]
+             when :param_method
+               # self.x = param.method → resolver tipo do param, depois método
+               param_name = expr_info[:param_name]
+               param_type = init_arg_types[param_name]
+               param_type = nil if param_type.nil? || param_type == "untyped"
+               if param_type
+                 method_type_resolver.resolve(param_type, expr_info[:method_name])
+               end
              when :call
                # self.x = algo.method → tentar resolver
                expr_info[:type]

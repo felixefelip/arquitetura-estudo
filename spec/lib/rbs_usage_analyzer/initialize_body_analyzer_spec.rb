@@ -80,4 +80,19 @@ RSpec.describe RbsUsageAnalyzer::InitializeBodyAnalyzer do
     visitor = analyze(source)
     expect(visitor.keyword_defaults).not_to have_key("senha")
   end
+
+  it "detecta self.attr = param.method como :param_method" do
+    source = <<~RUBY
+      class Matricular
+        def initialize(aluno_dto:)
+          self.errors = aluno_dto.errors
+        end
+      end
+    RUBY
+
+    visitor = analyze(source)
+    expect(visitor.self_assignments["errors"][:kind]).to eq(:param_method)
+    expect(visitor.self_assignments["errors"][:param_name]).to eq("aluno_dto")
+    expect(visitor.self_assignments["errors"][:method_name]).to eq("errors")
+  end
 end
