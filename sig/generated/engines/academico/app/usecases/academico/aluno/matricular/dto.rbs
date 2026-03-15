@@ -1,41 +1,22 @@
-# Generated from engines/academico/app/usecases/academico/aluno/matricular/dto.rb with RBS::Inline
-
 module Academico
   module Aluno
-    class Matricular
-      class Dto
-        include ActiveModel::Validations
+    class Dto
+      include ActiveModel::Validations
+      extend ActiveModel::Validations::ClassMethods
+      attr_reader cpf: String?
+      attr_reader email: String?
+      attr_reader nome: String?
+      attr_reader senha: String?
+      def initialize: (cpf: String?, nome: String?, email: String?) -> void
+      def cpf!: -> String
+      def email!: -> String
+      def nome!: -> String
 
-        extend ActiveModel::Validations::ClassMethods
+      private
 
-        attr_reader cpf: String?
-
-        attr_reader email: String?
-
-        attr_reader nome: String?
-
-        attr_reader senha: String?
-
-        # : (cpf: String?, nome: String?, email: String?) -> void
-        def initialize: (cpf: String?, nome: String?, email: String?) -> void
-
-        # : -> String
-        def cpf!: () -> String
-
-        # : -> String
-        def email!: () -> String
-
-        # : -> String
-        def nome!: () -> String
-
-        private
-
-        attr_writer cpf: String?
-
-        attr_writer email: String?
-
-        attr_writer nome: String?
-      end
+      attr_writer cpf: String?
+      attr_writer email: String?
+      attr_writer nome: String?
     end
   end
 end
