@@ -490,13 +490,8 @@ RSpec.describe RbsUsageAnalyzer do
 
   # ─── merge_argument_types ───────────────────────────────────────
 
-  describe "#merge_argument_types" do
-    let(:analyzer) do
-      described_class.new(
-        target_class: "Foo",
-        source_files: []
-      )
-    end
+  describe RbsUsageAnalyzer::TypeMerger do
+    let(:merger) { described_class.new(target_file: nil) }
 
     it "prioriza tipos resolvidos sobre untyped" do
       usages = [
@@ -504,7 +499,7 @@ RSpec.describe RbsUsageAnalyzer do
         { "nome" => "String", "email" => "String" },
       ]
 
-      result = analyzer.send(:merge_argument_types, usages)
+      result = merger.merge_argument_types(usages)
       expect(result["nome"]).to eq("String")
       expect(result["email"]).to eq("String")
     end
@@ -515,7 +510,7 @@ RSpec.describe RbsUsageAnalyzer do
         { "value" => "Integer" },
       ]
 
-      result = analyzer.send(:merge_argument_types, usages)
+      result = merger.merge_argument_types(usages)
       expect(result["value"]).to eq("(String | Integer)")
     end
 
@@ -525,7 +520,7 @@ RSpec.describe RbsUsageAnalyzer do
         { "cpf" => "Shared::Cpf" },
       ]
 
-      result = analyzer.send(:merge_argument_types, usages)
+      result = merger.merge_argument_types(usages)
       expect(result["cpf"]).to eq("Shared::Cpf")
     end
   end
