@@ -2,13 +2,12 @@
 
 module Academico::Aluno
   class Entity
-    attr_reader :cpf #: ::Shared::Cpf
-    attr_reader :email #: Email
-    attr_reader :nome #: String
-    attr_reader :telefones #: Array[Telefone]
-    attr_reader :senha #: String?
+    attr_reader :cpf
+    attr_reader :email
+    attr_reader :nome
+    attr_reader :telefones
+    attr_reader :senha
 
-    #: (cpf: ::String, nome: ::String, email: ::String, ?senha: ::String?) -> void
     def initialize(nome:, email:, cpf:, senha: nil)
       self.nome = nome
       self.email = Email.new(endereco: email)
@@ -16,7 +15,6 @@ module Academico::Aluno
       self.senha = senha
     end
 
-    #: (ddd: ::String, numero: ::String) -> void
     def adicionar_telefone(ddd:, numero:)
       raise StandardError if telefones.count == 2
 
@@ -25,10 +23,10 @@ module Academico::Aluno
 
     private
 
-    attr_writer :cpf #: ::Shared::Cpf
-    attr_writer :email #: Email
-    attr_writer :nome #: String
-    attr_writer :telefones #: Array[Telefone]
-    attr_writer :senha #: String?
+    attr_writer :cpf
+    attr_writer :email
+    attr_writer :nome
+    attr_writer :telefones
+    attr_writer :senha
   end
 end

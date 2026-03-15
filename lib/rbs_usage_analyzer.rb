@@ -336,7 +336,7 @@ class RbsUsageAnalyzer
       when Prism::IntegerNode then "Integer"
       when Prism::SymbolNode then "Symbol"
       when Prism::TrueNode, Prism::FalseNode then "bool"
-      when Prism::NilNode then "nil"
+      # NilNode ignorado: default nil indica parâmetro opcional, não tipo nil
       end
     end
   end
@@ -593,15 +593,53 @@ class RbsUsageAnalyzer
     result = Prism.parse(source)
     comments = result.comments
     method_return_types = extract_method_return_types(source, comments, result.value)
+
+    # Incluir tipos de attr_reader/attr_accessor como retorno de métodos
+    # (em Ruby, attr_reader :foo gera um método foo)
+    extract_attr_return_types(source, comments, result.value).each do |name, type|
+      method_return_types[name] ||= type
+    end
+
+    # Resolver tipos do caller class via MethodTypeResolver
+    # (infere attrs sem anotação via keyword defaults e call-sites)
+    caller_visitor = ClassNameExtractor.new
+    result.value.accept(caller_visitor)
+    if caller_visitor.class_name
+      caller_types = method_type_resolver.resolve_all(caller_visitor.class_name)
+      caller_types.each do |name, type|
+        method_return_types[name] ||= type
+      end
+    end
+
     local_var_types = {}
 
     visitor = NewCallCollector.new(
       target_class: @target_class,
       method_return_types: method_return_types,
-      local_var_types: local_var_types
+      local_var_types: local_var_types,
+      method_type_resolver: method_type_resolver
     )
     result.value.accept(visitor)
     visitor.usages
+  end
+
+  def method_type_resolver
+    @method_type_resolver ||= MethodTypeResolver.new(@source_files)
+  end
+
+  def extract_attr_return_types(source, comments, tree)
+    types = {}
+    lines = source.lines
+    collector = ClassMemberCollector.new(comments: comments, lines: lines)
+    tree.accept(collector)
+    collector.members.each do |member|
+      next unless [:attr_accessor, :attr_reader].include?(member.kind)
+      if member.signature =~ /\w+:\s*(.+)/
+        type = $1.strip
+        types[member.name] = type unless type == "untyped"
+      end
+    end
+    types
   end
 
   def extract_method_return_types(source, comments, tree)
@@ -691,10 +729,13 @@ class RbsUsageAnalyzer
   class NewCallCollector < Prism::Visitor
     attr_reader :usages
 
-    def initialize(target_class:, method_return_types:, local_var_types:)
+    AR_FINDER_METHODS = %i[find find_by find_by! first first! last last! take take! create create! find_or_create_by find_or_create_by! find_sole_by].freeze
+
+    def initialize(target_class:, method_return_types:, local_var_types:, method_type_resolver: nil)
       @target_class = target_class
       @method_return_types = method_return_types
       @local_var_types = local_var_types
+      @method_type_resolver = method_type_resolver
       @usages = []
     end
 
@@ -747,6 +788,10 @@ class RbsUsageAnalyzer
               # aluno_dto = Academico::Aluno::Matricular::Dto.new(...)
               class_name = RbsUsageAnalyzer.extract_constant_path(stmt.value.receiver)
               @local_var_types[var_name] = class_name if class_name
+            elsif AR_FINDER_METHODS.include?(stmt.value.name) && stmt.value.receiver
+              # record = Record.find_by!(...) → type Record
+              class_name = RbsUsageAnalyzer.extract_constant_path(stmt.value.receiver)
+              @local_var_types[var_name] = class_name if class_name
             end
           end
         end
@@ -789,7 +834,7 @@ class RbsUsageAnalyzer
         elsif node.name == :new && node.receiver
           RbsUsageAnalyzer.extract_constant_path(node.receiver) || "untyped"
         else
-          "untyped"
+          resolve_method_chain(node) || "untyped"
         end
       when Prism::StringNode then "String"
       when Prism::IntegerNode then "Integer"
@@ -806,6 +851,177 @@ class RbsUsageAnalyzer
       else
         "untyped"
       end
+    end
+
+    # Resolver receiver.method() → tipo do retorno do method no receiver
+    def resolve_method_chain(node)
+      return nil unless @method_type_resolver
+
+      receiver_type = resolve_receiver_type(node.receiver)
+      return nil unless receiver_type && receiver_type != "untyped"
+
+      @method_type_resolver.resolve(receiver_type, node.name.to_s)
+    end
+
+    # Resolver o tipo do receiver de um method call
+    def resolve_receiver_type(node)
+      case node
+      when Prism::LocalVariableReadNode
+        @local_var_types[node.name.to_s]
+      when Prism::CallNode
+        if node.receiver.nil?
+          # Implicit method call (ex: attr_reader como aluno_dto)
+          @method_return_types[node.name.to_s]
+        elsif node.name == :new && node.receiver
+          RbsUsageAnalyzer.extract_constant_path(node.receiver)
+        end
+      when Prism::SelfNode
+        nil # self → seria a própria classe, não resolvemos por enquanto
+      end
+    end
+  end
+
+  # ─── Resolvedor de tipos inter-procedural ──────────────────────────
+  # Dado um class_name e method_name, encontra o arquivo fonte da classe,
+  # parseia e retorna o tipo de retorno do método.
+  # Também infere tipos de attrs via keyword defaults e call-sites.
+
+  class MethodTypeResolver
+    def initialize(source_files)
+      @source_files = source_files
+      @cache = {}
+      @building = Set.new # guard contra recursão infinita
+    end
+
+    def resolve(class_name, method_name)
+      return nil unless class_name && class_name != "untyped"
+
+      class_types = resolve_all(class_name)
+      class_types[method_name] || class_types[method_name.chomp("!").chomp("?")]
+    end
+
+    def resolve_all(class_name)
+      return {} unless class_name && class_name != "untyped"
+      @cache[class_name] ||= build_class_types(class_name)
+    end
+
+    private
+
+    def build_class_types(class_name)
+      return {} if @building.include?(class_name)
+      @building.add(class_name)
+
+      types = {}
+      file = find_class_file(class_name)
+
+      if file && File.exist?(file)
+        source = File.read(file)
+        result = Prism.parse(source)
+        comments = result.comments
+        lines = source.lines
+
+        # 1. Tipos anotados via ClassMemberCollector
+        collector = RbsUsageAnalyzer::ClassMemberCollector.new(comments: comments, lines: lines)
+        result.value.accept(collector)
+
+        attr_names = Set.new
+        collector.members.each do |member|
+          case member.kind
+          when :method
+            if member.signature =~ /->\s*(.+)$/
+              types[member.name] = $1.strip
+            end
+          when :attr_accessor, :attr_reader
+            attr_names.add(member.name)
+            if member.signature =~ /\w+:\s*(.+)/
+              type = $1.strip
+              types[member.name] = type unless type == "untyped"
+            end
+          end
+        end
+
+        # 2. Tipos inferidos via keyword defaults do initialize
+        init_visitor = RbsUsageAnalyzer::InitializeBodyAnalyzer.new
+        result.value.accept(init_visitor)
+
+        init_visitor.keyword_defaults.each do |param_name, default_type|
+          init_visitor.self_assignments.each do |attr_name, info|
+            if info[:kind] == :param && info[:name] == param_name && !types[attr_name]
+              types[attr_name] = default_type
+            end
+          end
+        end
+
+        # 3. Inferir attrs restantes via call-sites de ClassName.new(...)
+        untyped_attr_params = {}
+        init_visitor.self_assignments.each do |attr_name, info|
+          if info[:kind] == :param && attr_names.include?(attr_name) && !types[attr_name]
+            untyped_attr_params[info[:name]] = attr_name
+          end
+        end
+
+        if untyped_attr_params.any?
+          infer_attrs_from_call_sites(class_name, types, untyped_attr_params)
+        end
+      end
+
+      # 4. Fallback: buscar em arquivos RBS (ex: rbs_rails para AR models)
+      rbs_types = lookup_rbs_types(class_name)
+      rbs_types.each { |name, type| types[name] ||= type }
+
+      @building.delete(class_name)
+      types
+    end
+
+    # Escaneia source files para encontrar ClassName.new(key: val)
+    # e inferir os tipos dos kwargs → attrs
+    def infer_attrs_from_call_sites(class_name, types, param_to_attr)
+      short_name = class_name.split("::").last
+
+      @source_files.each do |file|
+        source = File.read(file) rescue next
+        next unless source.include?(short_name)
+
+        result = Prism.parse(source)
+
+        local_var_types = {}
+        visitor = RbsUsageAnalyzer::NewCallCollector.new(
+          target_class: class_name,
+          method_return_types: {},
+          local_var_types: local_var_types,
+          method_type_resolver: nil
+        )
+        result.value.accept(visitor)
+
+        visitor.usages.each do |usage|
+          usage.each do |param_name, type|
+            if param_to_attr.key?(param_name) && type != "untyped"
+              attr_name = param_to_attr[param_name]
+              types[attr_name] ||= type
+            end
+          end
+        end
+      end
+    end
+
+    # Busca tipos em arquivos .rbs gerados (ex: rbs_rails para AR models)
+    def lookup_rbs_types(class_name)
+      types = {}
+      class_path = class_name.sub(/\A::/, "").gsub("::", "/").gsub(/([a-z])([A-Z])/, '\1_\2').downcase
+      Dir["sig/rbs_rails/**/*.rbs"].each do |rbs_file|
+        next unless rbs_file.end_with?("#{class_path}.rbs")
+        content = File.read(rbs_file)
+        content.scan(/^\s*def (\w+): \(\) -> (.+)$/) do
+          name, type = $1, $2
+          types[name] ||= type.strip
+        end
+      end
+      types
+    end
+
+    def find_class_file(class_name)
+      class_path = class_name.sub(/\A::/, "").gsub("::", "/").gsub(/([a-z])([A-Z])/, '\1_\2').downcase
+      @source_files.find { |f| f.end_with?("#{class_path}.rb") }
     end
   end
 
@@ -834,19 +1050,23 @@ class RbsUsageAnalyzer
   # ─── Unificar tipos de múltiplos call-sites ────────────────────────
 
   def merge_argument_types(usages)
-    merged = {}
+    all_types = Hash.new { |h, k| h[k] = [] }
 
     usages.each do |usage|
       usage.each do |arg_name, type|
-        if merged[arg_name]
-          existing = merged[arg_name]
-          unless existing.include?(type)
-            merged[arg_name] = "(#{existing} | #{type})"
-          end
-        else
-          merged[arg_name] = type
-        end
+        all_types[arg_name] << type
       end
+    end
+
+    merged = {}
+    all_types.each do |arg_name, types|
+      # Preferir tipos resolvidos sobre untyped
+      resolved = types.reject { |t| t == "untyped" }
+      resolved = types if resolved.empty?
+
+      # Normalizar :: prefix e deduplicar
+      unique = resolved.map { |t| t.sub(/\A::/, "") }.uniq
+      merged[arg_name] = unique.size == 1 ? unique.first : "(#{unique.join(" | ")})"
     end
 
     merged

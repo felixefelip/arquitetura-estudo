@@ -9,7 +9,8 @@ rbs-infer:
 	ruby bin/rbs_infer --output \
 		engines/finance/app/models/finance/client/enroll.rb \
 		engines/finance/app/controllers/finance/clients_controller.rb \
-		engines/academico/app/usecases/academico/aluno/matricular.rb
+		engines/academico/app/usecases/academico/aluno/matricular.rb \
+		engines/academico/app/domains/academico/aluno/entity.rb
 
 # Run tests
 test:

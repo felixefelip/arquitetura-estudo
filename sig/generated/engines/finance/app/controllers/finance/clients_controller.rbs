@@ -1,5 +1,5 @@
 module Finance
-  class ClientsController
+  class ClientsController < ApplicationController
     def create: () -> void
 
     private

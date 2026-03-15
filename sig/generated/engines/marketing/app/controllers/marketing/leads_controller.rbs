@@ -1,5 +1,5 @@
 module Marketing
-  class LeadsController
+  class LeadsController < ApplicationController
     def new: () -> void
     def create: () -> void
     def sucesso: () -> void

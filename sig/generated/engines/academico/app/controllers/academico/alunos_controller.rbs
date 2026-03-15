@@ -1,11 +1,6 @@
-# Generated from engines/academico/app/controllers/academico/alunos_controller.rb with RBS::Inline
-
 module Academico
   class AlunosController < ApplicationController
-    # : -> void
     def index: () -> void
-
-    # : -> void
     def create: () -> void
   end
 end
