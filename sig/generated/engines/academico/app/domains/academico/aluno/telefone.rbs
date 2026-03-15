@@ -4,7 +4,7 @@ module Academico
       attr_reader ddd: String?
       attr_reader numero: String?
       def initialize: (ddd: String?, numero: String?) -> void
-      def to_s: () -> untyped
+      def to_s: () -> String
 
       private
 

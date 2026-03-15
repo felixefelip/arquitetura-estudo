@@ -35,7 +35,6 @@ class RbsUsageAnalyzer
     # for uma chamada implícita a um attr conhecido.
 
     def resolve_method_return_types_from_attrs(members, attr_types)
-      return if attr_types.empty?
       return unless @target_file && File.exist?(@target_file)
 
       source = File.read(@target_file)
@@ -60,6 +59,16 @@ class RbsUsageAnalyzer
         if last_stmt.is_a?(Prism::CallNode) && last_stmt.receiver.nil? && last_stmt.arguments.nil?
           method_last_exprs[defn.name.to_s] = last_stmt.name.to_s
         end
+
+        # Literal na última expressão → return type direto
+        literal_type = infer_literal_type(last_stmt)
+        if literal_type
+          members.each do |m|
+            next unless m.kind == :method && m.name == defn.name.to_s
+            next unless m.signature.end_with?("-> untyped")
+            m.signature = m.signature.sub("-> untyped", "-> #{literal_type}")
+          end
+        end
       end
 
       # Atualizar signatures de métodos que retornam attrs
@@ -74,6 +83,22 @@ class RbsUsageAnalyzer
         next unless resolved_type
 
         member.signature = member.signature.sub("-> untyped", "-> #{resolved_type}")
+      end
+    end
+
+    private
+
+    def infer_literal_type(node)
+      case node
+      when Prism::StringNode, Prism::InterpolatedStringNode then "String"
+      when Prism::IntegerNode then "Integer"
+      when Prism::FloatNode then "Float"
+      when Prism::SymbolNode, Prism::InterpolatedSymbolNode then "Symbol"
+      when Prism::TrueNode, Prism::FalseNode then "bool"
+      when Prism::NilNode then "nil"
+      when Prism::ArrayNode then "Array[untyped]"
+      when Prism::HashNode then "Hash[untyped, untyped]"
+      when Prism::InterpolatedRegularExpressionNode, Prism::RegularExpressionNode then "Regexp"
       end
     end
   end

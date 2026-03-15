@@ -418,6 +418,47 @@ RSpec.describe RbsUsageAnalyzer do
       end
     end
 
+    it "infere return type de método via literal na última expressão (string interpolation, integer, etc.)" do
+      src = <<~RUBY
+        class Foo
+          attr_reader :nome #: String
+
+          def to_s
+            "(\#{nome})"
+          end
+
+          def count
+            42
+          end
+
+          def ratio
+            3.14
+          end
+
+          def label
+            :foo
+          end
+
+          def active?
+            true
+          end
+        end
+      RUBY
+
+      with_temp_files("foo.rb" => src) do |dir, paths|
+        analyzer = described_class.new(target_file: paths.first, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        aggregate_failures do
+          expect(rbs).to include("def to_s: () -> String")
+          expect(rbs).to include("def count: () -> Integer")
+          expect(rbs).to include("def ratio: () -> Float")
+          expect(rbs).to include("def label: () -> Symbol")
+          expect(rbs).to include("def active?: () -> bool")
+        end
+      end
+    end
+
     it "infere tipo de attr via param.method quando tipo do param é conhecido" do
       dto_src = <<~RUBY
         module MyApp
@@ -626,6 +667,7 @@ RSpec.describe RbsUsageAnalyzer do
           expect(rbs).to include("ddd: String?")
           expect(rbs).to include("numero: String?")
           expect(rbs).to include("def initialize: (ddd: String?, numero: String?) -> void")
+          expect(rbs).to include("def to_s: () -> String")
         end
       end
     end
