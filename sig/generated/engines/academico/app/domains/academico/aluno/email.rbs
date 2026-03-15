@@ -2,7 +2,7 @@ module Academico
   module Aluno
     class Email
       def initialize: (endereco: String) -> void
-      def to_s: -> ::String
+      def to_s: () -> untyped
 
       private
 

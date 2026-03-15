@@ -9,7 +9,6 @@ module Academico
         self.endereco = endereco
       end
 
-      #: -> ::String
       def to_s
         endereco
       end
