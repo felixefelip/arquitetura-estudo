@@ -1204,7 +1204,7 @@ module ActionView
       #   <%= form_for @invoice, url: external_url, authenticity_token: false do |f| %>
       #     ...
       #   <% end %>
-      def form_for: (untyped record, ?::Hash[untyped, untyped] options) { (Helpers::FormBuilder[:full_name | :email]) -> untyped } -> String
+      def form_for: (ActiveRecord::Base | ActiveModel::Model record, ?::Hash[untyped, untyped] options) { (Helpers::FormBuilder[F]) -> untyped } -> String
 
       # Creates a form tag based on mixing URLs, scopes, or models.
       #
