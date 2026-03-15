@@ -4,6 +4,9 @@ require "prism"
 # sem exigir anotações de tipo, comentários especiais ou arquivos extras.
 # Toda a inferência é feita por análise estática do código-fonte via Prism.
 #
+# O objetivo é ser uma gem genérica para qualquer projeto Ruby ou Rails,
+# inferindo tipos automaticamente a partir do código existente.
+#
 # Estratégias de inferência:
 # - Tipos do initialize via call-sites (quem chama .new) e forwarding wrappers
 # - Tipos de attrs via assignments no initialize (self.x = param) e corpo da classe
