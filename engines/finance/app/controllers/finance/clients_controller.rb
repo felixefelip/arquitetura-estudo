@@ -15,7 +15,6 @@ class Finance::ClientsController < ApplicationController
 
   private
 
-  # @rbs () -> Finance::Client::Entity
   def build_client
     Finance::Client::Entity.new(
       full_name: params[:cardOwnerFullName], email: params[:email],
@@ -23,7 +22,6 @@ class Finance::ClientsController < ApplicationController
     )
   end
 
-  # @rbs () -> Finance::Card::Entity
   def build_card
     Finance::Card::Entity.new(
       number: params[:cardNumber],

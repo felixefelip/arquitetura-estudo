@@ -273,7 +273,8 @@ class RbsUsageAnalyzer
       signature = if sig
                     "#{name}: #{sig}"
                   else
-                    "#{name}: #{params_sig} -> untyped"
+                    return_type = infer_return_type(node) || "untyped"
+                    "#{name}: #{params_sig} -> #{return_type}"
                   end
 
       @members << Member.new(
@@ -430,6 +431,40 @@ class RbsUsageAnalyzer
         "untyped #{param.name}"
       else
         "untyped"
+      end
+    end
+
+    def infer_return_type(defn)
+      body = defn.body
+      return nil unless body
+
+      last_stmt = case body
+                  when Prism::StatementsNode then body.body.last
+                  else body
+                  end
+
+      return nil unless last_stmt
+
+      infer_type_from_node(last_stmt)
+    end
+
+    def infer_type_from_node(node)
+      case node
+      when Prism::CallNode
+        if node.name == :new && node.receiver
+          RbsUsageAnalyzer.extract_constant_path(node.receiver)
+        end
+      when Prism::StringNode then "String"
+      when Prism::IntegerNode then "Integer"
+      when Prism::FloatNode then "Float"
+      when Prism::SymbolNode then "Symbol"
+      when Prism::TrueNode then "bool"
+      when Prism::FalseNode then "bool"
+      when Prism::NilNode then "nil"
+      when Prism::ArrayNode then "Array[untyped]"
+      when Prism::HashNode then "Hash[untyped, untyped]"
+      when Prism::ConstantReadNode, Prism::ConstantPathNode
+        RbsUsageAnalyzer.extract_constant_path(node)
       end
     end
   end
