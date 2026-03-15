@@ -57,11 +57,14 @@ class RbsUsageAnalyzer
     # Resolver return types de métodos que retornam attrs conhecidos
     type_merger.resolve_method_return_types_from_attrs(target_members, attr_types)
 
+    # Inferir tipos de parâmetros de métodos via chamadas intra-classe
+    method_param_types = infer_method_param_types(attr_types)
+
     # Identificar parâmetros opcionais do initialize
     optional_params = extract_optional_init_params
 
     rbs_builder = RbsBuilder.new(target_class: @target_class, superclass_name: @superclass_name)
-    rbs_builder.build(target_members, init_arg_types, attr_types, optional_params)
+    rbs_builder.build(target_members, init_arg_types, attr_types, optional_params, method_param_types)
   end
 
   def self.extract_constant_path(node)
@@ -222,11 +225,26 @@ class RbsUsageAnalyzer
   def type_merger
     @type_merger ||= TypeMerger.new(target_file: @target_file)
   end
+
+  # ─── Inferir tipos de parâmetros de métodos via chamadas intra-classe ──
+
+  def infer_method_param_types(attr_types)
+    return {} unless @target_file && File.exist?(@target_file)
+
+    source = File.read(@target_file)
+    result = Prism.parse(source)
+
+    visitor = IntraClassCallAnalyzer.new(attr_types: attr_types, method_type_resolver: method_type_resolver)
+    result.value.accept(visitor)
+
+    visitor.inferred_param_types
+  end
 end
 
 require_relative "rbs_usage_analyzer/optional_param_extractor"
 require_relative "rbs_usage_analyzer/class_name_extractor"
 require_relative "rbs_usage_analyzer/class_body_attr_analyzer"
+require_relative "rbs_usage_analyzer/intra_class_call_analyzer"
 require_relative "rbs_usage_analyzer/initialize_body_analyzer"
 require_relative "rbs_usage_analyzer/class_member_collector"
 require_relative "rbs_usage_analyzer/def_collector"

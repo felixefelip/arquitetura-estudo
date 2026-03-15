@@ -11,7 +11,6 @@ module Academico
         self.errors = aluno_dto.errors
       end
 
-      #: -> void
       def call
         aluno_dto.validate!
 
@@ -24,16 +23,12 @@ module Academico
         publicar_evento(aluno:)
 
         SuccessMailer.send_mail(aluno).deliver
-
-        true
       end
 
       private
 
-      attr_accessor :aluno_repository
-      attr_accessor :aluno_dto
+      attr_accessor :aluno_repository, :aluno_dto
 
-      #: (aluno: Academico::Aluno::Entity) -> void
       def publicar_evento(aluno:)
         payload = {
           cpf_aluno: aluno.cpf,

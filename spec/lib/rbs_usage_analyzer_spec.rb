@@ -425,6 +425,32 @@ RSpec.describe RbsUsageAnalyzer do
         expect(rbs).to include("attr_accessor resultado: String")
       end
     end
+
+    it "infere tipos de parâmetros de métodos via chamadas intra-classe" do
+      usecase_src = <<~RUBY
+        module MyApp
+          class Usecase
+            def call
+              entity = ::MyApp::Entity.new(nome: "test")
+              processar(entity:)
+            end
+
+            private
+
+            def processar(entity:)
+              entity.nome
+            end
+          end
+        end
+      RUBY
+
+      with_temp_files("my_app/usecase.rb" => usecase_src) do |dir, paths|
+        analyzer = described_class.new(target_file: paths.first, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        expect(rbs).to include("def processar: (entity: ::MyApp::Entity)")
+      end
+    end
   end
 
   # ─── Integração com arquivos reais do projeto ───────────────────
@@ -478,9 +504,10 @@ RSpec.describe RbsUsageAnalyzer do
         aggregate_failures do
           expect(rbs).to include("class Matricular")
           expect(rbs).to include("errors: ActiveModel::Errors")
-          expect(rbs).to include("def call: -> void")
+          expect(rbs).to include("def call:")
           expect(rbs).to include("aluno_dto: Academico::Aluno::Matricular::Dto")
           expect(rbs).to match(/aluno_repository:.*Impl/)
+          expect(rbs).to include("def publicar_evento: (aluno: ::Academico::Aluno::Entity)")
         end
       end
     end

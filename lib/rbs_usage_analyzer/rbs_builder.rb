@@ -5,7 +5,7 @@ class RbsUsageAnalyzer
       @superclass_name = superclass_name
     end
 
-    def build(members, init_arg_types, attr_types, optional_params = Set.new)
+    def build(members, init_arg_types, attr_types, optional_params = Set.new, method_param_types = {})
       parts = @target_class.split("::")
       class_name = parts.pop
       modules = parts
@@ -45,6 +45,8 @@ class RbsUsageAnalyzer
                 "#{prefix}#{name}: #{type}"
               }.join(", ")
               sig = "initialize: (#{sig_args}) -> void"
+            elsif method_param_types[member.name]
+              sig = apply_inferred_param_types(sig, method_param_types[member.name])
             end
             lines << "#{member_indent}def #{sig}"
           when :attr_accessor, :attr_reader, :attr_writer
@@ -65,6 +67,18 @@ class RbsUsageAnalyzer
       end
 
       lines.join("\n")
+    end
+
+    private
+
+    # Substitui parâmetros `untyped` na assinatura por tipos inferidos
+    # Ex: "publicar_evento: (aluno: untyped) -> untyped" com {aluno: "Entity"}
+    #   → "publicar_evento: (aluno: Entity) -> untyped"
+    def apply_inferred_param_types(signature, param_types)
+      param_types.each do |param_name, type|
+        signature = signature.gsub(/(\??)#{Regexp.escape(param_name)}:\s*untyped/, "\\1#{param_name}: #{type}")
+      end
+      signature
     end
   end
 end

@@ -3,13 +3,13 @@ module Academico
     class Matricular
       attr_accessor errors: ActiveModel::Errors
       def initialize: (aluno_dto: Academico::Aluno::Matricular::Dto, ?aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl) -> void
-      def call: -> void
+      def call: () -> untyped
 
       private
 
       attr_accessor aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl
       attr_accessor aluno_dto: Academico::Aluno::Matricular::Dto
-      def publicar_evento: (aluno: Academico::Aluno::Entity) -> void
+      def publicar_evento: (aluno: ::Academico::Aluno::Entity) -> untyped
     end
   end
 end
