@@ -102,4 +102,124 @@ RSpec.describe RbsUsageAnalyzer::ClassBodyAttrAnalyzer do
     visitor = analyze(source, ["items"])
     expect(visitor.collection_element_types).to be_empty
   end
+
+  it "detecta push com um elemento" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def add(name:)
+          items.push(Item.new(name:))
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types["items"]).to contain_exactly("Item")
+  end
+
+  it "detecta push com múltiplos elementos" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def add_defaults
+          items.push(Item.new, Widget.new)
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types["items"]).to contain_exactly("Item", "Widget")
+  end
+
+  it "detecta append como alias de push" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :tags
+
+        def add_tag(name:)
+          tags.append(Tag.new(name:))
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["tags"])
+    expect(visitor.collection_element_types["tags"]).to contain_exactly("Tag")
+  end
+
+  it "detecta unshift" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def prepend_item(name:)
+          items.unshift(Item.new(name:))
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types["items"]).to contain_exactly("Item")
+  end
+
+  it "detecta prepend como alias de unshift" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def add_first(name:)
+          items.prepend(Item.new(name:))
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types["items"]).to contain_exactly("Item")
+  end
+
+  it "detecta insert ignorando o primeiro arg (índice)" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def insert_at(pos:, name:)
+          items.insert(pos, Item.new(name:))
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types["items"]).to contain_exactly("Item")
+  end
+
+  it "detecta concat com array literal" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def add_batch
+          items.concat([Item.new, Widget.new])
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types["items"]).to contain_exactly("Item", "Widget")
+  end
+
+  it "ignora concat com argumento não-array (variável)" do
+    source = <<~RUBY
+      class Entity
+        attr_reader :items
+
+        def merge(other)
+          items.concat(other)
+        end
+      end
+    RUBY
+
+    visitor = analyze(source, ["items"])
+    expect(visitor.collection_element_types).to be_empty
+  end
 end

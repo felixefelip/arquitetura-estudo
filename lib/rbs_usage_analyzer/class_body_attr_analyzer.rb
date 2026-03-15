@@ -34,17 +34,8 @@ class RbsUsageAnalyzer
           end
         end
 
-        # attr << Foo.new(...) — infer element type for collection attrs
-        if node.name == :<<
-          attr_name = receiver_attr_name(node.receiver)
-          if attr_name && @attr_names.include?(attr_name)
-            value = node.arguments&.arguments&.first
-            type = infer_type_from_node(value) if value
-            if type
-              (@collection_element_types[attr_name] ||= Set.new) << type
-            end
-          end
-        end
+        # attr << Foo.new(...) / push / append / unshift / prepend / insert / concat
+        collect_element_types_from_call(node)
       end
       super
     end
@@ -60,9 +51,46 @@ class RbsUsageAnalyzer
       super
     end
 
+    # Métodos que adicionam elementos diretamente: todos os args são elementos
+    ELEMENT_ADD_METHODS = %i[<< push append unshift prepend].to_set
+    # insert: primeiro arg é índice, demais são elementos
+    # concat: arg é um array, elementos estão dentro
+
     private
 
-    # Extracts the attr name from the receiver of a << call.
+    def collect_element_types_from_call(node)
+      method_name = node.name
+      return unless ELEMENT_ADD_METHODS.include?(method_name) || method_name == :insert || method_name == :concat
+
+      attr_name = receiver_attr_name(node.receiver)
+      return unless attr_name && @attr_names.include?(attr_name)
+
+      args = node.arguments&.arguments
+      return unless args&.any?
+
+      types = case method_name
+              when *ELEMENT_ADD_METHODS
+                args.filter_map { |arg| infer_type_from_node(arg) }
+              when :insert
+                # primeiro arg é o índice, demais são elementos
+                args[1..].filter_map { |arg| infer_type_from_node(arg) }
+              when :concat
+                # arg é um array literal — extrair tipos dos elementos internos
+                args.flat_map do |arg|
+                  if arg.is_a?(Prism::ArrayNode)
+                    arg.elements.filter_map { |el| infer_type_from_node(el) }
+                  else
+                    []
+                  end
+                end
+              end
+
+      types&.each do |type|
+        (@collection_element_types[attr_name] ||= Set.new) << type
+      end
+    end
+
+    # Extracts the attr name from the receiver of a collection method call.
     # Handles: telefones << ... (implicit self) and self.telefones << ...
     def receiver_attr_name(receiver)
       case receiver
