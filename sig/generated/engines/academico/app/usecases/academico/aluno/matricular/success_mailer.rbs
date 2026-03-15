@@ -1,6 +1,6 @@
 module Academico
   module Aluno
-    module Matricular
+    class Matricular
       class SuccessMailer < ApplicationMailer
         def send_mail: (Academico::Aluno::Entity aluno) -> Mail::Message
       end

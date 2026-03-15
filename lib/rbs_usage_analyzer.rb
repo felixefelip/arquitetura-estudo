@@ -63,7 +63,8 @@ class RbsUsageAnalyzer
     # Identificar parâmetros opcionais do initialize
     optional_params = extract_optional_init_params
 
-    rbs_builder = RbsBuilder.new(target_class: @target_class, superclass_name: @superclass_name)
+    namespace_classes = resolve_namespace_classes
+    rbs_builder = RbsBuilder.new(target_class: @target_class, superclass_name: @superclass_name, namespace_classes: namespace_classes)
     rbs_builder.build(target_members, init_arg_types, attr_types, optional_params, method_param_types)
   end
 
@@ -224,6 +225,29 @@ class RbsUsageAnalyzer
 
   def type_merger
     @type_merger ||= TypeMerger.new(target_file: @target_file)
+  end
+
+  # ─── Resolver quais namespaces da classe-alvo são class (não module) ──
+
+  def resolve_namespace_classes
+    parts = @target_class.split("::")
+    parts.pop
+
+    classes = Set.new
+    parts.each_index do |i|
+      full_name = parts[0..i].join("::")
+      class_path = full_name.gsub("::", "/").gsub(/([a-z])([A-Z])/, '\1_\2').downcase
+      source_file = @source_files.find { |f| f.end_with?("#{class_path}.rb") }
+
+      next unless source_file && File.exist?(source_file)
+
+      result = Prism.parse(File.read(source_file))
+      visitor = ClassNameExtractor.new
+      result.value.accept(visitor)
+      classes.add(full_name) if visitor.class_name == full_name
+    end
+
+    classes
   end
 
   # ─── Inferir tipos de parâmetros de métodos via chamadas intra-classe ──

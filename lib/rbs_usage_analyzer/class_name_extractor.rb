@@ -16,7 +16,9 @@ class RbsUsageAnalyzer
     def visit_class_node(node)
       name = extract_const_name(node.constant_path)
       @class_name = (@namespace + [name]).join("::")
+      @namespace.push(name)
       super
+      @namespace.pop
     end
 
     private

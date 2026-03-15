@@ -1,8 +1,9 @@
 class RbsUsageAnalyzer
   class RbsBuilder
-    def initialize(target_class:, superclass_name:)
+    def initialize(target_class:, superclass_name:, namespace_classes: Set.new)
       @target_class = target_class
       @superclass_name = superclass_name
+      @namespace_classes = namespace_classes
     end
 
     def build(members, init_arg_types, attr_types, optional_params = Set.new, method_param_types = {})
@@ -15,7 +16,9 @@ class RbsUsageAnalyzer
 
       lines = []
       modules.each_with_index do |mod, i|
-        lines << "#{"  " * i}module #{mod}"
+        full_name = modules[0..i].join("::")
+        keyword = @namespace_classes.include?(full_name) ? "class" : "module"
+        lines << "#{"  " * i}#{keyword} #{mod}"
       end
       lines << "#{base_indent}class #{class_name}#{@superclass_name ? " < #{@superclass_name}" : ""}"
 
