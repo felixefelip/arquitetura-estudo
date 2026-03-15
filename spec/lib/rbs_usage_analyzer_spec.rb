@@ -613,5 +613,21 @@ RSpec.describe RbsUsageAnalyzer do
         end
       end
     end
+
+    context "Academico::Aluno::Telefone" do
+      let(:target_file) { "engines/academico/app/domains/academico/aluno/telefone.rb" }
+
+      it "infere tipos de attrs via forwarding wrapper (Entity#adicionar_telefone → Telefone.new)" do
+        analyzer = described_class.new(target_file: target_file, source_files: source_files)
+        rbs = analyzer.generate_rbs
+
+        aggregate_failures do
+          expect(rbs).to include("class Telefone")
+          expect(rbs).to include("ddd: String?")
+          expect(rbs).to include("numero: String?")
+          expect(rbs).to include("def initialize: (ddd: String?, numero: String?) -> void")
+        end
+      end
+    end
   end
 end

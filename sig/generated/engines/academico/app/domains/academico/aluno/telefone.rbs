@@ -1,15 +1,15 @@
 module Academico
   module Aluno
     class Telefone
-      attr_reader ddd: String
-      attr_reader numero: String
-      def initialize: (ddd: untyped, numero: untyped) -> void
-      def to_s: -> ::String
+      attr_reader ddd: String?
+      attr_reader numero: String?
+      def initialize: (ddd: String?, numero: String?) -> void
+      def to_s: () -> untyped
 
       private
 
-      attr_writer ddd: String
-      attr_writer numero: String
+      attr_writer ddd: String?
+      attr_writer numero: String?
     end
   end
 end
