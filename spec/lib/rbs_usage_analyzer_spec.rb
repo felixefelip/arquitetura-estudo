@@ -988,6 +988,40 @@ RSpec.describe RbsUsageAnalyzer do
         expect(rbs).to include("endereco: String")
       end
     end
+
+    it "resolve return type de método que retorna attr conhecido (to_s -> endereco)" do
+      email_src = <<~RUBY
+        module MyApp
+          class Email
+            attr_accessor :endereco
+
+            def initialize(endereco:)
+              self.endereco = endereco
+            end
+
+            def to_s
+              endereco
+            end
+          end
+        end
+      RUBY
+      caller_src = <<~RUBY
+        class Caller
+          def call
+            MyApp::Email.new(endereco: "test@email.com")
+          end
+        end
+      RUBY
+
+      with_temp_files("email.rb" => email_src, "caller.rb" => caller_src) do |dir, paths|
+        email = paths.find { |p| p.end_with?("email.rb") }
+        analyzer = described_class.new(target_file: email, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        expect(rbs).to include("def to_s: () -> String")
+        expect(rbs).not_to include("def to_s: () -> untyped")
+      end
+    end
   end
 
   # ─── Integração com arquivos reais do projeto ───────────────────
@@ -1026,6 +1060,7 @@ RSpec.describe RbsUsageAnalyzer do
           expect(rbs).to include("module Aluno")
           expect(rbs).to include("class Email")
           expect(rbs).to include("endereco: String")
+          expect(rbs).to include("def to_s: () -> String")
         end
       end
     end
