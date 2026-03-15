@@ -2,11 +2,7 @@
 
 module Academico::Aluno
   class Entity
-    attr_reader :cpf
-    attr_reader :email
-    attr_reader :nome
-    attr_reader :telefones
-    attr_reader :senha
+    attr_reader :cpf, :email, :nome, :telefones, :senha
 
     def initialize(nome:, email:, cpf:, senha: nil)
       self.nome = nome
@@ -23,10 +19,6 @@ module Academico::Aluno
 
     private
 
-    attr_writer :cpf
-    attr_writer :email
-    attr_writer :nome
-    attr_writer :telefones
-    attr_writer :senha
+    attr_writer :cpf, :email, :nome, :telefones, :senha
   end
 end
