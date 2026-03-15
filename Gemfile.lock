@@ -1,4 +1,10 @@
 PATH
+  remote: ../rbs_infer
+  specs:
+    rbs_infer (0.1.0)
+      prism (>= 1.0)
+
+PATH
   remote: /home/felix/workspaces/ruby-workspace/steep_fork/steep
   specs:
     steep (2.0.0.dev)
@@ -506,6 +512,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.2.2.1)
   rbs-inline
+  rbs_infer!
   rbs_rails
   redis (~> 4.0)
   rspec-rails

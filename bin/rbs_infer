@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative "../lib/rbs_usage_analyzer"
+require "rbs_infer"
 require "fileutils"
 require "optparse"
 
@@ -59,7 +59,7 @@ files.each do |input|
            { target_class: input, source_files: source_files }
          end
 
-  analyzer = RbsUsageAnalyzer.new(**args)
+  analyzer = RbsInfer::Analyzer.new(**args)
   rbs = analyzer.generate_rbs
 
   unless rbs
