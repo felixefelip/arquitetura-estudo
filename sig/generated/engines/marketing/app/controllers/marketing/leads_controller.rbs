@@ -6,7 +6,7 @@ module Marketing
 
     private
 
-    attr_accessor lead: untyped
+    attr_accessor lead: Marketing::Lead::Entity
     def build_plans: () -> Hash[untyped, untyped]
   end
 end

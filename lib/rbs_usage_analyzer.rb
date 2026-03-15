@@ -114,6 +114,7 @@ class RbsUsageAnalyzer
 
     visitor = ClassMemberCollector.new(comments: comments, lines: lines)
     result.value.accept(visitor)
+    @superclass_name = visitor.superclass_name
     visitor.members
   end
 
@@ -344,7 +345,7 @@ class RbsUsageAnalyzer
   Member = Struct.new(:kind, :name, :signature, :visibility, keyword_init: true)
 
   class ClassMemberCollector < Prism::Visitor
-    attr_reader :members
+    attr_reader :members, :superclass_name
 
     CONTROLLER_BASES = %w[ApplicationController ActionController::Base ActionController::API].freeze
 
@@ -354,12 +355,13 @@ class RbsUsageAnalyzer
       @members = []
       @current_visibility = :public
       @is_controller = false
+      @superclass_name = nil
     end
 
     def visit_class_node(node)
       if node.superclass
-        superclass_name = RbsUsageAnalyzer.extract_constant_path(node.superclass)
-        @is_controller = CONTROLLER_BASES.include?(superclass_name)
+        @superclass_name = RbsUsageAnalyzer.extract_constant_path(node.superclass)
+        @is_controller = CONTROLLER_BASES.include?(@superclass_name)
       end
       super
     end
@@ -864,7 +866,7 @@ class RbsUsageAnalyzer
     modules.each_with_index do |mod, i|
       lines << "#{"  " * i}module #{mod}"
     end
-    lines << "#{base_indent}class #{class_name}"
+    lines << "#{base_indent}class #{class_name}#{@superclass_name ? " < #{@superclass_name}" : ""}"
 
     current_visibility = :public
     has_private = members.any? { |m| m.visibility == :private }
