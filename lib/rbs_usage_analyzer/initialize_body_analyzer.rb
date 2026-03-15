@@ -76,6 +76,10 @@ class RbsUsageAnalyzer
         end
       when Prism::ConstantReadNode, Prism::ConstantPathNode
         { kind: :constant, type: RbsUsageAnalyzer.extract_constant_path(node) }
+      when Prism::ArrayNode
+        { kind: :literal, type: "Array[untyped]" }
+      when Prism::HashNode
+        { kind: :literal, type: "Hash[untyped, untyped]" }
       else
         { kind: :unknown }
       end

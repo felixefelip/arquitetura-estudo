@@ -95,4 +95,60 @@ RSpec.describe RbsUsageAnalyzer::InitializeBodyAnalyzer do
     expect(visitor.self_assignments["errors"][:param_name]).to eq("aluno_dto")
     expect(visitor.self_assignments["errors"][:method_name]).to eq("errors")
   end
+
+  it "detecta self.attr = [] como Array[untyped]" do
+    source = <<~RUBY
+      class Entity
+        def initialize
+          self.telefones = []
+        end
+      end
+    RUBY
+
+    visitor = analyze(source)
+    expect(visitor.self_assignments["telefones"][:kind]).to eq(:literal)
+    expect(visitor.self_assignments["telefones"][:type]).to eq("Array[untyped]")
+  end
+
+  it "detecta self.attr = {} como Hash[untyped, untyped]" do
+    source = <<~RUBY
+      class Config
+        def initialize
+          self.options = {}
+        end
+      end
+    RUBY
+
+    visitor = analyze(source)
+    expect(visitor.self_assignments["options"][:kind]).to eq(:literal)
+    expect(visitor.self_assignments["options"][:type]).to eq("Hash[untyped, untyped]")
+  end
+
+  it "detecta self.attr = [] com elementos como Array[untyped]" do
+    source = <<~RUBY
+      class Entity
+        def initialize
+          self.items = [1, 2, 3]
+        end
+      end
+    RUBY
+
+    visitor = analyze(source)
+    expect(visitor.self_assignments["items"][:kind]).to eq(:literal)
+    expect(visitor.self_assignments["items"][:type]).to eq("Array[untyped]")
+  end
+
+  it "detecta self.attr = {} com pares como Hash[untyped, untyped]" do
+    source = <<~RUBY
+      class Config
+        def initialize
+          self.options = { foo: "bar", baz: 42 }
+        end
+      end
+    RUBY
+
+    visitor = analyze(source)
+    expect(visitor.self_assignments["options"][:kind]).to eq(:literal)
+    expect(visitor.self_assignments["options"][:type]).to eq("Hash[untyped, untyped]")
+  end
 end

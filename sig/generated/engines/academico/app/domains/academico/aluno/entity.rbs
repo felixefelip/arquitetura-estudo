@@ -4,7 +4,7 @@ module Academico
       attr_reader cpf: ::Shared::Cpf
       attr_reader email: Email
       attr_reader nome: String
-      attr_reader telefones: untyped
+      attr_reader telefones: Array[untyped]
       attr_reader senha: String?
       def initialize: (nome: String, email: String, cpf: String, ?senha: String?) -> void
       def adicionar_telefone: (ddd: String?, numero: String?) -> untyped
@@ -14,7 +14,7 @@ module Academico
       attr_writer cpf: ::Shared::Cpf
       attr_writer email: Email
       attr_writer nome: String
-      attr_writer telefones: untyped
+      attr_writer telefones: Array[untyped]
       attr_writer senha: String?
     end
   end

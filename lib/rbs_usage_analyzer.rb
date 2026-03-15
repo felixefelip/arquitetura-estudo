@@ -205,6 +205,8 @@ class RbsUsageAnalyzer
                expr_info[:type]
              when :constant
                expr_info[:type]
+             when :literal
+               expr_info[:type]
              end
 
       attr_types[attr_name] = type if type
