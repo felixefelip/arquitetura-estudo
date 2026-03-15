@@ -1,23 +1,14 @@
-# Generated from engines/academico/app/usecases/academico/aluno/matricular.rb with RBS::Inline
-
 module Academico
   module Aluno
     class Matricular
       attr_accessor errors: ActiveModel::Errors
-
-      # : (aluno_dto: Dto, ?aluno_repository: Academico::Aluno::_Repository) -> void
-      def initialize: (aluno_dto: Dto, ?aluno_repository: Academico::Aluno::_Repository) -> void
-
-      # : -> void
-      def call: () -> void
+      def initialize: (aluno_dto: Academico::Aluno::Matricular::Dto, aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl) -> void
+      def call: -> void
 
       private
 
-      attr_accessor aluno_repository: Academico::Aluno::_Repository
-
-      attr_accessor aluno_dto: Dto
-
-      # : (aluno: Academico::Aluno::Entity) -> void
+      attr_accessor aluno_repository: Academico::Aluno::Repositories::ActiveRecord::Impl
+      attr_accessor aluno_dto: Academico::Aluno::Matricular::Dto
       def publicar_evento: (aluno: Academico::Aluno::Entity) -> void
     end
   end

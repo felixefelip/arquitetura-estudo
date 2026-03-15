@@ -1,21 +1,14 @@
-# Generated from engines/finance/app/models/finance/client/enroll.rb with RBS::Inline
-
 module Finance
   module Client
     class Enroll
-      def initialize: (client: untyped, card: untyped) -> untyped
-
-      # : -> void
-      def call: () -> void
+      def initialize: (client: Finance::Client::Entity, card: Finance::Card::Entity) -> void
+      def call: () -> untyped
 
       private
 
       attr_accessor client: Finance::Client::Entity
-
       attr_accessor card: Finance::Card::Entity
-
-      # : -> void
-      def send_event_client_enrolled: () -> void
+      def send_event_client_enrolled: () -> untyped
     end
   end
 end

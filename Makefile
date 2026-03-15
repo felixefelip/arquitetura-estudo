@@ -4,6 +4,13 @@
 rbs-i:
 	bundle exec rbs-inline lib/ --output
 
+# Infer RBS types and write to sig/generated/
+rbs-infer:
+	ruby bin/rbs_infer --output \
+		engines/finance/app/models/finance/client/enroll.rb \
+		engines/finance/app/controllers/finance/clients_controller.rb \
+		engines/academico/app/usecases/academico/aluno/matricular.rb
+
 # Run tests
 test:
 	bundle exec rspec

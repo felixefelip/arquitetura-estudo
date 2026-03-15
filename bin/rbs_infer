@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/rbs_usage_analyzer"
+require "fileutils"
+require "optparse"
+
+output = false
+output_dir = "sig/generated"
+files = []
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: bin/rbs_infer [options] FILE_OR_CLASS [...]"
+
+  opts.on("--output", "Write RBS to sig/generated/ (based on source file path)") do
+    output = true
+  end
+
+  opts.on("--output-dir DIR", "Output directory (default: sig/generated)") do |dir|
+    output = true
+    output_dir = dir
+  end
+
+  opts.on("-h", "--help", "Show this help") do
+    puts opts
+    exit
+  end
+end
+
+parser.parse!
+files = ARGV
+
+if files.empty?
+  puts parser
+  exit 1
+end
+
+source_files = Dir["app/**/*.rb", "engines/**/*.rb", "lib/**/*.rb"]
+
+files.each do |input|
+  is_path = input.include?("/") || input.end_with?(".rb")
+  args = if is_path
+           { target_file: input, source_files: source_files }
+         else
+           { target_class: input, source_files: source_files }
+         end
+
+  analyzer = RbsUsageAnalyzer.new(**args)
+  rbs = analyzer.generate_rbs
+
+  unless rbs
+    warn "#{input}: class not found or no members detected."
+    next
+  end
+
+  if output
+    # Derivar path de saída a partir do source file (mesma convenção do rbs-inline)
+    source_path = analyzer.target_file || input
+    output_path = File.join(output_dir, source_path.sub(/\.rb$/, ".rbs"))
+
+    FileUtils.mkdir_p(File.dirname(output_path))
+    File.write(output_path, rbs + "\n")
+    puts "#{output_path}"
+  else
+    puts rbs
+  end
+end

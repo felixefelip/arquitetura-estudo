@@ -1,14 +1,10 @@
-# Generated from engines/finance/app/controllers/finance/clients_controller.rb with RBS::Inline
+module Finance
+  class ClientsController
+    def create: () -> void
 
-class Finance::ClientsController < ApplicationController
-  # @rbs () -> void
-  def create: () -> void
+    private
 
-  private
-
-  # @rbs () -> Finance::Client::Entity
-  def build_client: () -> Finance::Client::Entity
-
-  # @rbs () -> Finance::Card::Entity
-  def build_card: () -> Finance::Card::Entity
+    def build_client: () -> Finance::Client::Entity
+    def build_card: () -> Finance::Card::Entity
+  end
 end
