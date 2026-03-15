@@ -16,10 +16,16 @@ require "prism"
 class RbsUsageAnalyzer
   attr_reader :target_class, :target_file, :source_files
 
-  def initialize(target_class:, source_files:, target_file: nil)
-    @target_class = target_class
+  def initialize(target_class: nil, source_files:, target_file: nil)
     @source_files = source_files
-    @target_file = target_file || find_target_file
+    @target_file = target_file
+    @target_class = target_class
+
+    if @target_file && !@target_class
+      @target_class = extract_class_name_from_file(@target_file)
+    elsif @target_class && !@target_file
+      @target_file = find_target_file
+    end
   end
 
   def generate_rbs
@@ -41,6 +47,44 @@ class RbsUsageAnalyzer
   def find_target_file
     class_path = @target_class.gsub("::", "/").gsub(/([a-z])([A-Z])/, '\1_\2').downcase
     @source_files.find { |f| f.end_with?("#{class_path}.rb") }
+  end
+
+  # ─── Extrair nome da classe a partir do arquivo (via Prism) ────────
+
+  def extract_class_name_from_file(file)
+    return nil unless File.exist?(file)
+
+    result = Prism.parse(File.read(file))
+    visitor = ClassNameExtractor.new
+    result.value.accept(visitor)
+    visitor.class_name
+  end
+
+  class ClassNameExtractor < Prism::Visitor
+    attr_reader :class_name
+
+    def initialize
+      @namespace = []
+      @class_name = nil
+    end
+
+    def visit_module_node(node)
+      @namespace.push(extract_const_name(node.constant_path))
+      super
+      @namespace.pop
+    end
+
+    def visit_class_node(node)
+      name = extract_const_name(node.constant_path)
+      @class_name = (@namespace + [name]).join("::")
+      super
+    end
+
+    private
+
+    def extract_const_name(node)
+      RbsUsageAnalyzer.extract_constant_path(node) || node.to_s
+    end
   end
 
   # ─── Parsear classe-alvo: métodos, attrs, visibilidade ─────────────
