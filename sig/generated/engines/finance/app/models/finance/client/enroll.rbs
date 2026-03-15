@@ -3,8 +3,7 @@
 module Finance
   module Client
     class Enroll
-      # : (client: Finance::Client::Entity, card: Finance::Card::Entity) -> void
-      def initialize: (client: Finance::Client::Entity, card: Finance::Card::Entity) -> void
+      def initialize: (client: untyped, card: untyped) -> untyped
 
       # : -> void
       def call: () -> void

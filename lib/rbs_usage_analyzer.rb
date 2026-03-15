@@ -37,7 +37,10 @@ class RbsUsageAnalyzer
     # Inferir tipos do initialize via call-sites
     init_arg_types = infer_initialize_types
 
-    build_full_rbs(target_members, init_arg_types)
+    # Inferir tipos dos attrs a partir do initialize (self.x = param)
+    attr_types = infer_attr_types_from_initialize(init_arg_types)
+
+    build_full_rbs(target_members, init_arg_types, attr_types)
   end
 
   private
@@ -98,6 +101,144 @@ class RbsUsageAnalyzer
     visitor = ClassMemberCollector.new(comments: comments, lines: lines)
     result.value.accept(visitor)
     visitor.members
+  end
+
+  # ─── Inferir tipos dos attrs via initialize ────────────────────────
+  # Analisa o corpo do initialize para encontrar `self.x = param` e
+  # mapeia o tipo do attr a partir do tipo do parâmetro (inferido via call-sites)
+  # ou do valor default do keyword argument.
+
+  def infer_attr_types_from_initialize(init_arg_types)
+    return {} unless @target_file && File.exist?(@target_file)
+
+    source = File.read(@target_file)
+    result = Prism.parse(source)
+
+    visitor = InitializeBodyAnalyzer.new
+    result.value.accept(visitor)
+
+    attr_types = {}
+
+    # Mapear defaults dos keyword params: param_name -> tipo do default
+    default_types = visitor.keyword_defaults
+
+    # Mapear self.attr = expr encontrados no initialize
+    visitor.self_assignments.each do |attr_name, expr_info|
+      type = case expr_info[:kind]
+             when :param
+               # self.x = x → tipo vem dos call-sites ou do default
+               param_name = expr_info[:name]
+               init_arg_types[param_name] || default_types[param_name]
+             when :call
+               # self.x = algo.method → tentar resolver
+               expr_info[:type]
+             when :constant
+               expr_info[:type]
+             end
+
+      attr_types[attr_name] = type if type
+    end
+
+    attr_types
+  end
+
+  class InitializeBodyAnalyzer < Prism::Visitor
+    attr_reader :self_assignments, :keyword_defaults
+
+    def initialize
+      @self_assignments = {}
+      @keyword_defaults = {}
+      @param_names = []
+      @in_initialize = false
+    end
+
+    def visit_def_node(node)
+      return super unless node.name == :initialize
+
+      @in_initialize = true
+      @param_names = extract_param_names(node.parameters)
+      extract_keyword_defaults(node.parameters)
+      super
+      @in_initialize = false
+    end
+
+    def visit_call_node(node)
+      if @in_initialize && node.name.to_s.end_with?("=") && node.receiver.is_a?(Prism::SelfNode)
+        attr_name = node.name.to_s.chomp("=")
+        value = node.arguments&.arguments&.first
+        if value
+          @self_assignments[attr_name] = resolve_assignment_value(value)
+        end
+      end
+      super
+    end
+
+    private
+
+    def extract_param_names(params)
+      return [] unless params
+      names = []
+      params.keywords.each do |kw|
+        names << kw.name.to_s
+      end if params.respond_to?(:keywords)
+      params.requireds.each do |p|
+        names << p.name.to_s if p.respond_to?(:name)
+      end if params.respond_to?(:requireds)
+      names
+    end
+
+    def extract_keyword_defaults(params)
+      return unless params&.respond_to?(:keywords)
+
+      params.keywords.each do |kw|
+        next unless kw.is_a?(Prism::OptionalKeywordParameterNode)
+        param_name = kw.name.to_s
+        default_type = infer_type_from_node(kw.value)
+        @keyword_defaults[param_name] = default_type if default_type
+      end
+    end
+
+    def resolve_assignment_value(node)
+      case node
+      when Prism::LocalVariableReadNode
+        name = node.name.to_s
+        if @param_names.include?(name)
+          { kind: :param, name: name }
+        else
+          { kind: :unknown }
+        end
+      when Prism::CallNode
+        if node.receiver.is_a?(Prism::LocalVariableReadNode)
+          # aluno_dto.errors → tipo depende do que aluno_dto retorna
+          { kind: :call, type: nil }
+        elsif node.name == :new && node.receiver
+          class_name = RbsUsageAnalyzer.extract_constant_path(node.receiver)
+          { kind: :constant, type: class_name }
+        else
+          { kind: :unknown }
+        end
+      when Prism::ConstantReadNode, Prism::ConstantPathNode
+        { kind: :constant, type: RbsUsageAnalyzer.extract_constant_path(node) }
+      else
+        { kind: :unknown }
+      end
+    end
+
+    def infer_type_from_node(node)
+      case node
+      when Prism::CallNode
+        if node.name == :new && node.receiver
+          RbsUsageAnalyzer.extract_constant_path(node.receiver)
+        end
+      when Prism::ConstantReadNode, Prism::ConstantPathNode
+        RbsUsageAnalyzer.extract_constant_path(node)
+      when Prism::StringNode then "String"
+      when Prism::IntegerNode then "Integer"
+      when Prism::SymbolNode then "Symbol"
+      when Prism::TrueNode, Prism::FalseNode then "bool"
+      when Prism::NilNode then "nil"
+      end
+    end
   end
 
   # Estrutura que representa um membro da classe
@@ -553,7 +694,7 @@ class RbsUsageAnalyzer
 
   # ─── Gerar RBS completo ────────────────────────────────────────────
 
-  def build_full_rbs(members, init_arg_types)
+  def build_full_rbs(members, init_arg_types, attr_types)
     parts = @target_class.split("::")
     class_name = parts.pop
     modules = parts
@@ -592,12 +733,14 @@ class RbsUsageAnalyzer
             sig = "initialize: (#{sig_args}) -> void"
           end
           lines << "#{member_indent}def #{sig}"
-        when :attr_accessor
-          lines << "#{member_indent}attr_accessor #{member.signature}"
-        when :attr_reader
-          lines << "#{member_indent}attr_reader #{member.signature}"
-        when :attr_writer
-          lines << "#{member_indent}attr_writer #{member.signature}"
+        when :attr_accessor, :attr_reader, :attr_writer
+          sig = member.signature
+          # Se o attr está untyped, tentar preencher via inferência do initialize
+          if sig.end_with?(": untyped") && attr_types[member.name]
+            sig = "#{member.name}: #{attr_types[member.name]}"
+          end
+          prefix = member.kind.to_s.sub("_", "_")
+          lines << "#{member_indent}#{member.kind} #{sig}"
         end
       end
     end

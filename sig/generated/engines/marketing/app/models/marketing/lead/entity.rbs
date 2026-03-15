@@ -2,7 +2,7 @@
 
 module Marketing::Lead
   class Entity < ApplicationRecord
-    # @rbs (email: String) -> void
+    # : (email: String) -> void
     def self.convert: (email: String) -> void
   end
 end

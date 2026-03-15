@@ -114,22 +114,22 @@ module ActionView
   module Helpers
     class FormBuilder[F]
       def text_field: (F method, ?Hash[untyped, untyped] options) -> String
-      def password_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def text_area: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def color_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def search_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def telephone_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def phone_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def date_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def time_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def datetime_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def datetime_local_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def month_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def week_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def url_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def email_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def number_field: (untyped method, ?Hash[untyped, untyped] options) -> String
-      def range_field: (untyped method, ?Hash[untyped, untyped] options) -> String
+      def password_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def text_area: (F method, ?Hash[untyped, untyped] options) -> String
+      def color_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def search_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def telephone_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def phone_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def date_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def time_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def datetime_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def datetime_local_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def month_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def week_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def url_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def email_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def number_field: (F method, ?Hash[untyped, untyped] options) -> String
+      def range_field: (F method, ?Hash[untyped, untyped] options) -> String
 
       # Add the submit button for the given form. When no value is given, it checks
       # if the object is a new resource or not to create the proper label:
@@ -219,7 +219,7 @@ module ActionView
       #     raw('Accept <a href="/terms">Terms</a>.')
       #   end
       #   # => <label for="post_terms">Accept <a href="/terms">Terms</a>.</label>
-      def label: (untyped method, ?untyped? text, ?::Hash[untyped, untyped] options) ?{ () -> untyped } -> untyped
+      def label: (F method, ?untyped? text, ?::Hash[untyped, untyped] options) ?{ () -> untyped } -> untyped
 
       # Wraps ActionView::Helpers::FormOptionsHelper#select for form builders:
       #
@@ -229,7 +229,7 @@ module ActionView
       #   <% end %>
       #
       # Please refer to the documentation of the base helper for details.
-      def select: (untyped method, ?untyped? choices, ?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] html_options) ?{ () -> untyped } -> untyped
+      def select: (F method, ?untyped? choices, ?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] html_options) ?{ () -> untyped } -> untyped
 
       # Wraps ActionView::Helpers::FormOptionsHelper#collection_check_boxes for form builders:
       #
@@ -239,7 +239,7 @@ module ActionView
       #   <% end %>
       #
       # Please refer to the documentation of the base helper for details.
-      def collection_check_boxes: (untyped method, untyped collection, untyped value_method, untyped text_method, ?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] html_options) ?{ (ActionView::Helpers::Tags::CollectionCheckBoxes::CheckBoxBuilder) -> String } -> String
+      def collection_check_boxes: (F method, untyped collection, untyped value_method, untyped text_method, ?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] html_options) ?{ (ActionView::Helpers::Tags::CollectionCheckBoxes::CheckBoxBuilder) -> String } -> String
 
       # Wraps ActionView::Helpers::FormOptionsHelper#collection_radio_buttons for form builders:
       #
@@ -249,7 +249,7 @@ module ActionView
       #   <% end %>
       #
       # Please refer to the documentation of the base helper for details.
-      def collection_radio_buttons: (untyped method, untyped collection, untyped value_method, untyped text_method, ?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] html_options) ?{ (ActionView::Helpers::Tags::CollectionRadioButtons::RadioButtonBuilder) -> String } -> String
+      def collection_radio_buttons: (F method, untyped collection, untyped value_method, untyped text_method, ?::Hash[untyped, untyped] options, ?::Hash[untyped, untyped] html_options) ?{ (ActionView::Helpers::Tags::CollectionRadioButtons::RadioButtonBuilder) -> String } -> String
     end
   end
 end

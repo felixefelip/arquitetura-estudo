@@ -48,6 +48,8 @@ gem "rbs-inline", require: false
 gem "rbs_rails", require: false
 gem "steep", path: "/home/felix/workspaces/ruby-workspace/steep_fork/steep", require: false
 
+gem "typeprof", "~> 0.31.0", require: false
+
 # gem "typeprof", require: false
 
 # Use Sass to process CSS

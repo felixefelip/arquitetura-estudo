@@ -3,7 +3,6 @@
 module Finance
   module Client
     class Enroll
-      #: (client: Finance::Client::Entity, card: Finance::Card::Entity) -> void
       def initialize(client:, card:)
         self.client = client
         self.card = card
@@ -27,8 +26,8 @@ module Finance
 
       private
 
-      attr_accessor :client #: Finance::Client::Entity
-      attr_accessor :card #: Finance::Card::Entity
+      attr_accessor :client
+      attr_accessor :card
 
       #: -> void
       def send_event_client_enrolled

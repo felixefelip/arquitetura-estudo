@@ -2,6 +2,8 @@
 
 module Marketing::Leads
   class PaymentStepComponent < ViewComponent::Base
+    include ActionView::Helpers::FormHelper[:full_name | :email]
+
     # : (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
     def initialize: (lead: Marketing::Lead::Entity, plano: Hash[Symbol, untyped]) -> void
 
