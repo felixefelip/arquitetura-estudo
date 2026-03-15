@@ -459,6 +459,86 @@ RSpec.describe RbsUsageAnalyzer do
       end
     end
 
+    it "infere return type via Klass.new(...) na última expressão" do
+      src = <<~RUBY
+        module MyApp
+          class Factory
+            def build
+              MyApp::Entity.new(nome: "x")
+            end
+          end
+        end
+      RUBY
+
+      with_temp_files("my_app/factory.rb" => src) do |dir, paths|
+        analyzer = described_class.new(target_file: paths.first, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        expect(rbs).to include("def build: () -> MyApp::Entity")
+      end
+    end
+
+    it "infere return type via chamada de método com tipo conhecido (self.metodo)" do
+      src = <<~RUBY
+        module MyApp
+          class Service
+            attr_reader :entity #: MyApp::Entity
+
+            def build_entity
+              MyApp::Entity.new(nome: "x")
+            end
+
+            def resultado
+              build_entity
+            end
+          end
+        end
+      RUBY
+
+      with_temp_files("my_app/service.rb" => src) do |dir, paths|
+        analyzer = described_class.new(target_file: paths.first, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        aggregate_failures do
+          expect(rbs).to include("def build_entity: () -> MyApp::Entity")
+          expect(rbs).to include("def resultado: () -> MyApp::Entity")
+        end
+      end
+    end
+
+    it "infere return type via receiver.method (method chain)" do
+      entity_src = <<~RUBY
+        module MyApp
+          class Entity
+            attr_reader :nome #: String
+
+            def initialize(nome:)
+              self.nome = nome
+            end
+          end
+        end
+      RUBY
+      service_src = <<~RUBY
+        module MyApp
+          class Service
+            attr_reader :entity #: MyApp::Entity
+
+            def nome_do_entity
+              entity.nome
+            end
+          end
+        end
+      RUBY
+
+      with_temp_files("my_app/entity.rb" => entity_src, "my_app/service.rb" => service_src) do |dir, paths|
+        service = paths.find { |p| p.end_with?("service.rb") }
+        analyzer = described_class.new(target_file: service, source_files: paths)
+        rbs = analyzer.generate_rbs
+
+        expect(rbs).to include("def nome_do_entity: () -> String")
+      end
+    end
+
     it "infere tipo de attr via param.method quando tipo do param é conhecido" do
       dto_src = <<~RUBY
         module MyApp

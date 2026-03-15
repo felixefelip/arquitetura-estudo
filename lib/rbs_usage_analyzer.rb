@@ -58,7 +58,7 @@ class RbsUsageAnalyzer
     end
 
     # Resolver return types de métodos que retornam attrs conhecidos
-    type_merger.resolve_method_return_types_from_attrs(target_members, attr_types)
+    type_merger.resolve_method_return_types_from_attrs(target_members, attr_types, method_type_resolver: method_type_resolver)
 
     # Inferir tipos de parâmetros de métodos via chamadas intra-classe
     method_param_types = infer_method_param_types(attr_types)
