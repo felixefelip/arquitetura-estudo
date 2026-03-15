@@ -6,12 +6,6 @@ module Academico
     module Repositories
       class Memoria
         include Academico::Aluno::_Repository
-
-        @alunos: Array[Academico::Aluno::Entity]
-
-        private
-
-        def alunos: -> Array[Academico::Aluno::Entity]
       end
     end
   end
